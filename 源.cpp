@@ -63,7 +63,7 @@ bool check() {
 	}
 	return false;
 }
-// 1-4¶ÔÓ¦µÄ»ù´¡±¦Ê¯ 5¶ÔÓ¦s±¦Ê¯ 6-9¶ÔÓ¦µÄĞ§¹û±¦Ê¯
+// 1-4å¯¹åº”çš„åŸºç¡€å®çŸ³ 5å¯¹åº”så®çŸ³ 6-9å¯¹åº”çš„æ•ˆæœå®çŸ³
 void update() {
 	bool flag = false;
 	for (int i = 1; i <= 7; ++i) {
@@ -178,18 +178,18 @@ int main() {
 	int x1, y1, x2, y2;
 	while (1) {
 		show();
-		cout << "ÊäÈëÒª²Ù×÷µÄ±¦Ê¯£º";
+		cout << "è¾“å…¥è¦æ“ä½œçš„å®çŸ³ï¼š";
 		cin >> x1 >> y1;
 		while (1) {
-			cout << "ÔÙÊäÈëµÚ¶ş¸öÒª²Ù×÷µÄ±¦Ê¯£º";
+			cout << "å†è¾“å…¥ç¬¬äºŒä¸ªè¦æ“ä½œçš„å®çŸ³ï¼š";
 			cin >> x2 >> y2;
 			if (abs(x1 - x2) + abs(y1 - y2) != 1) {
-				cout << "ÊäÈëÓĞÎó" << endl;
+				cout << "è¾“å…¥æœ‰è¯¯" << endl;
 				continue;
 			}
 			change(x1, y1, x2, y2);
 			if (!check()) {
-				cout << "ÎŞ·¨²Ù×÷" << endl;
+				cout << "æ— æ³•æ“ä½œ" << endl;
 				change(x2, y2, x1, y1);
 				continue;
 			}
