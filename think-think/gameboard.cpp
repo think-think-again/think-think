@@ -9,6 +9,7 @@ gameBoard::gameBoard(QGraphicsItem *parent)
     std::mt19937 gen(time(0));
     std::uniform_int_distribution<int> col(0, 3);
     for(int i=0; i<boardSizeX; ++i) for(int j=0; j<boardSizeY; ++j) cell[i][j] = nullptr;
+    // TODO: more efficient initialization is needed.
     do{
         for(int i=0; i<boardSizeX; ++i) for(int j=0; j<boardSizeY; ++j){
             if(cell[i][j] != nullptr) delete cell[i][j];
