@@ -1,6 +1,7 @@
 #include "gameboard.h"
 
 #include <QPropertyAnimation>
+#include <QTimer>
 #include <random>
 
 gameBoard::gameBoard(QGraphicsItem *parent)
@@ -19,26 +20,20 @@ gameBoard::gameBoard(QGraphicsItem *parent)
     } while(existMatching());
 }
 
-void gameBoard::gemMove(int gx, int gy, int x, int y)
+void gameBoard::dragGem(int gx, int gy, int x, int y)
 {
 //    qDebug() << gx << gy << x << y;
     x+=gx, y+=gy;
     if(0<=x && x<boardSizeX && 0<=y && y<boardSizeY){
-        QPropertyAnimation *move1 = new QPropertyAnimation(cell[gx][gy], "pos");
-        move1->setStartValue(QPointF(gx*64, gy*64));
-        move1->setEndValue(QPointF(x*64, y*64));
-        move1->setDuration(300);
-        move1->start(QPropertyAnimation::DeleteWhenStopped);
-
-        QPropertyAnimation *move2 = new QPropertyAnimation(cell[x][y], "pos");
-        move2->setStartValue(QPointF(x*64, y*64));
-        move2->setEndValue(QPointF(gx*64, gy*64));
-        move2->setDuration(300);
-        move2->start(QPropertyAnimation::DeleteWhenStopped);
-
-        std::swap(cell[gx][gy], cell[x][y]);
-        cell[gx][gy]->setGPos(gx, gy);
-        cell[x][y]->setGPos(x, y);
+        swapGem(gx, gy, x, y);
+        QTimer::singleShot(swapAnimationDuration, [&, gx, gy, x, y](){
+            if(!existMatching()){
+                swapGem(gx, gy, x, y);
+            }
+            else{
+                eraseMatchings();
+            }
+        });
     }
 }
 
@@ -52,6 +47,29 @@ GemTypes gameBoard::getType(int x, int y)
 GemTypes gameBoard::getBasicType(int x, int y)
 {
     return getType(x, y) & BasicGemMask;
+}
+
+void gameBoard::moveGem(int gx, int gy, int x, int y)
+{
+    QPropertyAnimation *move = new QPropertyAnimation(cell[gx][gy], "pos");
+    move->setStartValue(QPointF(gx*64, gy*64));
+    move->setEndValue(QPointF(x*64, y*64));
+    move->setDuration(swapAnimationDuration);
+    move->start(QPropertyAnimation::DeleteWhenStopped);
+}
+
+void gameBoard::swapGem(int gx, int gy, int x, int y)
+{
+    moveGem(gx, gy, x, y);
+    moveGem(x, y, gx, gy);
+    std::swap(cell[gx][gy], cell[x][y]);
+    cell[gx][gy]->setGPos(gx, gy);
+    cell[x][y]->setGPos(x, y);
+}
+
+void gameBoard::eraseMatchings()
+{
+    qDebug() << "erase";
 }
 
 bool gameBoard::existMatching()

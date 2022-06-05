@@ -53,7 +53,7 @@ void Gem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
                 x = (delta.x()<0 ? -1 : 1);
             else
                 y = (delta.y()<0 ? -1 : 1);
-            board->gemMove(gx, gy, x, y);
+            board->dragGem(gx, gy, x, y);
         }
     }
 }
