@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/svg/Blue.svg</file>
+        <file>resources/svg/Green.svg</file>
+        <file>resources/svg/Orange.svg</file>
+        <file>resources/svg/Red.svg</file>
+        <file>resources/256w/blue.png</file>
+        <file>resources/256w/green.png</file>
+        <file>resources/256w/orange.png</file>
+        <file>resources/256w/red.png</file>
+        <file>resources/64w/blue.png</file>
+        <file>resources/64w/green.png</file>
+        <file>resources/64w/orange.png</file>
+        <file>resources/64w/red.png</file>
+    </qresource>
+</RCC>
