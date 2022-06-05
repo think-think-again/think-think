@@ -3,7 +3,18 @@
 
 #include <QGraphicsPixmapItem>
 
-enum gemType{ Blue, Green, Red, Orange, gemTypeNum};
+enum GemType{
+    Invalid       = 0x00000000,
+    Blue          = 0x00000001,
+    Green         = 0x00000002,
+    Red           = 0x00000004,
+    Orange        = 0x00000008,
+    Super         = 0x00000010,
+    Upgraded      = 0x00000020,
+    BasicGemMask  = 0x0000001f
+};
+Q_DECLARE_FLAGS(GemTypes, GemType)
+Q_DECLARE_OPERATORS_FOR_FLAGS(GemTypes)
 
 class gameBoard;
 class Gem : public QObject, public QGraphicsPixmapItem
@@ -14,11 +25,12 @@ class Gem : public QObject, public QGraphicsPixmapItem
                WRITE setPos
                NOTIFY posChanged)
 public:
-    explicit Gem(gemType type, gameBoard *parent, int x, int y);
+    explicit Gem(GemTypes type, gameBoard *parent, int x, int y);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void setGPos(int x, int y);
+    GemTypes getType() const;
 
     QPointF pos() const;
     void setPos(const QPointF &pos);
@@ -27,6 +39,7 @@ signals:
     void posChanged(QPointF);
 
 private:
+    GemTypes type;
     QPointF lastClickPosition;
     bool lastClickHandled;
     gameBoard *board;

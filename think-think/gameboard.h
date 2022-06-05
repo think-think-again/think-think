@@ -6,7 +6,7 @@
 #include <QPropertyAnimation>
 #include <QTimer>
 
-const int boardSize = 9;
+const int boardSizeX = 8, boardSizeY = 7;
 
 class gameBoard : public QGraphicsPixmapItem
 {
@@ -15,7 +15,10 @@ public:
     void gemMove(int gx, int gy, int x, int y);
 
 private:
-    Gem *cell[boardSize][boardSize];
+    Gem *cell[boardSizeX][boardSizeY];
+    bool existMatching();
+    GemTypes getType(int x, int y);
+    GemTypes getBasicType(int x, int y);
 };
 
 #endif // GAMEBOARD_H

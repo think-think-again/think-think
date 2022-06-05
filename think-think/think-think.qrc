@@ -8,9 +8,9 @@
         <file>resources/256w/green.png</file>
         <file>resources/256w/orange.png</file>
         <file>resources/256w/red.png</file>
-        <file>resources/64w/blue.png</file>
-        <file>resources/64w/green.png</file>
-        <file>resources/64w/orange.png</file>
-        <file>resources/64w/red.png</file>
+        <file alias="blue">resources/64w/blue.png</file>
+        <file alias="green">resources/64w/green.png</file>
+        <file alias="orange">resources/64w/orange.png</file>
+        <file alias="red">resources/64w/red.png</file>
     </qresource>
 </RCC>

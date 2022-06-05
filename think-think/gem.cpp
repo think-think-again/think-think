@@ -4,19 +4,25 @@
 #include <QGraphicsSceneMouseEvent>
 #include <string>
 
-const char *gemTypeName[] = {"blue", "green", "red", "orange"};
-
-Gem::Gem(gemType type, gameBoard *parent, int x, int y)
+Gem::Gem(GemTypes tp, gameBoard *parent, int x, int y)
     : QGraphicsPixmapItem((QGraphicsPixmapItem *)parent),
+      type(tp),
       board(parent),
       gx(x), gy(y)
 {
-    QPixmap pixmap((":/resources/64w/" + std::string(gemTypeName[type]) + ".png").c_str());
+    auto gemTypeName = [](GemTypes tp){
+        if(tp == Blue) return ":/blue";
+        if(tp == Green) return ":/green";
+        if(tp == Red) return ":/red";
+        if(tp == Orange) return ":/orange";
+        qCritical() << "invalid gem type";
+        return "invalid";
+    };
+    QPixmap pixmap(gemTypeName(tp));
     pixmap = pixmap.scaled(64, 64);
     setPixmap(pixmap);
     setOffset(-pixmap.width() / 2, -pixmap.height() / 2);
     setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
-//    qDebug() << pixmap.width();
 }
 
 void Gem::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -55,6 +61,11 @@ void Gem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 void Gem::setGPos(int x, int y)
 {
     gx = x, gy = y;
+}
+
+GemTypes Gem::getType() const
+{
+    return type;
 }
 
 QPointF Gem::pos() const
