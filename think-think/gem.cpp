@@ -15,6 +15,10 @@ Gem::Gem(GemTypes tp, gameBoard *parent, int x, int y)
         if(tp == Green) return ":/green";
         if(tp == Red) return ":/red";
         if(tp == Orange) return ":/orange";
+        if(tp == (Blue | Upgraded)) return ":/blue";
+        if(tp == (Green | Upgraded)) return ":/green";
+        if(tp == (Red | Upgraded)) return ":/red";
+        if(tp == (Orange | Upgraded)) return ":/orange";
         qCritical() << "invalid gem type";
         return "invalid";
     };
