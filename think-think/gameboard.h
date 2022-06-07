@@ -8,7 +8,7 @@
 #include <random>
 
 const int boardSizeX = 8, boardSizeY = 7;
-const int swapAnimationDuration = 500;
+const int swapAnimationDuration = 200;
 
 class gameBoard : public QObject, public QGraphicsPixmapItem
 {

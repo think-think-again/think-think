@@ -62,7 +62,9 @@ int gameBoard::moveGem(int gx, int gy, int x, int y, int ax, int ay)
     QPropertyAnimation *move = new QPropertyAnimation(cell[gx][gy], "pos");
     move->setStartValue(QPointF(ax*64, ay*64));
     move->setEndValue(QPointF(x*64, y*64));
-    int duration = (abs(ax-x)+abs(ay-y))*swapAnimationDuration;
+    move->setEasingCurve(QEasingCurve::InQuad);
+//    int duration = (abs(ax-x)+abs(ay-y))*swapAnimationDuration;
+    int duration = sqrt(abs(ax-x)+abs(ay-y))*swapAnimationDuration;
     move->setDuration(duration);
     move->start(QPropertyAnimation::DeleteWhenStopped);
     return duration;
