@@ -5,19 +5,26 @@
 #include <random>
 
 gameBoard::gameBoard(QGraphicsItem *parent)
-    : QGraphicsPixmapItem(parent)
+    : QGraphicsPixmapItem(parent),
+      rng(time(0)),
+      gemGenerator(0, 3)
 {
-    std::mt19937 gen(time(0));
-    std::uniform_int_distribution<int> col(0, 3);
     for(int i=0; i<boardSizeX; ++i) for(int j=0; j<boardSizeY; ++j) cell[i][j] = nullptr;
     // TODO: more efficient initialization is needed.
     do{
         for(int i=0; i<boardSizeX; ++i) for(int j=0; j<boardSizeY; ++j){
             if(cell[i][j] != nullptr) delete cell[i][j];
-            cell[i][j] = new Gem(GemTypes(1<<col(gen)), this, i, j);
+            cell[i][j] = new Gem(GemTypes(1<<gemGenerator(rng)), this, i, j);
             cell[i][j]->setPos(QPointF(i*64, j*64));
         }
     } while(existMatching());
+}
+
+void gameBoard::lazyErase(){
+    int latency = eraseMatchings();
+    QTimer::singleShot(latency, [&](){
+        if(existMatching()) lazyErase();
+    });
 }
 
 void gameBoard::dragGem(int gx, int gy, int x, int y)
@@ -30,11 +37,7 @@ void gameBoard::dragGem(int gx, int gy, int x, int y)
             if(!existMatching()){
                 swapGem(gx, gy, x, y);
             }
-            else{
-                do{
-                    eraseMatchings();
-                }while(existMatching());
-            }
+            else lazyErase();
         });
     }
 }
@@ -51,13 +54,17 @@ GemTypes gameBoard::getBasicType(int x, int y)
     return getType(x, y) & BasicGemMask;
 }
 
-void gameBoard::moveGem(int gx, int gy, int x, int y)
+// returns animation duration
+int gameBoard::moveGem(int gx, int gy, int x, int y, int ax, int ay)
 {
+    if(ax == -1 && ay == -1) ax = gx, ay = gy;
     QPropertyAnimation *move = new QPropertyAnimation(cell[gx][gy], "pos");
-    move->setStartValue(QPointF(gx*64, gy*64));
+    move->setStartValue(QPointF(ax*64, ay*64));
     move->setEndValue(QPointF(x*64, y*64));
-    move->setDuration(swapAnimationDuration);
+    int duration = (abs(ax-x)+abs(ay-y))*swapAnimationDuration;
+    move->setDuration(duration);
     move->start(QPropertyAnimation::DeleteWhenStopped);
+    return duration;
 }
 
 void gameBoard::swapGem(int gx, int gy, int x, int y)
@@ -69,7 +76,8 @@ void gameBoard::swapGem(int gx, int gy, int x, int y)
     cell[x][y]->setGPos(x, y);
 }
 
-void gameBoard::eraseMatchings()
+// TODO: the upgrade positon of "xxxx" should be the operate position
+int gameBoard::eraseMatchings()
 {
     qDebug() << "erase";
     bool flag = false;
@@ -102,22 +110,22 @@ void gameBoard::eraseMatchings()
                 }
                 if (cnt == 3) {
                     if (_4) {
-                        cell[j][mem] = new Gem(GemTypes(Super), this, j, mem);
+                        cell[j][mem] = new Gem(Super, this, j, mem);
                         cell[j][mem]->setPos(QPointF(j * 64, mem * 64));
                     }
                 }
                 else if (cnt == 4) {
                     if (mem == -1) {
-                        cell[j][i + 1] = new Gem(GemTypes(Upgraded | temp), this, j, i + 1);
+                        cell[j][i + 1] = new Gem(Upgraded | temp, this, j, i + 1);
                         cell[j][i + 1]->setPos(QPointF(j * 64, (i + 1) * 64));
                     }
                     else {
-                        cell[j][mem] = new Gem(GemTypes(Super), this, j, mem);
+                        cell[j][mem] = new Gem(Super, this, j, mem);
                         cell[j][mem]->setPos(QPointF(j * 64, mem * 64));
                     }
                 }
                 else if (cnt == 5){
-                    cell[j][i + 2] = new Gem(GemTypes(Super), this, j, i + 2);
+                    cell[j][i + 2] = new Gem(Super, this, j, i + 2);
                     cell[j][i + 2]->setPos(QPointF(j * 64, (i + 2) * 64));
                 }
                 flag = true;
@@ -149,22 +157,22 @@ void gameBoard::eraseMatchings()
                 }
                 if (cnt == 3){
                     if (!_4 && mem != -1){
-                        cell[mem][i] = new Gem(GemTypes(temp | Upgraded), this, mem, i);
+                        cell[mem][i] = new Gem(temp | Upgraded, this, mem, i);
                         cell[mem][i]->setPos(QPointF(mem * 64, i * 64));
                     }
                 }
                 else if (cnt == 4){
                     if (mem != -1){
-                        cell[mem][i] = new Gem(GemTypes(Super), this, mem, i);
+                        cell[mem][i] = new Gem(Super, this, mem, i);
                         cell[mem][i]->setPos(QPointF(mem * 64, i * 64));
                     }
                     else{
-                        cell[j + 1][i] = new Gem(GemTypes(temp | Upgraded), this, j + 1, i);
+                        cell[j + 1][i] = new Gem(temp | Upgraded, this, j + 1, i);
                         cell[j + 1][i]->setPos(QPointF((j + 1) * 64, i * 64));
                     }
                 }
                 else if (cnt == 5){
-                    cell[j + 2][i] = new Gem(GemTypes(Super), this, j + 2, i);
+                    cell[j + 2][i] = new Gem(Super, this, j + 2, i);
                     cell[j + 2][i]->setPos(QPointF((j + 2)*64, i * 64));
                 }
                 flag = true;
@@ -172,6 +180,7 @@ void gameBoard::eraseMatchings()
             }
         }
     }
+    int duration = 0;
     for (int j = 0; j < boardSizeX; ++j){
         for (int i = boardSizeY - 1; i >=0; --i){
             if (cell[j][i] != nullptr) continue;
@@ -181,10 +190,10 @@ void gameBoard::eraseMatchings()
                 if (k == -1) break;
             }
             if (k >= 0){
-                cell[j][i] = new Gem(cell[j][k]->getType(), this, j, i);
-                cell[j][i]->setPos(QPointF(j * 64, i * 64));
-                delete cell[j][k];
+                duration = std::max(duration, moveGem(j, k, j, i));
+                cell[j][i] = cell[j][k];
                 cell[j][k] = nullptr;
+                cell[j][i]->setGPos(j, i);
             }
         }
         int flag = boardSizeY - 1;
@@ -192,14 +201,13 @@ void gameBoard::eraseMatchings()
             flag--;
             if (flag == -1) break;
         }
-        std::mt19937 gen(time(0));
-        std::uniform_int_distribution<int> col(0, 3);
         for (int i = flag; i >=0; --i){
-            cell[j][i] = new Gem(GemTypes(1<<col(gen)), this, j, i);
-            cell[j][i]->setPos(QPointF(j*64, i*64));
+//            qDebug() << j << i;
+            cell[j][i] = new Gem(GemTypes(1<<gemGenerator(rng)), this, j, i);
+            duration = std::max(duration, moveGem(j, i, j, i, j, i-flag-1));
         }
     }
-    return;
+    return duration;
 }
 
 bool gameBoard::existMatching()

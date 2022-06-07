@@ -10,15 +10,17 @@ Gem::Gem(GemTypes tp, gameBoard *parent, int x, int y)
       board(parent),
       gx(x), gy(y)
 {
+//    qDebug() << "new Gem" << x << y;
     auto gemTypeName = [](GemTypes tp){
-        if(tp == Blue) return ":/blue";
-        if(tp == Green) return ":/green";
-        if(tp == Red) return ":/red";
-        if(tp == Orange) return ":/orange";
-        if(tp == (Blue | Upgraded)) return ":/blue";
-        if(tp == (Green | Upgraded)) return ":/green";
-        if(tp == (Red | Upgraded)) return ":/red";
-        if(tp == (Orange | Upgraded)) return ":/orange";
+        if(tp == Blue) return ":/resources/b.png";
+        if(tp == Green) return ":/resources/g.png";
+        if(tp == Red) return ":/resources/r.png";
+        if(tp == Orange) return ":/resources/o.png";
+        if(tp == (Blue | Upgraded)) return ":/resources/bb.png";
+        if(tp == (Green | Upgraded)) return ":/resources/gg.png";
+        if(tp == (Red | Upgraded)) return ":/resources/rr.png";
+        if(tp == (Orange | Upgraded)) return ":/resources/oo.png";
+        if(tp == Super) return ":/resources/s.png";
         qCritical() << "invalid gem type";
         return "invalid";
     };

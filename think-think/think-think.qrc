@@ -1,16 +1,13 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/svg/Blue.svg</file>
-        <file>resources/svg/Green.svg</file>
-        <file>resources/svg/Orange.svg</file>
-        <file>resources/svg/Red.svg</file>
-        <file>resources/256w/blue.png</file>
-        <file>resources/256w/green.png</file>
-        <file>resources/256w/orange.png</file>
-        <file>resources/256w/red.png</file>
-        <file alias="blue">resources/64w/blue.png</file>
-        <file alias="green">resources/64w/green.png</file>
-        <file alias="orange">resources/64w/orange.png</file>
-        <file alias="red">resources/64w/red.png</file>
+        <file>resources/b.png</file>
+        <file>resources/bb.png</file>
+        <file>resources/g.png</file>
+        <file>resources/gg.png</file>
+        <file>resources/o.png</file>
+        <file>resources/oo.png</file>
+        <file>resources/r.png</file>
+        <file>resources/rr.png</file>
+        <file>resources/s.png</file>
     </qresource>
 </RCC>
