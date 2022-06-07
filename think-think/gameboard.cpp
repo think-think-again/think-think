@@ -51,6 +51,7 @@ GemTypes gameBoard::getType(int x, int y)
 
 GemTypes gameBoard::getBasicType(int x, int y)
 {
+    if(cell[x][y] == nullptr) return Invalid;
     return getType(x, y) & BasicGemMask;
 }
 
@@ -80,11 +81,15 @@ void gameBoard::swapGem(int gx, int gy, int x, int y)
 int gameBoard::eraseMatchings()
 {
     qDebug() << "erase";
-    bool flag = false;
     for (int i = 0; i < boardSizeY; ++i){
-        if (flag) break;
         for (int j =0; j < boardSizeX; ++j){
-            if (i < boardSizeY - 2 && getBasicType(j, i) == getBasicType(j, i + 1) && getBasicType(j, i + 1) == getBasicType(j, i + 2)){
+            if (i < boardSizeY - 2
+                && cell[j][i] != nullptr
+                && cell[j][i + 1] != nullptr
+                && cell[j][i + 2] != nullptr
+                && getType(j, i) != Super
+                && getBasicType(j, i) == getBasicType(j, i + 1)
+                && getBasicType(j, i + 1) == getBasicType(j, i + 2)){
                 GemTypes temp = getBasicType(j, i);
                 int cnt = 0, mem = -1;
                 bool _4 = false;
@@ -113,6 +118,10 @@ int gameBoard::eraseMatchings()
                         cell[j][mem] = new Gem(Super, this, j, mem);
                         cell[j][mem]->setPos(QPointF(j * 64, mem * 64));
                     }
+                    else if (mem != -1){
+                        cell[j][mem] = new Gem(Upgraded | temp, this, j ,mem);
+                        cell[j][mem]->setPos(QPointF(j * 64, mem * 64));
+                    }
                 }
                 else if (cnt == 4) {
                     if (mem == -1) {
@@ -128,10 +137,14 @@ int gameBoard::eraseMatchings()
                     cell[j][i + 2] = new Gem(Super, this, j, i + 2);
                     cell[j][i + 2]->setPos(QPointF(j * 64, (i + 2) * 64));
                 }
-                flag = true;
-                break;
             }
-            else if (j < boardSizeX - 2 && getBasicType(j, i) == getBasicType(j + 1, i) && getBasicType(j + 1, i) == getBasicType(j + 2, i)){
+            else if (j < boardSizeX - 2
+                     && cell[j][i] != nullptr
+                     && cell[j + 1][i] != nullptr
+                     && cell[j + 2][i] != nullptr
+                     && getType(j, i) != Super
+                     && getBasicType(j, i) == getBasicType(j + 1, i)
+                     && getBasicType(j + 1, i) == getBasicType(j + 2, i)){
                 GemTypes temp = getBasicType(j, i);
                 int cnt = 0, mem = -1;
                 bool _4 = false;
@@ -175,8 +188,6 @@ int gameBoard::eraseMatchings()
                     cell[j + 2][i] = new Gem(Super, this, j + 2, i);
                     cell[j + 2][i]->setPos(QPointF((j + 2)*64, i * 64));
                 }
-                flag = true;
-                break;
             }
         }
     }
