@@ -25,7 +25,7 @@ Gem::Gem(GemTypes tp, gameBoard *parent, int x, int y)
         return "invalid";
     };
     QPixmap pixmap(gemTypeName(tp));
-    pixmap = pixmap.scaled(64, 64);
+    pixmap = pixmap.scaled(gemSize, gemSize);
     setPixmap(pixmap);
     setOffset(-pixmap.width() / 2, -pixmap.height() / 2);
     setShapeMode(QGraphicsPixmapItem::BoundingRectShape);

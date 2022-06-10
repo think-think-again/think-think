@@ -3,11 +3,13 @@
 
 #include "gem.h"
 #include <QGraphicsPixmapItem>
+#include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 #include <QTimer>
 #include <random>
 
 const int boardSizeX = 8, boardSizeY = 7;
+const int gemSize = 128;
 const int swapAnimationDuration = 200;
 
 class gameBoard : public QObject, public QGraphicsPixmapItem
@@ -23,10 +25,13 @@ private:
     bool existMatching();
     GemTypes getType(int x, int y);
     GemTypes getBasicType(int x, int y);
-    void swapGem(int sx, int sy, int dx, int dy);
-    int eraseMatchings();
-    int moveGem(int gx, int gy, int x, int y, int ax=-1, int ay=-1);
+    QParallelAnimationGroup *swapGem(int sx, int sy, int dx, int dy);
+    QParallelAnimationGroup *eraseMatchings();
+    QPropertyAnimation *moveGem(int gx, int gy, int x, int y, int ax=-1, int ay=-1);
+
+private slots:
     void lazyErase();
+
 };
 
 #endif // GAMEBOARD_H
