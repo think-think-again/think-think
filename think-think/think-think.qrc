@@ -9,5 +9,7 @@
         <file>resources/r.png</file>
         <file>resources/rr.png</file>
         <file>resources/s.png</file>
+        <file alias="1080p">resources/1920x1080.jpg</file>
+        <file alias="2k">resources/2560x1440.jpg</file>
     </qresource>
 </RCC>

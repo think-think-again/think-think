@@ -11,11 +11,17 @@ CONFIG += c++17
 SOURCES += \
     gameboard.cpp \
     gem.cpp \
-    main.cpp
+    main.cpp \
+    mainmenu.cpp \
+    mywindow.cpp \
+    startbutton.cpp
 
 HEADERS += \
     gameboard.h \
-    gem.h
+    gem.h \
+    mainmenu.h \
+    mywindow.h \
+    startbutton.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
