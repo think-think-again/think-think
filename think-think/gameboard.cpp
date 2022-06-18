@@ -17,7 +17,7 @@ gameBoard::gameBoard(QGraphicsItem *parent)
         for(int i=0; i<boardSizeX; ++i) for(int j=0; j<boardSizeY; ++j){
             if(cell[i][j] != nullptr) delete cell[i][j];
             cell[i][j] = new Gem(GemTypes(1<<gemGenerator(rng)), this, i, j);
-            cell[i][j]->setPos(QPointF(i*gemSize, j*gemSize));
+            cell[i][j]->setPos(QPointF(i*Gem::gemSize, j*Gem::gemSize));
         }
     } while(existMatching());
 }
@@ -29,37 +29,6 @@ void gameBoard::lazyErase(){
                 this, &gameBoard::lazyErase);
     }
     group->start(QPropertyAnimation::DeleteWhenStopped);
-}
-
-void gameBoard::dragGem(int gx, int gy, int x, int y)
-{
-//    qDebug() << gx << gy << x << y;
-    x+=gx, y+=gy;
-    if(0<=x && x<boardSizeX && 0<=y && y<boardSizeY){
-        QParallelAnimationGroup *g = new QParallelAnimationGroup(this);
-        g->addAnimation(moveGem(gx, gy, x, y));
-        g->addAnimation(moveGem(x, y, gx, gy));
-        std::swap(cell[gx][gy], cell[x][y]);
-        cell[gx][gy]->setGPos(gx, gy);
-        cell[x][y]->setGPos(x, y);
-        if(!existMatching()){
-            QSequentialAnimationGroup *group = new QSequentialAnimationGroup(this);
-            group->addAnimation(g);
-            g = new QParallelAnimationGroup(this);
-            g->addAnimation(moveGem(gx, gy, x, y));
-            g->addAnimation(moveGem(x, y, gx, gy));
-            group->addAnimation(g);
-            std::swap(cell[gx][gy], cell[x][y]);
-            cell[gx][gy]->setGPos(gx, gy);
-            cell[x][y]->setGPos(x, y);
-            group->start(QPropertyAnimation::DeleteWhenStopped);
-        }
-        else{
-            connect(g, &QParallelAnimationGroup::finished,
-                    this, &gameBoard::lazyErase);
-            g->start(QPropertyAnimation::DeleteWhenStopped);
-        }
-    }
 }
 
 GemTypes gameBoard::getType(int x, int y)
@@ -80,12 +49,23 @@ QPropertyAnimation *gameBoard::moveGem(int gx, int gy, int x, int y, int ax, int
 {
     if(ax == -1 && ay == -1) ax = gx, ay = gy;
     QPropertyAnimation *move = new QPropertyAnimation(cell[gx][gy], "pos");
-    move->setStartValue(QPointF(ax*gemSize, ay*gemSize));
-    move->setEndValue(QPointF(x*gemSize, y*gemSize));
+    move->setStartValue(QPointF(ax*Gem::gemSize, ay*Gem::gemSize));
+    move->setEndValue(QPointF(x*Gem::gemSize, y*Gem::gemSize));
     move->setEasingCurve(QEasingCurve::InQuad);
     int duration = sqrt(abs(ax-x)+abs(ay-y))*swapAnimationDuration;
     move->setDuration(duration);
     return move;
+}
+
+QParallelAnimationGroup *gameBoard::swapGem(int sx, int sy, int dx, int dy)
+{
+    QParallelAnimationGroup *g = new QParallelAnimationGroup(this);
+    g->addAnimation(moveGem(sx, sy, dx, dy));
+    g->addAnimation(moveGem(dx, dy, sx, sy));
+    std::swap(cell[sx][sy], cell[dx][dy]);
+    cell[sx][sy]->setGPos(sx, sy);
+    cell[dx][dy]->setGPos(dx, dy);
+    return g;
 }
 
 // TODO: the upgrade positon of "xxxx" should be the operate position
@@ -127,26 +107,26 @@ QParallelAnimationGroup *gameBoard::eraseMatchings()
                 if (cnt == 3) {
                     if (_4) {
                         cell[j][mem] = new Gem(Super, this, j, mem);
-                        cell[j][mem]->setPos(QPointF(j * gemSize, mem * gemSize));
+                        cell[j][mem]->setPos(QPointF(j * Gem::gemSize, mem * Gem::gemSize));
                     }
                     else if (mem != -1){
                         cell[j][mem] = new Gem(Upgraded | temp, this, j ,mem);
-                        cell[j][mem]->setPos(QPointF(j * gemSize, mem * gemSize));
+                        cell[j][mem]->setPos(QPointF(j * Gem::gemSize, mem * Gem::gemSize));
                     }
                 }
                 else if (cnt == 4) {
                     if (mem == -1) {
                         cell[j][i + 1] = new Gem(Upgraded | temp, this, j, i + 1);
-                        cell[j][i + 1]->setPos(QPointF(j * gemSize, (i + 1) * gemSize));
+                        cell[j][i + 1]->setPos(QPointF(j * Gem::gemSize, (i + 1) * Gem::gemSize));
                     }
                     else {
                         cell[j][mem] = new Gem(Super, this, j, mem);
-                        cell[j][mem]->setPos(QPointF(j * gemSize, mem * gemSize));
+                        cell[j][mem]->setPos(QPointF(j * Gem::gemSize, mem * Gem::gemSize));
                     }
                 }
                 else if (cnt == 5){
                     cell[j][i + 2] = new Gem(Super, this, j, i + 2);
-                    cell[j][i + 2]->setPos(QPointF(j * gemSize, (i + 2) * gemSize));
+                    cell[j][i + 2]->setPos(QPointF(j * Gem::gemSize, (i + 2) * Gem::gemSize));
                 }
             }
             else if (j < boardSizeX - 2
@@ -182,22 +162,22 @@ QParallelAnimationGroup *gameBoard::eraseMatchings()
                 if (cnt == 3){
                     if (!_4 && mem != -1){
                         cell[mem][i] = new Gem(temp | Upgraded, this, mem, i);
-                        cell[mem][i]->setPos(QPointF(mem * gemSize, i * gemSize));
+                        cell[mem][i]->setPos(QPointF(mem * Gem::gemSize, i * Gem::gemSize));
                     }
                 }
                 else if (cnt == 4){
                     if (mem != -1){
                         cell[mem][i] = new Gem(Super, this, mem, i);
-                        cell[mem][i]->setPos(QPointF(mem * gemSize, i * gemSize));
+                        cell[mem][i]->setPos(QPointF(mem * Gem::gemSize, i * Gem::gemSize));
                     }
                     else{
                         cell[j + 1][i] = new Gem(temp | Upgraded, this, j + 1, i);
-                        cell[j + 1][i]->setPos(QPointF((j + 1) * gemSize, i * gemSize));
+                        cell[j + 1][i]->setPos(QPointF((j + 1) * Gem::gemSize, i * Gem::gemSize));
                     }
                 }
                 else if (cnt == 5){
                     cell[j + 2][i] = new Gem(Super, this, j + 2, i);
-                    cell[j + 2][i]->setPos(QPointF((j + 2)*gemSize, i * gemSize));
+                    cell[j + 2][i]->setPos(QPointF((j + 2)*Gem::gemSize, i * Gem::gemSize));
                 }
             }
         }
