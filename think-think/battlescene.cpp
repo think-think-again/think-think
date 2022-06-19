@@ -1,6 +1,7 @@
 #include "battlescene.h"
 #include "qscreen.h"
 
+#include <QGraphicsProxyWidget>
 #include <QGraphicsView>
 #include <QGuiApplication>
 
@@ -19,5 +20,6 @@ BattleScene::BattleScene(QObject *parent)
     boardView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     boardView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     boardView->setFixedSize(boardScene->sceneRect().size().toSize());
-    addWidget(boardView);
+    QGraphicsProxyWidget *boardProxy = addWidget(boardView);
+    boardProxy->setPos(100, 100);
 }
