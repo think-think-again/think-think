@@ -14,6 +14,7 @@ signals:
 
 private:
     MyWindow *window;
+    QJsonDocument *doc;
 
 };
 

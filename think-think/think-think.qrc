@@ -12,5 +12,6 @@
         <file alias="1080p">resources/1920x1080.jpg</file>
         <file alias="2k">resources/2560x1440.jpg</file>
         <file>resources/boss.jpg</file>
+        <file>resources/ljy.json</file>
     </qresource>
 </RCC>
