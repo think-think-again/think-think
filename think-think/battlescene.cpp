@@ -22,5 +22,9 @@ BattleScene::BattleScene(QObject *parent)
     boardView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     boardView->setFixedSize(boardScene->sceneRect().size().toSize());
     QGraphicsProxyWidget *boardProxy = addWidget(boardView);
-    boardProxy->setPos(100, 100);
+    boardProxy->setPos(300, 300);
+
+    boss = new Boss;
+    addItem(boss);
+    boss->setPos(1500,100);
 }

@@ -2,6 +2,7 @@
 #define BATTLESCENE_H
 
 #include "gameboard.h"
+#include "boss.h"
 
 #include <QGraphicsScene>
 
@@ -12,6 +13,7 @@ public:
     explicit BattleScene(QObject *parent = nullptr);
 private:
     GameBoard *board;
+    Boss *boss;
 };
 
 #endif // BATTLESCENE_H
