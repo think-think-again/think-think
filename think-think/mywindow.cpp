@@ -1,4 +1,5 @@
 #include "battlescene.h"
+#include "dialogue.h"
 #include "gameboard.h"
 #include "mainmenu.h"
 #include "mywindow.h"
@@ -10,13 +11,6 @@
 MyWindow::MyWindow(QWidget *parent)
     : QWidget{parent}
 {
-    BattleScene *battle = new BattleScene;
-    QGraphicsView *battleView = new QGraphicsView(battle);
-    battleView->setRenderHint(QPainter::Antialiasing);
-    battleView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    battleView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    battleView->setFixedSize(battle->sceneRect().size().toSize());
-
     MainMenu *menu = new MainMenu(this);
     QGraphicsView *menuView = new QGraphicsView(menu);
     menuView->setRenderHint(QPainter::Antialiasing);
@@ -24,13 +18,28 @@ MyWindow::MyWindow(QWidget *parent)
     menuView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     menuView->setFixedSize(menu->sceneRect().size().toSize());
 
+    Dialogue *dialog = new Dialogue(this);
+
+    BattleScene *battle = new BattleScene;
+    QGraphicsView *battleView = new QGraphicsView(battle);
+    battleView->setRenderHint(QPainter::Antialiasing);
+    battleView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    battleView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    battleView->setFixedSize(battle->sceneRect().size().toSize());
+
     layout = new QStackedLayout(this);
-    layout->addWidget(battleView);
     layout->addWidget(menuView);
+    layout->addWidget(dialog);
+    layout->addWidget(battleView);
+    layout->setCurrentIndex(0);
+}
+
+void MyWindow::startDialog()
+{
     layout->setCurrentIndex(1);
 }
 
-void MyWindow::start()
+void MyWindow::startBattle()
 {
-    layout->setCurrentIndex(0);
+    layout->setCurrentIndex(2);
 }

@@ -27,6 +27,6 @@ MainMenu::MainMenu(MyWindow *parent)
     startGame->setFont(font);
     startGame->setPos(-startGame->boundingRect().width()/2, 0);
     connect(startGame, &StartButton::clicked,
-            parent, &MyWindow::start);
+            parent, &MyWindow::startDialog);
     addItem(startGame);
 }

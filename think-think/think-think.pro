@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     battlescene.cpp \
     boss.cpp \
+    dialogue.cpp \
     gameboard.cpp \
     gem.cpp \
     main.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 HEADERS += \
     battlescene.h \
     boss.h \
+    dialogue.h \
     gameboard.h \
     gem.h \
     mainmenu.h \
