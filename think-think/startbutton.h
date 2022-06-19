@@ -3,11 +3,11 @@
 
 #include <QGraphicsTextItem>
 
-class startButton : public QGraphicsTextItem
+class StartButton : public QGraphicsTextItem
 {
     Q_OBJECT
 public:
-    startButton(const QString &text, QGraphicsItem *parent = nullptr);
+    StartButton(const QString &text, QGraphicsItem *parent = nullptr);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 signals:

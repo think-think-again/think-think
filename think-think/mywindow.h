@@ -6,11 +6,11 @@
 
 
 
-class myWindow : public QWidget
+class MyWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit myWindow(QWidget *parent = nullptr);
+    explicit MyWindow(QWidget *parent = nullptr);
     QStackedLayout *layout;
 
 signals:

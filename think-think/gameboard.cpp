@@ -6,7 +6,7 @@
 #include <QTimer>
 #include <random>
 
-gameBoard::gameBoard(QGraphicsItem *parent)
+GameBoard::GameBoard(QGraphicsItem *parent)
     : QGraphicsPixmapItem(parent),
       rng(time(0)),
       gemGenerator(0, 3)
@@ -22,30 +22,30 @@ gameBoard::gameBoard(QGraphicsItem *parent)
     } while(existMatching());
 }
 
-void gameBoard::lazyErase(){
+void GameBoard::lazyErase(){
     QParallelAnimationGroup *group = eraseMatchings();
     if(existMatching()){
         connect(group, &QParallelAnimationGroup::finished,
-                this, &gameBoard::lazyErase);
+                this, &GameBoard::lazyErase);
     }
     group->start(QPropertyAnimation::DeleteWhenStopped);
 }
 
-GemTypes gameBoard::getType(int x, int y)
+GemTypes GameBoard::getType(int x, int y)
 {
 //    if(x<0 || x>=boardSizeX || y<0 || y>=boardSizeY)
 //        qCritical() << "getType out of board bounds";
     return cell[x][y]->getType();
 }
 
-GemTypes gameBoard::getBasicType(int x, int y)
+GemTypes GameBoard::getBasicType(int x, int y)
 {
     if(cell[x][y] == nullptr) return Invalid;
     return getType(x, y) & BasicGemMask;
 }
 
 // returns animation duration
-QPropertyAnimation *gameBoard::moveGem(int gx, int gy, int x, int y, int ax, int ay)
+QPropertyAnimation *GameBoard::moveGem(int gx, int gy, int x, int y, int ax, int ay)
 {
     if(ax == -1 && ay == -1) ax = gx, ay = gy;
     QPropertyAnimation *move = new QPropertyAnimation(cell[gx][gy], "pos");
@@ -57,7 +57,7 @@ QPropertyAnimation *gameBoard::moveGem(int gx, int gy, int x, int y, int ax, int
     return move;
 }
 
-QParallelAnimationGroup *gameBoard::swapGem(int sx, int sy, int dx, int dy)
+QParallelAnimationGroup *GameBoard::swapGem(int sx, int sy, int dx, int dy)
 {
     QParallelAnimationGroup *g = new QParallelAnimationGroup(this);
     g->addAnimation(moveGem(sx, sy, dx, dy));
@@ -69,7 +69,7 @@ QParallelAnimationGroup *gameBoard::swapGem(int sx, int sy, int dx, int dy)
 }
 
 // TODO: the upgrade positon of "xxxx" should be the operate position
-QParallelAnimationGroup *gameBoard::eraseMatchings()
+QParallelAnimationGroup *GameBoard::eraseMatchings()
 {
 //    qDebug() << "erase";
     for (int i = 0; i < boardSizeY; ++i){
@@ -211,7 +211,7 @@ QParallelAnimationGroup *gameBoard::eraseMatchings()
     return group;
 }
 
-bool gameBoard::existMatching()
+bool GameBoard::existMatching()
 {
     for (int i = 0; i < boardSizeX; ++i) {
         for (int j = 0; j < boardSizeY; ++j) {

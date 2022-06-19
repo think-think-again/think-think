@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    battlescene.cpp \
     gameboard.cpp \
     gem.cpp \
     main.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
     startbutton.cpp
 
 HEADERS += \
+    battlescene.h \
     gameboard.h \
     gem.h \
     mainmenu.h \

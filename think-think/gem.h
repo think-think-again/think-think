@@ -19,7 +19,7 @@ enum GemType{
 Q_DECLARE_FLAGS(GemTypes, GemType)
 Q_DECLARE_OPERATORS_FOR_FLAGS(GemTypes)
 
-class gameBoard;
+class GameBoard;
 // TODO: QObject affects performance. Should find an alternative.
 class Gem : public QObject, public QGraphicsPixmapItem
 {
@@ -41,7 +41,7 @@ public:
                WRITE setScale
                NOTIFY scaleChanged)
 public:
-    explicit Gem(GemTypes type, gameBoard *parent, int x, int y);
+    explicit Gem(GemTypes type, GameBoard *parent, int x, int y);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -61,7 +61,7 @@ private:
     QPointF lastPosition;
     bool lastClickHandled;
     bool hover;
-    gameBoard *board;
+    GameBoard *board;
     int gx, gy, dx, dy;
     QPointF m_pos;
     QPropertyAnimation *scaleAnimation;

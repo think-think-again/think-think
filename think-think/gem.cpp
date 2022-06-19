@@ -5,7 +5,7 @@
 #include <QSequentialAnimationGroup>
 #include <string>
 
-Gem::Gem(GemTypes tp, gameBoard *parent, int x, int y)
+Gem::Gem(GemTypes tp, GameBoard *parent, int x, int y)
     : QGraphicsPixmapItem((QGraphicsPixmapItem *)parent),
       type(tp),
       hover(false),
@@ -115,7 +115,7 @@ void Gem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
                 x = (delta.x()<0 ? -1 : 1);
             else
                 y = (delta.y()<0 ? -1 : 1);
-            if(0<=gx+x && gx+x<gameBoard::boardSizeX && 0<=gy+y && gy+y<gameBoard::boardSizeY){
+            if(0<=gx+x && gx+x<GameBoard::boardSizeX && 0<=gy+y && gy+y<GameBoard::boardSizeY){
                 dx = x, dy = y;
                 curSwapAnimation = board->swapGem(gx, gy, gx+x, gy+y);
                 curSwapAnimation->start();

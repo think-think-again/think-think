@@ -8,14 +8,14 @@
 #include <QTimer>
 #include <random>
 
-class gameBoard : public QObject, public QGraphicsPixmapItem
+class GameBoard : public QObject, public QGraphicsPixmapItem
 {
 
 public:
     static constexpr int boardSizeX = 8, boardSizeY = 7;
     static constexpr int swapAnimationDuration = 200;
 
-    explicit gameBoard(QGraphicsItem *parent = 0);
+    explicit GameBoard(QGraphicsItem *parent = 0);
     QParallelAnimationGroup *swapGem(int sx, int sy, int dx, int dy);
     bool existMatching();
 

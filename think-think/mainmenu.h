@@ -5,17 +5,17 @@
 
 #include <QGraphicsScene>
 
-class myWindow;
-class mainMenu : public QGraphicsScene
+class MyWindow;
+class MainMenu : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    explicit mainMenu(myWindow *parent);
+    explicit MainMenu(MyWindow *parent);
 
 private:
     QGraphicsPixmapItem *background;
-    startButton *startGame;
-    myWindow *window;
+    StartButton *startGame;
+    MyWindow *window;
 
 private slots:
 };

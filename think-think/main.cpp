@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    myWindow window;
+    MyWindow window;
     window.showFullScreen();
 
     return a.exec();
