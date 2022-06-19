@@ -11,6 +11,7 @@ MainMenu::MainMenu(MyWindow *parent)
 {
     // change to screen resolution
     QSize screenSize = QGuiApplication::primaryScreen()->size();
+    screenSize = QSize(2560, 1440);
     setSceneRect(-screenSize.width()/2, -screenSize.height()/2, screenSize.width(), screenSize.height());
 
     // set background

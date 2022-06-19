@@ -10,6 +10,7 @@ BattleScene::BattleScene(QObject *parent)
 {
     // change to screen resolution
     QSize screenSize = QGuiApplication::primaryScreen()->size();
+    screenSize = QSize(2560, 1440);
     setSceneRect(0, 0, screenSize.width(), screenSize.height());
 
     board = new GameBoard;
