@@ -26,5 +26,5 @@ BattleScene::BattleScene(QObject *parent)
 
     boss = new Boss;
     addItem(boss);
-    boss->setPos(1500,100);
+    boss->setPos(1500,300);
 }
