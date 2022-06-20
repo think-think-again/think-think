@@ -13,5 +13,7 @@
         <file alias="2k">resources/2560x1440.jpg</file>
         <file>resources/boss.jpg</file>
         <file>resources/ljy.json</file>
+        <file>resources/main_menu.jpg</file>
+        <file>resources/start.png</file>
     </qresource>
 </RCC>
