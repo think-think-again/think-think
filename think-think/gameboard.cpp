@@ -76,16 +76,22 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
 //    qDebug() << "erase";
     for (int i = 0; i < boardSizeY; ++i){
         for (int j =0; j < boardSizeX; ++j){
+            int BasicNum = 0, UpgradeNum = 0;
+            int BasicHit = 0, UpgradeHit = 0;
+            GemTypes tempcolor;
+            bool flag = false;
             if (i < boardSizeY - 2
                 && cell[j][i] != nullptr
                 && cell[j][i + 1] != nullptr
                 && cell[j][i + 2] != nullptr
                 && getType(j, i) != Super
                 && getBasicType(j, i) == getBasicType(j, i + 1)
-                && getBasicType(j, i + 1) == getBasicType(j, i + 2)){
+                && getBasicType(j, i + 1) == getBasicType(j, i + 2))
+            {
+                flag = true;
                 GemTypes temp = getBasicType(j, i);
+                tempcolor = temp;
                 int cnt = 0, mem = -1;
-                int BasicNum = 0, UpgradeNum = 0;
                 bool _4 = false;
                 for (int k = i; k < boardSizeY && getBasicType(j, k) == temp; ++k){
                     int BranchBasicNum = 0, BranchUpgradeNum = 0;
@@ -124,30 +130,34 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                     if (_4) {
                         cell[j][mem] = new Gem(Upgraded | temp, this, j, mem);
                         cell[j][mem]->setPos(QPointF(j * Gem::gemSize, mem * Gem::gemSize));
-                        int BasicHit = 3, UpgradeHit = UpgradeNum * BasicHit;
-                        if (temp == Blue) {
-                            // TODO: 3 / 2 should be changed
-                            boss->hurt(player->PhysicalAttack * BasicHit + player->PhysicalAttack * 3 / 2 * UpgradeHit);
-                        }
+                        BasicHit = 3;
+
                     }
                     else if (mem != -1){
                         cell[j][mem] = new Gem(Upgraded | temp, this, j ,mem);
                         cell[j][mem]->setPos(QPointF(j * Gem::gemSize, mem * Gem::gemSize));
+                        BasicHit = 2;
+                    }
+                    else {
+                        BasicHit = 1;
                     }
                 }
                 else if (cnt == 4) {
                     if (mem == -1) {
                         cell[j][i + 1] = new Gem(Upgraded | temp, this, j, i + 1);
                         cell[j][i + 1]->setPos(QPointF(j * Gem::gemSize, (i + 1) * Gem::gemSize));
+                        BasicHit = 2;
                     }
                     else {
                         cell[j][mem] = new Gem(Super, this, j, mem);
                         cell[j][mem]->setPos(QPointF(j * Gem::gemSize, mem * Gem::gemSize));
+                        BasicHit = 3;
                     }
                 }
                 else if (cnt == 5){
                     cell[j][i + 2] = new Gem(Super, this, j, i + 2);
                     cell[j][i + 2]->setPos(QPointF(j * Gem::gemSize, (i + 2) * Gem::gemSize));
+                    BasicHit = 4;
                 }
             }
             else if (j < boardSizeX - 2
@@ -156,17 +166,28 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                      && cell[j + 2][i] != nullptr
                      && getType(j, i) != Super
                      && getBasicType(j, i) == getBasicType(j + 1, i)
-                     && getBasicType(j + 1, i) == getBasicType(j + 2, i)){
+                     && getBasicType(j + 1, i) == getBasicType(j + 2, i))
+            {
+                flag = true;
                 GemTypes temp = getBasicType(j, i);
+                tempcolor = temp;
                 int cnt = 0, mem = -1;
                 bool _4 = false;
                 for (int l = j; l < boardSizeX && getBasicType(l, i) == temp; ++l){
+                    int BranchUpgradeNum = 0;
+                    if (cell[l][i]->getType() & Upgraded) UpgradeNum++;
                     cnt++;
                     delete cell[l][i];
                     cell[l][i] = nullptr;
                     int sumrow = 0;
-                    for (int k = i - 1; k >= 0 && getBasicType(l, k) == temp; --k) sumrow++;
-                    for (int k = i + 1; k < boardSizeY && getBasicType(l, k) == temp; ++k) sumrow++;
+                    for (int k = i - 1; k >= 0 && getBasicType(l, k) == temp; --k){
+                        sumrow++;
+                        if (cell[l][k]->getType() & Upgraded) BranchUpgradeNum++;
+                    }
+                    for (int k = i + 1; k < boardSizeY && getBasicType(l, k) == temp; ++k){
+                        sumrow++;
+                        if (cell[l][k]->getType() & Upgraded) BranchUpgradeNum++;
+                    }
                     if (sumrow >= 2){
                         mem = l;
                         if (sumrow == 3) _4 = true;
@@ -184,21 +205,41 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                     if (!_4 && mem != -1){
                         cell[mem][i] = new Gem(temp | Upgraded, this, mem, i);
                         cell[mem][i]->setPos(QPointF(mem * Gem::gemSize, i * Gem::gemSize));
+                        BasicHit = 3;
                     }
                 }
                 else if (cnt == 4){
                     if (mem != -1){
                         cell[mem][i] = new Gem(Upgraded | temp, this, mem, i);
                         cell[mem][i]->setPos(QPointF(mem * Gem::gemSize, i * Gem::gemSize));
+                        BasicHit = 3;
                     }
                     else{
                         cell[j + 1][i] = new Gem(temp | Upgraded, this, j + 1, i);
                         cell[j + 1][i]->setPos(QPointF((j + 1) * Gem::gemSize, i * Gem::gemSize));
+                        BasicHit = 2;
                     }
                 }
                 else if (cnt == 5){
                     cell[j + 2][i] = new Gem(Super, this, j + 2, i);
                     cell[j + 2][i]->setPos(QPointF((j + 2)*Gem::gemSize, i * Gem::gemSize));
+                    BasicHit = 4;
+                }
+            }
+            if (flag)
+            {
+                UpgradeHit = UpgradeNum * BasicHit;
+                if (tempcolor == Blue) {
+                    boss->hurt(player->Attack * BasicHit + (int)player->Attack * player->UpgradeRateBlue * UpgradeHit);
+                }
+                else if (tempcolor == Red) {
+                    boss->hurt((player->Attack * BasicHit + (int)player->Attack * player->UpgradeRateRed * UpgradeHit));
+                }
+                else if (tempcolor == Green) {
+                    player->GetHP(player->getHP * BasicHit + (int)player->getHP * player->UpgardeRateGreen * UpgradeHit);
+                }
+                else if (tempcolor == Orange) {
+                    player->GetMP(player->getMP * BasicHit + (int)player->getMP * player->UpgradeRateOrange * UpgradeHit);
                 }
             }
         }

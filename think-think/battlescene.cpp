@@ -14,13 +14,14 @@ BattleScene::BattleScene(QObject *parent)
     setSceneRect(0, 0, screenSize.width(), screenSize.height());
 
     player = new Player;
+    Player* _player = player;
 
     boss = new Boss(1);
     addItem(boss);
     boss->setPos(1500,300);
     Boss *_boss = boss;
 
-    board = new GameBoard(_boss);
+    board = new GameBoard(_boss, _player);
     QGraphicsScene *boardScene = new QGraphicsScene;
     boardScene->addItem(board);
     QGraphicsView *boardView = new QGraphicsView(boardScene);
