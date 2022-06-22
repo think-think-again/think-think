@@ -2,6 +2,8 @@
 #define GAMEBOARD_H
 
 #include "gem.h"
+#include "boss.h"
+#include "player.h"
 #include <QGraphicsPixmapItem>
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
@@ -15,12 +17,14 @@ public:
     static constexpr int boardSizeX = 8, boardSizeY = 7;
     static constexpr int swapAnimationDuration = 200;
 
-    explicit GameBoard(QGraphicsItem *parent = 0);
+    explicit GameBoard(Boss* _boss, Player* _player, QGraphicsItem *parent = 0);
     QParallelAnimationGroup *swapGem(int sx, int sy, int dx, int dy);
     bool existMatching();
 
 private:
     Gem *cell[boardSizeX][boardSizeY];
+    Boss *boss;
+    Player *player;
     std::mt19937 rng;
     std::uniform_int_distribution<int> gemGenerator;
     GemTypes getType(int x, int y);

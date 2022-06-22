@@ -13,7 +13,14 @@ BattleScene::BattleScene(QObject *parent)
     screenSize = QSize(2560, 1440);
     setSceneRect(0, 0, screenSize.width(), screenSize.height());
 
-    board = new GameBoard;
+    player = new Player;
+
+    boss = new Boss(1);
+    addItem(boss);
+    boss->setPos(1500,300);
+    Boss *_boss = boss;
+
+    board = new GameBoard(_boss);
     QGraphicsScene *boardScene = new QGraphicsScene;
     boardScene->addItem(board);
     QGraphicsView *boardView = new QGraphicsView(boardScene);
@@ -24,7 +31,4 @@ BattleScene::BattleScene(QObject *parent)
     QGraphicsProxyWidget *boardProxy = addWidget(boardView);
     boardProxy->setPos(300, 300);
 
-    boss = new Boss;
-    addItem(boss);
-    boss->setPos(1500,300);
 }

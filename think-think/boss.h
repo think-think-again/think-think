@@ -6,7 +6,11 @@
 class Boss:public QObject, public QGraphicsPixmapItem
 {
 public:
-    explicit Boss(QGraphicsItem* parent = 0);
+    explicit Boss(int _difficulty, QGraphicsItem* parent = 0);
+    void hurt(int harm);
+private:
+    int HP;
+    int difficulty;
 };
 
 

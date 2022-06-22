@@ -17,6 +17,7 @@ SOURCES += \
     main.cpp \
     mainmenu.cpp \
     mywindow.cpp \
+    player.cpp \
     startbutton.cpp
 
 HEADERS += \
@@ -27,6 +28,7 @@ HEADERS += \
     gem.h \
     mainmenu.h \
     mywindow.h \
+    player.h \
     startbutton.h
 
 # Default rules for deployment.

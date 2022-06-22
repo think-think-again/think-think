@@ -3,6 +3,7 @@
 
 #include "gameboard.h"
 #include "boss.h"
+#include "player.h"
 
 #include <QGraphicsScene>
 
@@ -14,6 +15,7 @@ public:
 private:
     GameBoard *board;
     Boss *boss;
+    Player * player;
 };
 
 #endif // BATTLESCENE_H

@@ -6,11 +6,13 @@
 #include <QTimer>
 #include <random>
 
-GameBoard::GameBoard(QGraphicsItem *parent)
+GameBoard::GameBoard(Boss *_boss,Player* _player, QGraphicsItem *parent)
     : QGraphicsPixmapItem(parent),
       rng(time(0)),
       gemGenerator(0, 3)
 {
+    boss = _boss;
+    player = _player;
     for(int i=0; i<boardSizeX; ++i) for(int j=0; j<boardSizeY; ++j) cell[i][j] = nullptr;
     // TODO: more efficient initialization is needed.
     do{
@@ -83,16 +85,30 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                 && getBasicType(j, i + 1) == getBasicType(j, i + 2)){
                 GemTypes temp = getBasicType(j, i);
                 int cnt = 0, mem = -1;
+                int BasicNum = 0, UpgradeNum = 0;
                 bool _4 = false;
                 for (int k = i; k < boardSizeY && getBasicType(j, k) == temp; ++k){
+                    int BranchBasicNum = 0, BranchUpgradeNum = 0;
+                    if (cell[j][k]->getType() & Upgraded) UpgradeNum++;
+                    else BasicNum++;
                     cnt++;
                     delete cell[j][k];
                     cell[j][k] = nullptr;
                     int sumcol = 0;
-                    for (int l = j - 1; l >= 0 && getBasicType(l, k) == temp; --l) sumcol++;
-                    for (int l = j + 1; l < boardSizeX && getBasicType(l, k) == temp; ++l) sumcol++;
+                    for (int l = j - 1; l >= 0 && getBasicType(l, k) == temp; --l) {
+                        sumcol++;
+                        if (cell[l][k]->getType() & Upgraded) BranchUpgradeNum++;
+                        else BranchBasicNum++;
+                    }
+                    for (int l = j + 1; l < boardSizeX && getBasicType(l, k) == temp; ++l){
+                        sumcol++;
+                        if (cell[l][k]->getType() & Upgraded) BranchUpgradeNum++;
+                        else BranchBasicNum++;
+                    }
                     if (sumcol >= 2){
                         mem = k;
+                        BasicNum += BranchBasicNum;
+                        UpgradeNum += BranchUpgradeNum;
                         if (sumcol == 3) _4 = true;
                         for (int l = j - 1; l >= 0 && getBasicType(l, k) == temp; --l){
                             delete cell[l][k];
@@ -106,8 +122,13 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                 }
                 if (cnt == 3) {
                     if (_4) {
-                        cell[j][mem] = new Gem(Super, this, j, mem);
+                        cell[j][mem] = new Gem(Upgraded | temp, this, j, mem);
                         cell[j][mem]->setPos(QPointF(j * Gem::gemSize, mem * Gem::gemSize));
+                        int BasicHit = 3, UpgradeHit = UpgradeNum * BasicHit;
+                        if (temp == Blue) {
+                            // TODO: 3 / 2 should be changed
+                            boss->hurt(player->PhysicalAttack * BasicHit + player->PhysicalAttack * 3 / 2 * UpgradeHit);
+                        }
                     }
                     else if (mem != -1){
                         cell[j][mem] = new Gem(Upgraded | temp, this, j ,mem);
@@ -167,7 +188,7 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                 }
                 else if (cnt == 4){
                     if (mem != -1){
-                        cell[mem][i] = new Gem(Super, this, mem, i);
+                        cell[mem][i] = new Gem(Upgraded | temp, this, mem, i);
                         cell[mem][i]->setPos(QPointF(mem * Gem::gemSize, i * Gem::gemSize));
                     }
                     else{
@@ -182,6 +203,7 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
             }
         }
     }
+
     QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
     for (int j = 0; j < boardSizeX; ++j){
         for (int i = boardSizeY - 1; i >=0; --i){

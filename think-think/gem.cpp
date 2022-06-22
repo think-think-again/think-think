@@ -1,5 +1,6 @@
 #include "gem.h"
 #include "gameboard.h"
+#include "battlescene.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QSequentialAnimationGroup>
