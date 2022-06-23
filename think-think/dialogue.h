@@ -1,20 +1,25 @@
 #ifndef DIALOGUE_H
 #define DIALOGUE_H
 
+#include <QLabel>
 #include <QWidget>
 
-class MyWindow;
 class Dialogue : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Dialogue(MyWindow *parent);
+    explicit Dialogue(QWidget *parent, const QString &name);
 
 signals:
+    void dialogueEnded();
 
 private:
-    MyWindow *window;
     QJsonDocument *doc;
+    QLabel *dlg, *prologue;
+    int dlgCount;
+
+private slots:
+    void handleButtonClick();
 
 };
 

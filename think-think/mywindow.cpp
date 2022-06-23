@@ -18,7 +18,9 @@ MyWindow::MyWindow(QWidget *parent)
     menuView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     menuView->setFixedSize(menu->sceneRect().size().toSize());
 
-    Dialogue *dialog = new Dialogue(this);
+    Dialogue *dialogue = new Dialogue(this, "ljy");
+    connect(dialogue, &Dialogue::dialogueEnded,
+            this, &MyWindow::startBattle);
 
     BattleScene *battle = new BattleScene;
     QGraphicsView *battleView = new QGraphicsView(battle);
@@ -29,7 +31,7 @@ MyWindow::MyWindow(QWidget *parent)
 
     layout = new QStackedLayout(this);
     layout->addWidget(menuView);
-    layout->addWidget(dialog);
+    layout->addWidget(dialogue);
     layout->addWidget(battleView);
     layout->setCurrentIndex(0);
 }
