@@ -1,7 +1,7 @@
 #include "gem.h"
 #include "gameboard.h"
 #include "battlescene.h"
-
+#include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QSequentialAnimationGroup>
 #include <string>

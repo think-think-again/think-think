@@ -1,5 +1,5 @@
 #include "gameboard.h"
-
+#include <time.h>
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>

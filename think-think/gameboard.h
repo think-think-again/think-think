@@ -15,7 +15,7 @@ class GameBoard : public QObject, public QGraphicsPixmapItem
 
 public:
     static constexpr int boardSizeX = 8, boardSizeY = 7;
-    static constexpr int swapAnimationDuration = 200;
+    static constexpr int swapAnimationDuration = 400;
 
     explicit GameBoard(Boss* _boss, Player* _player, QGraphicsItem *parent = 0);
     QParallelAnimationGroup *swapGem(int sx, int sy, int dx, int dy);
