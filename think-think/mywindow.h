@@ -18,7 +18,6 @@ signals:
 public slots:
     void startDialog();
     void startBattle();
-
 };
 
 #endif // MYWINDOW_H

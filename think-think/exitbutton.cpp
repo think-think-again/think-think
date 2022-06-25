@@ -1,12 +1,12 @@
-#include "startbutton.h"
+#include "exitbutton.h"
 
-StartButton::StartButton()
+ExitButton::ExitButton()
 {
-    QPixmap start(":/resources/start.png");
-    start = start.scaled(643, 401);
-    setPixmap(start);
+    QPixmap exit(":/resources/exit.png");
+    exit = exit.scaled(643, 401);
+    setPixmap(exit);
     setScale(1./3);
-    setOffset(-1020/3, -2263/3);
+    setOffset(-1020/3, -1263/3);
     setAcceptHoverEvents(true);
 
     zoomInAnimation = new QPropertyAnimation(this, "scale");
@@ -20,16 +20,17 @@ StartButton::StartButton()
     zoomOutAnimation->setDuration(200);
 }
 
-void StartButton::mousePressEvent(__attribute__ ((unused))QGraphicsSceneMouseEvent *event){
+void ExitButton::mousePressEvent(__attribute__ ((unused))QGraphicsSceneMouseEvent *event){
     emit clicked();
 }
 
-void StartButton::hoverEnterEvent(__attribute__ ((unused))QGraphicsSceneHoverEvent *event)
+void ExitButton::hoverEnterEvent(__attribute__ ((unused))QGraphicsSceneHoverEvent *event)
 {
     zoomInAnimation->start();
 }
 
-void StartButton::hoverLeaveEvent(__attribute__ ((unused))QGraphicsSceneHoverEvent *event)
+void ExitButton::hoverLeaveEvent(__attribute__ ((unused))QGraphicsSceneHoverEvent *event)
 {
     zoomOutAnimation->start();
 }
+

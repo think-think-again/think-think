@@ -26,4 +26,11 @@ MainMenu::MainMenu(MyWindow *parent)
     connect(startGame, &StartButton::clicked,
             parent, &MyWindow::startDialog);
     addItem(startGame);
+
+    // add exit button
+    exitGame = new ExitButton();
+    exitGame->setPos(2560-600/3, 1440-100/3);
+    connect(exitGame, &ExitButton::clicked,
+            parent, &MyWindow::startDialog);
+    addItem(exitGame);
 }
