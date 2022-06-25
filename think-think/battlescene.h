@@ -13,6 +13,7 @@ class BattleScene : public QGraphicsScene
 public:
     explicit BattleScene(QObject *parent = nullptr);
 private:
+    QGraphicsPixmapItem *backgroundMask, *dialogueBackground;
     GameBoard *board;
     Boss *boss;
     Player * player;

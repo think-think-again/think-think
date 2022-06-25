@@ -71,7 +71,7 @@ void Dialogue::initialize()
     setTextAnimation(prologue, str);
 }
 
-void Dialogue::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
+void Dialogue::mousePressEvent(__attribute__ ((unused))QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!clicked){
         clicked = true;
