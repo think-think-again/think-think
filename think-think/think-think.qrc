@@ -17,5 +17,8 @@
         <file>resources/dialogues/gw.json</file>
         <file>resources/dialogues/ljy.json</file>
         <file>resources/dialogues/zqj.json</file>
+        <file>resources/classroom1.jpg</file>
+        <file>resources/dialogue_background.png</file>
+        <file>resources/FZYanSJW_Zhun.TTF</file>
     </qresource>
 </RCC>

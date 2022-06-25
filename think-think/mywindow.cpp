@@ -11,18 +11,24 @@
 MyWindow::MyWindow(QWidget *parent)
     : QWidget{parent}
 {
-    MainMenu *menu = new MainMenu(this);
+    menu = new MainMenu(this);
     QGraphicsView *menuView = new QGraphicsView(menu);
     menuView->setRenderHint(QPainter::Antialiasing);
     menuView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     menuView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     menuView->setFixedSize(menu->sceneRect().size().toSize());
 
-    Dialogue *dialogue = new Dialogue(this, "ljy");
+    dialogue = new Dialogue(this, "ljy");
+    QGraphicsView *dialogueView = new QGraphicsView(dialogue);
+    dialogueView->setRenderHint(QPainter::Antialiasing);
+    dialogueView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    dialogueView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    dialogueView->setFixedSize(dialogue->sceneRect().size().toSize());
+    dialogueView->setSceneRect(0, 0, 2560, 1440);
     connect(dialogue, &Dialogue::dialogueEnded,
             this, &MyWindow::startBattle);
 
-    BattleScene *battle = new BattleScene;
+    battle = new BattleScene;
     QGraphicsView *battleView = new QGraphicsView(battle);
     battleView->setRenderHint(QPainter::Antialiasing);
     battleView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -31,7 +37,7 @@ MyWindow::MyWindow(QWidget *parent)
 
     layout = new QStackedLayout(this);
     layout->addWidget(menuView);
-    layout->addWidget(dialogue);
+    layout->addWidget(dialogueView);
     layout->addWidget(battleView);
     layout->setCurrentIndex(0);
 }
@@ -39,6 +45,7 @@ MyWindow::MyWindow(QWidget *parent)
 void MyWindow::startDialog()
 {
     layout->setCurrentIndex(1);
+    dialogue->initialize();
 }
 
 void MyWindow::startBattle()
