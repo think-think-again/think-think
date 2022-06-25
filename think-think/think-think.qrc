@@ -9,11 +9,14 @@
         <file>resources/r.png</file>
         <file>resources/rr.png</file>
         <file>resources/s.png</file>
-        <file alias="1080p">resources/1920x1080.jpg</file>
-        <file alias="2k">resources/2560x1440.jpg</file>
-        <file>resources/boss.jpg</file>
-        <file>resources/ljy.json</file>
         <file>resources/main_menu.jpg</file>
         <file>resources/start.png</file>
+        <file>resources/dialogues/gw.json</file>
+        <file>resources/dialogues/ljy.json</file>
+        <file>resources/dialogues/zqj.json</file>
+        <file>resources/classroom1.jpg</file>
+        <file>resources/dialogue_background.png</file>
+        <file>resources/FZYanSJW_Zhun.TTF</file>
+        <file>resources/30232-0.7(RGB)(noise_scale)(Level0)(x4.000000).png</file>
     </qresource>
 </RCC>

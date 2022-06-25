@@ -13,12 +13,22 @@ BattleScene::BattleScene(QObject *parent)
     screenSize = QSize(2560, 1440);
     setSceneRect(0, 0, screenSize.width(), screenSize.height());
 
+    QPixmap _background(":/resources/classroom1.jpg");
+    _background = _background.scaled(2560, 1440, Qt::KeepAspectRatioByExpanding);
+    QGraphicsPixmapItem *background = new QGraphicsPixmapItem(_background);
+    background->setPos(-(_background.width()-2560)/2, -(_background.height()-1440)/2);
+    addItem(background);
+
+    QPixmap _backgroundMask(2560, 1440);
+    _backgroundMask.fill(QColor(255, 255, 255, 90));
+    backgroundMask = new QGraphicsPixmapItem(_backgroundMask);
+    addItem(backgroundMask);
+
     player = new Player;
     Player* _player = player;
 
     boss = new Boss(1);
     addItem(boss);
-    boss->setPos(1500,300);
     Boss *_boss = boss;
 
     board = new GameBoard(_boss, _player);
