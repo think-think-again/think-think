@@ -1,23 +1,32 @@
 #include "startbutton.h"
 
-StartButton::StartButton()
+StartButton::StartButton(const QString &name)
 {
-    QPixmap start(":/resources/start.png");
-    start = start.scaled(643, 401);
+    QPixmap start(":/resources/" + name + ".png");
     setPixmap(start);
-    setScale(1./3);
-    setOffset(-1020/3, -2263/3);
+    setMyScale(1./3);
     setAcceptHoverEvents(true);
 
-    zoomInAnimation = new QPropertyAnimation(this, "scale");
+    zoomInAnimation = new QPropertyAnimation(this, "myScale");
     zoomInAnimation->setStartValue(1./3);
     zoomInAnimation->setEndValue(0.4);
     zoomInAnimation->setDuration(200);
 
-    zoomOutAnimation = new QPropertyAnimation(this, "scale");
+    zoomOutAnimation = new QPropertyAnimation(this, "myScale");
     zoomOutAnimation->setStartValue(0.4);
     zoomOutAnimation->setEndValue(1./3);
     zoomOutAnimation->setDuration(200);
+}
+
+void StartButton::setMyScale(qreal scale)
+{
+    setScale(scale);
+    setOffset(-pixmap().width()*scale*0.5, -pixmap().height()*scale*0.5);
+}
+
+qreal StartButton::myScale()
+{
+    return scale();
 }
 
 void StartButton::mousePressEvent(__attribute__ ((unused))QGraphicsSceneMouseEvent *event){

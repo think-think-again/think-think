@@ -2,7 +2,6 @@
 #define MAINMENU_H
 
 #include "startbutton.h"
-#include "exitbutton.h"
 #include <QGraphicsScene>
 #include <QApplication>
 
@@ -16,8 +15,7 @@ public:
 private:
     QApplication *app;
     QGraphicsPixmapItem *background;
-    StartButton *startGame;
-    ExitButton *exitGame;
+    StartButton *startGame, *exitGame;
     MyWindow *window;
 
 private slots:

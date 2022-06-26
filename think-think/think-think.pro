@@ -18,8 +18,7 @@ SOURCES += \
     mainmenu.cpp \
     mywindow.cpp \
     player.cpp \
-    startbutton.cpp \
-    exitbutton.cpp
+    startbutton.cpp
 
 HEADERS += \
     battlescene.h \
@@ -30,8 +29,7 @@ HEADERS += \
     mainmenu.h \
     mywindow.h \
     player.h \
-    startbutton.h \
-    exitbutton.h
+    startbutton.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
