@@ -11,8 +11,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QApplication* app = &a;
 
-    MyWindow window;
+    MyWindow window(app);
     window.showFullScreen();
 
     return a.exec();

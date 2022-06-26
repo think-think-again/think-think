@@ -22,5 +22,6 @@
         <file>resources/dialogue-2.png</file>
         <file>resources/dialogue-3.png</file>
         <file>resources/dialogue-4.png</file>
+        <file>resources/exit.png</file>
     </qresource>
 </RCC>

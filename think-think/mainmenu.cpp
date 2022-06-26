@@ -9,6 +9,7 @@ MainMenu::MainMenu(MyWindow *parent)
     : QGraphicsScene{(QObject *)parent},
       window(parent)
 {
+    app = parent->app;
     // change to screen resolution
     QSize screenSize = QGuiApplication::primaryScreen()->size();
     screenSize = QSize(2560, 1440);
@@ -31,6 +32,6 @@ MainMenu::MainMenu(MyWindow *parent)
     exitGame = new ExitButton();
     exitGame->setPos(2560-600/3, 1440-100/3);
     connect(exitGame, &ExitButton::clicked,
-            parent, &MyWindow::startDialog);
+            app, &QApplication::quit);
     addItem(exitGame);
 }

@@ -7,6 +7,7 @@
 
 #include <QStackedLayout>
 #include <QWidget>
+#include <QApplication>
 
 
 
@@ -14,8 +15,9 @@ class MyWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MyWindow(QWidget *parent = nullptr);
+    explicit MyWindow(QApplication *_app, QWidget *parent = nullptr);
     QStackedLayout *layout;
+    QApplication *app;
 
 private:
     MainMenu *menu;

@@ -4,6 +4,7 @@
 #include "startbutton.h"
 #include "exitbutton.h"
 #include <QGraphicsScene>
+#include <QApplication>
 
 class MyWindow;
 class MainMenu : public QGraphicsScene
@@ -13,6 +14,7 @@ public:
     explicit MainMenu(MyWindow *parent);
 
 private:
+    QApplication *app;
     QGraphicsPixmapItem *background;
     StartButton *startGame;
     ExitButton *exitGame;
