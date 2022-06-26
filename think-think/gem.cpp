@@ -82,7 +82,12 @@ void Gem::handleMouseRelease()
     if(curSwapAnimation!=nullptr)
         disconnect(curSwapAnimation, &QParallelAnimationGroup::finished,
                    this, &Gem::handleMouseRelease);
-    if(board->existMatching()) board->lazyErase();
+    if(board->existMatching())
+    {
+        board->T++;
+        board->lazyErase();
+        //qDebug() << board->T;
+    }
     else board->swapGem(gx, gy, gx-dx, gy-dy)->start(QAbstractAnimation::DeleteWhenStopped);
     dx = dy = 0;
 }

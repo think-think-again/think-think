@@ -11,6 +11,7 @@ GameBoard::GameBoard(Boss *_boss,Player* _player, QGraphicsItem *parent)
       rng(time(0)),
       gemGenerator(0, 3)
 {
+    T = 1;
     boss = _boss;
     player = _player;
     for(int i=0; i<boardSizeX; ++i) for(int j=0; j<boardSizeY; ++j) cell[i][j] = nullptr;
@@ -149,7 +150,7 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                         BasicHit = 2;
                     }
                     else {
-                        cell[j][mem] = new Gem(Super, this, j, mem);
+                        cell[j][mem] = new Gem(Upgraded | temp, this, j, mem);
                         cell[j][mem]->setPos(QPointF(j * Gem::gemSize, mem * Gem::gemSize));
                         BasicHit = 3;
                     }
@@ -280,10 +281,10 @@ bool GameBoard::existMatching()
         for (int j = 0; j < boardSizeY; ++j) {
             if (i < boardSizeX-2 &&
                 getBasicType(i, j) == getBasicType(i + 1, j) &&
-                getBasicType(i + 1, j) == getBasicType(i + 2, j)) return true;
+                getBasicType(i + 1, j) == getBasicType(i + 2, j) && getType(i, j) != Super) return true;
             if (j < boardSizeY-2 &&
                 getBasicType(i, j) == getBasicType(i, j + 1) &&
-                getBasicType(i, j + 1) == getBasicType(i, j + 2)) return true;
+                getBasicType(i, j + 1) == getBasicType(i, j + 2) && getType(i, j) != Super) return true;
         }
     }
     return false;
