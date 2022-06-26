@@ -8,8 +8,8 @@
 #include <QGraphicsView>
 #include <QStackedLayout>
 
-MyWindow::MyWindow(QWidget *parent)
-    : QWidget{parent}
+MyWindow::MyWindow(QApplication *_app, QWidget *parent)
+    : QWidget{parent}, app(_app)
 {
     menu = new MainMenu(this);
     QGraphicsView *menuView = new QGraphicsView(menu);
