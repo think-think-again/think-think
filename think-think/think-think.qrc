@@ -18,5 +18,6 @@
         <file>resources/dialogue_background.png</file>
         <file>resources/FZYanSJW_Zhun.TTF</file>
         <file>resources/30232-0.7(RGB)(noise_scale)(Level0)(x4.000000).png</file>
+        <file>resources/exit.png</file>
     </qresource>
 </RCC>
