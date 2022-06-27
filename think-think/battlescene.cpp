@@ -4,6 +4,7 @@
 #include "skill2.h"
 #include "skill3.h"
 #include "skill4.h"
+#include "mywindow.h"
 
 #include <QGraphicsProxyWidget>
 #include <QGraphicsView>
@@ -80,6 +81,12 @@ BattleScene::BattleScene(QObject *parent)
     board->PlayerHp = PlayerHp;
     board->PlayerMp = PlayerMp;
 
+    // add returnMenu button
+    returnMenu = new StartButton("menu");
+    returnMenu->setPos(2560-240, 1440-1360);
+    connect(returnMenu, &StartButton::clicked,
+            this->window,&MyWindow::returnMenu);
+    addItem(returnMenu);
 
     skill[0] = new Skill1();
     skill[1] = new Skill2();

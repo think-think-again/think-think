@@ -52,3 +52,7 @@ void MyWindow::startBattle()
 {
     layout->setCurrentIndex(2);
 }
+void MyWindow::returnMenu()
+{
+    layout->setCurrentIndex(0);
+}

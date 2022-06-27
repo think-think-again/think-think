@@ -5,6 +5,7 @@
 #include "boss.h"
 #include "player.h"
 #include "skill.h"
+#include "startbutton.h"
 
 #include <QGraphicsScene>
 #include <QPushButton>
@@ -24,6 +25,8 @@ private:
     QProgressBar *PlayerHp;
     QProgressBar *PlayerMp;
     Skill *skill[4];
+    StartButton *returnMenu;
+
 };
 
 #endif // BATTLESCENE_H

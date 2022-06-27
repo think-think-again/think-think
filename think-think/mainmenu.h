@@ -11,7 +11,6 @@ class MainMenu : public QGraphicsScene
     Q_OBJECT
 public:
     explicit MainMenu(MyWindow *parent);
-
 private:
     QApplication *app;
     QGraphicsPixmapItem *background;

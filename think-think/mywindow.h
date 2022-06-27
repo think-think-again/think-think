@@ -18,7 +18,6 @@ public:
     explicit MyWindow(QApplication *_app, QWidget *parent = nullptr);
     QStackedLayout *layout;
     QApplication *app;
-
 private:
     MainMenu *menu;
     Dialogue *dialogue;
@@ -29,6 +28,7 @@ signals:
 public slots:
     void startDialog();
     void startBattle();
+    void returnMenu();
 };
 
 #endif // MYWINDOW_H
