@@ -18,6 +18,11 @@ SOURCES += \
     mainmenu.cpp \
     mywindow.cpp \
     player.cpp \
+    skill.cpp \
+    skill1.cpp \
+    skill2.cpp \
+    skill3.cpp \
+    skill4.cpp \
     startbutton.cpp
 
 HEADERS += \
@@ -29,6 +34,11 @@ HEADERS += \
     mainmenu.h \
     mywindow.h \
     player.h \
+    skill.h \
+    skill1.h \
+    skill2.h \
+    skill3.h \
+    skill4.h \
     startbutton.h
 
 # Default rules for deployment.

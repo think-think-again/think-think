@@ -1,5 +1,9 @@
 #include "battlescene.h"
 #include "qscreen.h"
+#include "skill1.h"
+#include "skill2.h"
+#include "skill3.h"
+#include "skill4.h"
 
 #include <QGraphicsProxyWidget>
 #include <QGraphicsView>
@@ -57,4 +61,12 @@ BattleScene::BattleScene(QObject *parent)
     board->PlaterMp = PlayerMp;
 
 
+    skill[0] = new Skill1();
+    skill[1] = new Skill2();
+    skill[2] = new Skill3(board);
+    skill[3] = new Skill4(board);
+    for(int i=0; i<4; ++i){
+        addItem(skill[i]);
+        skill[i]->setPos(300+i*100, 1440-200);
+    }
 }

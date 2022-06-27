@@ -35,6 +35,7 @@ Gem::Gem(GemTypes tp, GameBoard *parent, int x, int y)
     setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     setAcceptHoverEvents(true);
     setScale(defaultScale);
+    setPos(x*gemSize, y*gemSize);
 
     scaleAnimation = new QPropertyAnimation(this, "scale");
     scaleAnimation->setStartValue(defaultScale);
@@ -97,12 +98,18 @@ void Gem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if(event->button() == Qt::LeftButton){
         scaleAnimation->stop();
         setScale(defaultScale);
-        if(dx || dy){
-            if(curSwapAnimation==nullptr || curSwapAnimation->state() == QAbstractAnimation::Stopped)
-                handleMouseRelease();
-            else{
-                connect(curSwapAnimation, &QParallelAnimationGroup::finished,
-                        this, &Gem::handleMouseRelease);
+        if(board->skillSelected()){
+//            qDebug() << "gem" << gx << gy << "selected";
+            board->emitSelection(gx, gy);
+        }
+        else{
+            if(dx || dy){
+                if(curSwapAnimation==nullptr || curSwapAnimation->state() == QAbstractAnimation::Stopped)
+                    handleMouseRelease();
+                else{
+                    connect(curSwapAnimation, &QParallelAnimationGroup::finished,
+                            this, &Gem::handleMouseRelease);
+                }
             }
         }
     }
@@ -110,6 +117,7 @@ void Gem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void Gem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(board->skillSelected()) return;
     if(curSwapAnimation!=nullptr && curSwapAnimation->state() == QAbstractAnimation::Running) return;
     if(event->buttons() & Qt::LeftButton){
         QPointF delta = event->scenePos() - lastPosition;

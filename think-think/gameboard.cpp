@@ -9,7 +9,8 @@
 GameBoard::GameBoard(Boss *_boss,Player* _player, QGraphicsItem *parent)
     : QGraphicsPixmapItem(parent),
       rng(time(0)),
-      gemGenerator(0, 3)
+      gemGenerator(0, 3),
+      m_skillSelected(false)
 {
     T = 1;
     boss = _boss;
@@ -18,18 +19,18 @@ GameBoard::GameBoard(Boss *_boss,Player* _player, QGraphicsItem *parent)
     // TODO: more efficient initialization is needed.
     do{
         for(int i=0; i<boardSizeX; ++i) for(int j=0; j<boardSizeY; ++j){
-            if(cell[i][j] != nullptr) delete cell[i][j];
+            if(cell[i][j] != nullptr) removeGem(i, j);
             cell[i][j] = new Gem(GemTypes(1<<gemGenerator(rng)), this, i, j);
-            cell[i][j]->setPos(QPointF(i*Gem::gemSize, j*Gem::gemSize));
         }
     } while(existMatching());
 }
 
-void GameBoard::lazyErase(){
-    QParallelAnimationGroup *group = eraseMatchings();
+void GameBoard::lazyErase(bool fallFirst){
+    if(!fallFirst) eraseMatchings();
+    QParallelAnimationGroup *group = gemsFalling();
     if(existMatching()){
         connect(group, &QParallelAnimationGroup::finished,
-                this, &GameBoard::lazyErase);
+                this, [&](){ lazyErase();});
     }
     else{
         connect(group, &QParallelAnimationGroup::finished,
@@ -54,6 +55,13 @@ GemTypes GameBoard::getBasicType(int x, int y)
 {
     if(cell[x][y] == nullptr) return Invalid;
     return getType(x, y) & BasicGemMask;
+}
+
+void GameBoard::upgradeGem(int x, int y)
+{
+    GemTypes type = cell[x][y]->getType() | Upgraded;
+    removeGem(x, y);
+    cell[x][y] = new Gem(type, this, x, y);
 }
 
 // returns animation duration
@@ -81,9 +89,8 @@ QParallelAnimationGroup *GameBoard::swapGem(int sx, int sy, int dx, int dy)
 }
 
 // TODO: the upgrade positon of "xxxx" should be the operate position
-QParallelAnimationGroup *GameBoard::eraseMatchings()
+void GameBoard::eraseMatchings()
 {
-//    qDebug() << "erase";
     for (int i = 0; i < boardSizeY; ++i){
         for (int j =0; j < boardSizeX; ++j){
             int BasicNum = 0, UpgradeNum = 0;
@@ -108,8 +115,7 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                     if (cell[j][k]->getType() & Upgraded) UpgradeNum++;
                     else BasicNum++;
                     cnt++;
-                    delete cell[j][k];
-                    cell[j][k] = nullptr;
+                    removeGem(j, k);
                     int sumcol = 0;
                     for (int l = j - 1; l >= 0 && getBasicType(l, k) == temp; --l) {
                         sumcol++;
@@ -127,24 +133,20 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                         UpgradeNum += BranchUpgradeNum;
                         if (sumcol == 3) _4 = true;
                         for (int l = j - 1; l >= 0 && getBasicType(l, k) == temp; --l){
-                            delete cell[l][k];
-                            cell[l][k] = nullptr;
+                            removeGem(l, k);
                         }
                         for (int l = j + 1; l < boardSizeX && getBasicType(l, k) == temp; ++l){
-                            delete cell[l][k];
-                            cell[l][k] = nullptr;
+                            removeGem(l, k);
                         }
                     }
                 }
                 if (cnt == 3) {
                     if (_4) {
                         cell[j][mem] = new Gem(Upgraded | temp, this, j, mem);
-                        cell[j][mem]->setPos(QPointF(j * Gem::gemSize, mem * Gem::gemSize));
                         BasicHit = 3;
                     }
                     else if (mem != -1){
                         cell[j][mem] = new Gem(Upgraded | temp, this, j ,mem);
-                        cell[j][mem]->setPos(QPointF(j * Gem::gemSize, mem * Gem::gemSize));
                         BasicHit = 2;
                     }
                     else {
@@ -154,18 +156,15 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                 else if (cnt == 4) {
                     if (mem == -1) {
                         cell[j][i + 1] = new Gem(Upgraded | temp, this, j, i + 1);
-                        cell[j][i + 1]->setPos(QPointF(j * Gem::gemSize, (i + 1) * Gem::gemSize));
                         BasicHit = 2;
                     }
                     else {
                         cell[j][mem] = new Gem(Upgraded | temp, this, j, mem);
-                        cell[j][mem]->setPos(QPointF(j * Gem::gemSize, mem * Gem::gemSize));
                         BasicHit = 3;
                     }
                 }
                 else if (cnt == 5){
                     cell[j][i + 2] = new Gem(Super, this, j, i + 2);
-                    cell[j][i + 2]->setPos(QPointF(j * Gem::gemSize, (i + 2) * Gem::gemSize));
                     BasicHit = 4;
                 }
             }
@@ -186,8 +185,7 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                     int BranchUpgradeNum = 0;
                     if (cell[l][i]->getType() & Upgraded) UpgradeNum++;
                     cnt++;
-                    delete cell[l][i];
-                    cell[l][i] = nullptr;
+                    removeGem(l, i);
                     int sumrow = 0;
                     for (int k = i - 1; k >= 0 && getBasicType(l, k) == temp; --k){
                         sumrow++;
@@ -202,37 +200,31 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                         mem = l;
                         if (sumrow == 3) _4 = true;
                         for (int k = i - 1; k >= 0 && getBasicType(l, k) == temp; --k){
-                            delete cell[l][k];
-                            cell[l][k] = nullptr;
+                            removeGem(l, k);
                         }
                         for (int k = i + 1; k < boardSizeY && getBasicType(l, k) == temp; ++k){
-                            delete cell[l][k];
-                            cell[l][k] = nullptr;
+                            removeGem(l, k);
                         }
                     }
                 }
                 if (cnt == 3){
                     if (!_4 && mem != -1){
                         cell[mem][i] = new Gem(temp | Upgraded, this, mem, i);
-                        cell[mem][i]->setPos(QPointF(mem * Gem::gemSize, i * Gem::gemSize));
                         BasicHit = 3;
                     }
                 }
                 else if (cnt == 4){
                     if (mem != -1){
                         cell[mem][i] = new Gem(Upgraded | temp, this, mem, i);
-                        cell[mem][i]->setPos(QPointF(mem * Gem::gemSize, i * Gem::gemSize));
                         BasicHit = 3;
                     }
                     else{
                         cell[j + 1][i] = new Gem(temp | Upgraded, this, j + 1, i);
-                        cell[j + 1][i]->setPos(QPointF((j + 1) * Gem::gemSize, i * Gem::gemSize));
                         BasicHit = 2;
                     }
                 }
                 else if (cnt == 5){
                     cell[j + 2][i] = new Gem(Super, this, j + 2, i);
-                    cell[j + 2][i]->setPos(QPointF((j + 2)*Gem::gemSize, i * Gem::gemSize));
                     BasicHit = 4;
                 }
             }
@@ -256,7 +248,9 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
             }
         }
     }
+}
 
+QParallelAnimationGroup *GameBoard::gemsFalling(){
     QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
     for (int j = 0; j < boardSizeX; ++j){
         for (int i = boardSizeY - 1; i >=0; --i){
@@ -299,4 +293,25 @@ bool GameBoard::existMatching()
         }
     }
     return false;
+}
+
+bool GameBoard::skillSelected()
+{
+    return m_skillSelected;
+}
+
+void GameBoard::setSkillSelected(bool _skillSelected)
+{
+    m_skillSelected = _skillSelected;
+}
+
+void GameBoard::emitSelection(int gx, int gy)
+{
+    emit select(gx, gy);
+}
+
+void GameBoard::removeGem(int gx, int gy)
+{
+    delete cell[gx][gy];
+    cell[gx][gy] = nullptr;
 }
