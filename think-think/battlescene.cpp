@@ -42,4 +42,19 @@ BattleScene::BattleScene(QObject *parent)
     QGraphicsProxyWidget *boardProxy = addWidget(boardView);
     boardProxy->setPos(300, 300);
 
+    BossHp = new QProgressBar;
+    addWidget(BossHp);
+    BossHp->move(300, 250);
+    BossHp->setOrientation(Qt::Horizontal);
+    BossHp->setMinimum(0);
+    BossHp->setMaximum(boss->GetHp());
+    BossHp->setValue(boss->GetHp());
+    BossHp->setFormat(QString::fromLocal8Bit("%v"));
+    BossHp->setAlignment(Qt::AlignCenter);
+
+    board->BossHp = BossHp;
+    board->PlayerHp = PlayerHp;
+    board->PlaterMp = PlayerMp;
+
+
 }

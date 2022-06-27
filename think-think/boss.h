@@ -15,6 +15,7 @@ class Boss:public QObject, public QGraphicsPixmapItem
 public:
     explicit Boss(int _difficulty, QGraphicsItem* parent = 0);
     void hurt(int harm);
+    int GetHp();
 
 private:
     QSequentialAnimationGroup *floating;

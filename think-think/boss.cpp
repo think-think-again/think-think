@@ -34,5 +34,11 @@ Boss::Boss(int _difficulty, QGraphicsItem* parent)
 
 void Boss::hurt(int harm){
     HP -= harm;
+    if (HP < 0) HP = 0;
     return;
+}
+
+int Boss::GetHp()
+{
+    return HP;
 }

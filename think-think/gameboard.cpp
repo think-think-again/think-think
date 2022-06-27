@@ -141,7 +141,6 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                         cell[j][mem] = new Gem(Upgraded | temp, this, j, mem);
                         cell[j][mem]->setPos(QPointF(j * Gem::gemSize, mem * Gem::gemSize));
                         BasicHit = 3;
-
                     }
                     else if (mem != -1){
                         cell[j][mem] = new Gem(Upgraded | temp, this, j ,mem);
@@ -199,6 +198,7 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                         if (cell[l][k]->getType() & Upgraded) BranchUpgradeNum++;
                     }
                     if (sumrow >= 2){
+                        UpgradeNum += BranchUpgradeNum;
                         mem = l;
                         if (sumrow == 3) _4 = true;
                         for (int k = i - 1; k >= 0 && getBasicType(l, k) == temp; --k){
@@ -241,9 +241,11 @@ QParallelAnimationGroup *GameBoard::eraseMatchings()
                 UpgradeHit = UpgradeNum * BasicHit;
                 if (tempcolor == Blue) {
                     boss->hurt(player->Attack * BasicHit + (int)player->Attack * player->UpgradeRateBlue * UpgradeHit);
+                    BossHp->setValue(boss->GetHp());
                 }
                 else if (tempcolor == Red) {
-                    boss->hurt((player->Attack * BasicHit + (int)player->Attack * player->UpgradeRateRed * UpgradeHit));
+                    boss->hurt(player->Attack * BasicHit + (int)player->Attack * player->UpgradeRateRed * UpgradeHit);
+                    BossHp->setValue(boss->GetHp());
                 }
                 else if (tempcolor == Green) {
                     player->GetHP(player->getHP * BasicHit + (int)player->getHP * player->UpgardeRateGreen * UpgradeHit);

@@ -6,6 +6,8 @@
 #include "player.h"
 
 #include <QGraphicsScene>
+#include <QPushButton>
+#include <QProgressBar>
 
 class BattleScene : public QGraphicsScene
 {
@@ -16,7 +18,10 @@ private:
     QGraphicsPixmapItem *backgroundMask, *dialogueBackground;
     GameBoard *board;
     Boss *boss;
-    Player * player;
+    Player *player;
+    QProgressBar *BossHp;
+    QProgressBar *PlayerHp;
+    QProgressBar *PlayerMp;
 };
 
 #endif // BATTLESCENE_H

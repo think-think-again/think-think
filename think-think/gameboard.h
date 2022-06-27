@@ -9,6 +9,7 @@
 #include <QPropertyAnimation>
 #include <QTimer>
 #include <random>
+#include <QProgressBar>
 
 class GameBoard : public QObject, public QGraphicsPixmapItem
 {
@@ -21,6 +22,9 @@ public:
     QParallelAnimationGroup *swapGem(int sx, int sy, int dx, int dy);
     bool existMatching();
     int T;
+    QProgressBar *BossHp;
+    QProgressBar *PlayerHp;
+    QProgressBar *PlaterMp;
 
 private:
     Gem *cell[boardSizeX][boardSizeY];
