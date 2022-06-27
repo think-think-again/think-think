@@ -35,6 +35,7 @@ private:
 
 public slots:
     void lazyErase();
+    void turnFinished();
 
 };
 

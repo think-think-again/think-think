@@ -23,14 +23,14 @@ MainMenu::MainMenu(MyWindow *parent)
 
     // add start button
     startGame = new StartButton("start");
-    startGame->setPos(2560-232, 1440-540);
+    startGame->setPos(2560-232, 1440-340);
     connect(startGame, &StartButton::clicked,
             parent, &MyWindow::startDialog);
     addItem(startGame);
 
     // add exit button
     exitGame = new StartButton("exit");
-    exitGame->setPos(2560-240, 1440-400);
+    exitGame->setPos(2560-240, 1440-200);
     connect(exitGame, &StartButton::clicked,
             app, &QApplication::quit);
     addItem(exitGame);
