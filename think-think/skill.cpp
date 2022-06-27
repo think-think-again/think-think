@@ -5,9 +5,9 @@
 #include <QFontDatabase>
 
 Skill::Skill(BattleScene *_scene, const QString &_introduction, bool _isDirectional)
-    : introduction(_introduction),
-      isDirectional(_isDirectional),
-      scene(_scene)
+    : scene(_scene),
+      introduction(_introduction),
+      isDirectional(_isDirectional)
 {
     QPixmap _icon(":/resources/g.png");
     icon = new QGraphicsPixmapItem(_icon);
@@ -38,7 +38,7 @@ Skill::Skill(BattleScene *_scene, const QString &_introduction, bool _isDirectio
 
     introductionLabel = new QLabel(_introduction);
     introductionLabel->setFont(font);
-    introductionLabel->setStyleSheet("QLabel{ background: rgba(170, 0, 0, 0.3); color: white}");
+    introductionLabel->setStyleSheet("QLabel{ background: rgba(170, 0, 0, 0.3); color: white; border-style: outset; border-width: medium; border-color: rgba(170, 0, 0, 0.7);}");
     introductionLabel->hide();
     introductionLabelProxy = scene->addWidget(introductionLabel);
     introductionLabelProxy->setZValue(2);
@@ -67,9 +67,4 @@ void Skill::showIntroduction()
 void Skill::hideIntroduction()
 {
     introductionLabel->hide();
-}
-
-void Skill::handleMousePress()
-{
-    qDebug() << "virtual!!!";
 }

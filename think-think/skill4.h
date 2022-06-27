@@ -8,7 +8,7 @@
 class BattleScene;
 class Skill4 : public Skill
 {
-    static constexpr char introduction[] = "intro";
+    static constexpr char introduction[] = "一边看球一边看书：消耗800精力，强化一颗普通宝石";
 
     Q_OBJECT
 public:

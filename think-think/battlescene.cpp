@@ -92,6 +92,30 @@ BattleScene::BattleScene(QObject *parent)
     skill[3] = new Skill4(this, board, player);
     for(int i=0; i<4; ++i){
         addItem(skill[i]);
+        connect(skill[i], &Skill::increaseMp,
+                this, &BattleScene::increaseMp);
+        connect(skill[i], &Skill::increasePlayerHp,
+                this, &BattleScene::increasePlayerHp);
+        connect(skill[i], &Skill::increaseBossHp,
+                this, &BattleScene::increaseBossHp);
         skill[i]->setPos(900+i*100, 1440-200);
     }
+}
+
+void BattleScene::increaseMp(int x)
+{
+    player->GetMP(x);
+    PlayerMp->setValue(player->ReturnMp());
+}
+
+void BattleScene::increasePlayerHp(int x)
+{
+    player->GetHP(x);
+    PlayerHp->setValue(player->ReturnHp());
+}
+
+void BattleScene::increaseBossHp(int x)
+{
+    boss->hurt(-x);
+    BossHp->setValue(boss->GetHp());
 }

@@ -7,7 +7,8 @@
 class BattleScene;
 class Skill1 : public Skill
 {
-    static constexpr char introduction[] = "热带风味：恢复200点生命值";
+    static constexpr char introduction[] = "热带风味：消耗100精力，恢复100生命值";
+    static const int mpCost = 100, hpIncrement = 100;
 
     Q_OBJECT
 public:

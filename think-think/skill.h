@@ -17,6 +17,7 @@ class Skill : public QObject, public QGraphicsPixmapItem
 public:
     Skill(BattleScene *_scene, const QString &_introduction, bool _isDirectional = false);
     void setPos(qreal x, qreal y);
+    BattleScene *scene;
     QString introduction;
     bool isDirectional;
     QLabel *introductionLabel;
@@ -24,10 +25,12 @@ public:
     QGraphicsPixmapItem *icon;
 private:
     SkillHoverLayer *layer;
-    BattleScene *scene;
     QFont font;
 signals:
     void clicked();
+    void increaseMp(int);
+    void increasePlayerHp(int);
+    void increaseBossHp(int);
 public slots:
     void showIntroduction();
     void hideIntroduction();
