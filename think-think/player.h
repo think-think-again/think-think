@@ -17,6 +17,8 @@ public:
     const double UpgradeRateRed = 3.0;
     const double UpgradeRateOrange = 1.7;
     const double UpgardeRateGreen = 1.7;
+    int ReturnHp();
+    int ReturnMp();
 private:
     int HP;
     int MP;

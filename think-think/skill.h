@@ -1,6 +1,7 @@
 #ifndef SKILL_H
 #define SKILL_H
 
+#include "player.h"
 #include <QGraphicsPixmapItem>
 #include <QObject>
 

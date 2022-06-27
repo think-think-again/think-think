@@ -56,17 +56,37 @@ BattleScene::BattleScene(QObject *parent)
     BossHp->setFormat(QString::fromLocal8Bit("%v"));
     BossHp->setAlignment(Qt::AlignCenter);
 
+    PlayerHp = new QProgressBar;
+    addWidget(PlayerHp);
+    PlayerHp->move(300, 1440-200);
+    PlayerHp->setOrientation(Qt::Horizontal);
+    PlayerHp->setMinimum(0);
+    PlayerHp->setMaximum(player->UpperBoundHp);
+    PlayerHp->setValue(player->ReturnHp());
+    PlayerHp->setFormat(QString::fromLocal8Bit("%v"));
+    PlayerHp->setAlignment(Qt::AlignCenter);
+
+    PlayerMp = new QProgressBar;
+    addWidget(PlayerMp);
+    PlayerMp->move(300, 1440-100);
+    PlayerMp->setOrientation(Qt::Horizontal);
+    PlayerMp->setMinimum(0);
+    PlayerMp->setMaximum(player->UpperBoundMp);
+    PlayerMp->setValue(0);
+    PlayerMp->setFormat(QString::fromLocal8Bit("%v"));
+    PlayerMp->setAlignment(Qt::AlignCenter);
+
     board->BossHp = BossHp;
     board->PlayerHp = PlayerHp;
-    board->PlaterMp = PlayerMp;
+    board->PlayerMp = PlayerMp;
 
 
     skill[0] = new Skill1();
     skill[1] = new Skill2();
-    skill[2] = new Skill3(board);
-    skill[3] = new Skill4(board);
+    skill[2] = new Skill3(board, player);
+    skill[3] = new Skill4(board, player);
     for(int i=0; i<4; ++i){
         addItem(skill[i]);
-        skill[i]->setPos(300+i*100, 1440-200);
+        skill[i]->setPos(900+i*100, 1440-200);
     }
 }

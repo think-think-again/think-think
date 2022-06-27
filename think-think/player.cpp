@@ -18,3 +18,13 @@ void Player::GetMP(int dMP) {
     if (MP > UpperBoundMp) MP = UpperBoundMp;
     return;
 }
+
+int Player::ReturnHp()
+{
+    return HP;
+}
+
+int Player::ReturnMp()
+{
+    return MP;
+}

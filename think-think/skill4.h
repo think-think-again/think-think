@@ -9,11 +9,13 @@ class Skill4 : public Skill
 {
     Q_OBJECT
 public:
-    Skill4(GameBoard *_board);
+    Skill4(GameBoard *_board, Player *_player);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 private:
     bool selected;
     GameBoard *board;
+    Player *player;
+    QProgressBar *MPBar;
 public slots:
     void handleSelection(int gx, int gy);
 };

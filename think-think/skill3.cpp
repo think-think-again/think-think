@@ -1,9 +1,11 @@
 #include "skill3.h"
 
-Skill3::Skill3(GameBoard *_board)
+Skill3::Skill3(GameBoard *_board, Player *_player)
 {
     selected = false;
     board = _board;
+    player = _player;
+    MPBar = board->PlayerMp;
 }
 
 void Skill3::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -16,7 +18,7 @@ void Skill3::mousePressEvent(QGraphicsSceneMouseEvent *event)
         setPixmap(icon);
         board->setSkillSelected(false);
     }
-    else{
+    else if (player->ReturnMp() >= 500){
         connect(board, &GameBoard::select,
                 this, &Skill3::handleSelection);
         selected = true;
@@ -37,4 +39,6 @@ void Skill3::handleSelection(int gx, int gy)
     QPixmap icon(":/resources/g.png");
     setPixmap(icon);
     board->setSkillSelected(false);
+    player->GetMP(-500);
+    MPBar->setValue(player->ReturnMp());
 }

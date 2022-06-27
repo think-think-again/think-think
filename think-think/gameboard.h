@@ -32,7 +32,7 @@ public:
     int T;
     QProgressBar *BossHp;
     QProgressBar *PlayerHp;
-    QProgressBar *PlaterMp;
+    QProgressBar *PlayerMp;
 
 private:
     Gem *cell[boardSizeX][boardSizeY];

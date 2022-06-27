@@ -212,6 +212,7 @@ void GameBoard::eraseMatchings()
                         cell[mem][i] = new Gem(temp | Upgraded, this, mem, i);
                         BasicHit = 3;
                     }
+                    else BasicHit = 1;
                 }
                 else if (cnt == 4){
                     if (mem != -1){
@@ -241,9 +242,11 @@ void GameBoard::eraseMatchings()
                 }
                 else if (tempcolor == Green) {
                     player->GetHP(player->getHP * BasicHit + (int)player->getHP * player->UpgardeRateGreen * UpgradeHit);
+                    PlayerHp->setValue(player->ReturnHp());
                 }
                 else if (tempcolor == Orange) {
                     player->GetMP(player->getMP * BasicHit + (int)player->getMP * player->UpgradeRateOrange * UpgradeHit);
+                    PlayerMp->setValue(player->ReturnMp());
                 }
             }
         }
