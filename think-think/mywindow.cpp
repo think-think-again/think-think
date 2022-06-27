@@ -34,6 +34,8 @@ MyWindow::MyWindow(QApplication *_app, QWidget *parent)
     battleView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     battleView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     battleView->setFixedSize(battle->sceneRect().size().toSize());
+    connect(battle->returnMenu, &StartButton::clicked,
+            this, &MyWindow::returnMenu);
 
     layout = new QStackedLayout(this);
     layout->addWidget(menuView);

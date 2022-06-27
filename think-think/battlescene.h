@@ -16,6 +16,7 @@ class BattleScene : public QGraphicsScene
     Q_OBJECT
 public:
     explicit BattleScene(QObject *parent = nullptr);
+    StartButton *returnMenu;
 private:
     QGraphicsPixmapItem *backgroundMask, *dialogueBackground;
     GameBoard *board;
@@ -25,7 +26,6 @@ private:
     QProgressBar *PlayerHp;
     QProgressBar *PlayerMp;
     Skill *skill[4];
-    StartButton *returnMenu;
 
 };
 

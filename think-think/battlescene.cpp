@@ -84,8 +84,6 @@ BattleScene::BattleScene(QObject *parent)
     // add returnMenu button
     returnMenu = new StartButton("menu");
     returnMenu->setPos(2560-240, 1440-1360);
-    connect(returnMenu, &StartButton::clicked,
-            this->window,&MyWindow::returnMenu);
     addItem(returnMenu);
 
     skill[0] = new Skill1();
