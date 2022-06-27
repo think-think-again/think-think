@@ -7,19 +7,21 @@
 class StartButton : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
-    Q_PROPERTY(qreal scale
-               READ scale
-               WRITE setScale
-               NOTIFY scaleChanged)
+    Q_PROPERTY(qreal myScale
+               READ myScale
+               WRITE setMyScale
+               NOTIFY myScaleChanged)
 public:
-    StartButton();
+    StartButton(const QString &name);
+    void setMyScale(qreal scale);
+    qreal myScale();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
 signals:
     void clicked();
-    void scaleChanged();
+    void myScaleChanged();
 
 private:
     QPropertyAnimation *zoomInAnimation, *zoomOutAnimation;
