@@ -7,7 +7,6 @@
 #include <QGraphicsPixmapItem>
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
-#include <QTimer>
 #include <random>
 #include <QProgressBar>
 

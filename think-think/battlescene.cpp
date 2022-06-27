@@ -86,10 +86,10 @@ BattleScene::BattleScene(QObject *parent)
     returnMenu->setPos(2560-240, 1440-1360);
     addItem(returnMenu);
 
-    skill[0] = new Skill1();
-    skill[1] = new Skill2();
-    skill[2] = new Skill3(board, player);
-    skill[3] = new Skill4(board, player);
+    skill[0] = new Skill1(this);
+    skill[1] = new Skill2(this);
+    skill[2] = new Skill3(this, board, player);
+    skill[3] = new Skill4(this, board, player);
     for(int i=0; i<4; ++i){
         addItem(skill[i]);
         skill[i]->setPos(900+i*100, 1440-200);

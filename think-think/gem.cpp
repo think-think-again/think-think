@@ -143,7 +143,7 @@ void Gem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-void Gem::hoverEnterEvent(__attribute__ ((unused))QGraphicsSceneHoverEvent *event)
+void Gem::hoverEnterEvent(__attribute__((unused))QGraphicsSceneHoverEvent *event)
 {
     if(!hover){
         hover = true;
@@ -151,7 +151,7 @@ void Gem::hoverEnterEvent(__attribute__ ((unused))QGraphicsSceneHoverEvent *even
     }
 }
 
-void Gem::hoverLeaveEvent(__attribute__ ((unused))QGraphicsSceneHoverEvent *event)
+void Gem::hoverLeaveEvent(__attribute__((unused))QGraphicsSceneHoverEvent *event)
 {
     if(hover){
         hover = false;

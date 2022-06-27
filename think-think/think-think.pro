@@ -23,6 +23,7 @@ SOURCES += \
     skill2.cpp \
     skill3.cpp \
     skill4.cpp \
+    skillhoverlayer.cpp \
     startbutton.cpp
 
 HEADERS += \
@@ -39,6 +40,7 @@ HEADERS += \
     skill2.h \
     skill3.h \
     skill4.h \
+    skillhoverlayer.h \
     startbutton.h
 
 # Default rules for deployment.

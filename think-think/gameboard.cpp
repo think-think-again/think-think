@@ -3,7 +3,6 @@
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
-#include <QTimer>
 #include <random>
 
 GameBoard::GameBoard(Boss *_boss,Player* _player, QGraphicsItem *parent)

@@ -130,18 +130,17 @@ void Dialogue::setTextAnimation(QLabel *label, const QString &str)
     animationStr = str;
     animationLabel = label;
     animationProgress = 0;
-    timer->start(0);
+    timer->start(30);
 }
 
 
 void Dialogue::updateLabel()
 {
     if(animationProgress == animationStr.length()){
-        return;
+        timer->stop();
     }
     else{
         QString str = "<p style='line-height: 70px'>" + animationStr.left(++animationProgress) + "</p>";
         animationLabel->setText(str);
-        timer->start(30);
     }
 }
