@@ -16,4 +16,5 @@ void Player::GetHP(int dHP) {
 void Player::GetMP(int dMP) {
     MP += dMP;
     if (MP > UpperBoundMp) MP = UpperBoundMp;
+    return;
 }

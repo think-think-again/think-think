@@ -20,6 +20,7 @@ public:
     explicit GameBoard(Boss* _boss, Player* _player, QGraphicsItem *parent = 0);
     QParallelAnimationGroup *swapGem(int sx, int sy, int dx, int dy);
     bool existMatching();
+    int T;
 
 private:
     Gem *cell[boardSizeX][boardSizeY];

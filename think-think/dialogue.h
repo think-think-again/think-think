@@ -18,11 +18,11 @@ signals:
 
 private:
     QJsonDocument *doc;
-    QLabel *dlg, *prologue, *animationLabel;
+    QLabel *dlg, *prologue, *animationLabel, *speaker;
     QTimer *timer;
     int dlgCount, animationProgress;
     QString animationStr;
-    QGraphicsPixmapItem *backgroundMask, *dialogueBackground;
+    QGraphicsPixmapItem *backgroundMask, *dialogueBackground, *dialogueBackgroundBoss, *dialogueBackgroundZ;
     QFont font;
     bool clicked;
     void setTextAnimation(QLabel *label, const QString &str);

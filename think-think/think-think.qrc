@@ -15,17 +15,13 @@
         <file>resources/dialogues/ljy.json</file>
         <file>resources/dialogues/zqj.json</file>
         <file>resources/classroom1.jpg</file>
-        <file>resources/dialogue_background.png</file>
         <file>resources/FZYanSJW_Zhun.TTF</file>
         <file>resources/30232-0.7(RGB)(noise_scale)(Level0)(x4.000000).png</file>
-<<<<<<< HEAD
-=======
         <file>resources/dialogue.png</file>
         <file>resources/dialogue-1.png</file>
         <file>resources/dialogue-2.png</file>
         <file>resources/dialogue-3.png</file>
         <file>resources/dialogue-4.png</file>
->>>>>>> 4b8d393f55b47742229fd8025b1e606f91083736
         <file>resources/exit.png</file>
     </qresource>
 </RCC>
