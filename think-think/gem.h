@@ -5,7 +5,9 @@
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
+#include <QProgressBar>
 
+#include "boss.h"
 enum GemType{
     Invalid       = 0x00000000,
     Blue          = 0x00000001,
@@ -57,6 +59,8 @@ signals:
 
 
 private:
+    Boss *boss;
+    QProgressBar *HPBar;
     GemTypes type;
     QPointF lastPosition;
     bool lastClickHandled;

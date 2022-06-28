@@ -28,6 +28,8 @@ Gem::Gem(GemTypes tp, GameBoard *parent, int x, int y)
         qCritical() << "invalid gem type";
         return "invalid";
     };
+    boss = parent->boss;
+    HPBar = parent->BossHp;
     QPixmap pixmap(gemTypeName(tp));
     pixmap = pixmap.scaled(Gem::gemSize*2, Gem::gemSize*2);
     setPixmap(pixmap);
@@ -72,6 +74,12 @@ void Gem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         lastPosition = this->pos();
         scaleAnimation->start();
 //        lastClickHandled = false;
+    }
+    else if(event->button() == Qt::RightButton && type == Super){
+        board->removeGem(gx, gy);
+        board->lazyErase(true);
+        boss->hurt(300);
+        HPBar->setValue(boss->GetHp());
     }
 }
 

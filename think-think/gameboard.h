@@ -31,6 +31,7 @@ public:
     void removeGem(int gx, int gy);
     QParallelAnimationGroup *gemsFalling();
     int T;
+    Boss *boss;
     QProgressBar *BossHp;
     QProgressBar *PlayerHp;
     QProgressBar *PlayerMp;
@@ -38,7 +39,6 @@ public:
 
 private:
     Gem *cell[boardSizeX][boardSizeY];
-    Boss *boss;
     Player *player;
     std::mt19937 rng;
     std::uniform_int_distribution<int> gemGenerator;
