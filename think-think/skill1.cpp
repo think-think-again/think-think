@@ -12,5 +12,6 @@ void Skill1::handleMousePress()
     if(scene->player->ReturnMp()>=mpCost){
         emit increasePlayerHp(hpIncrement);
         emit increaseMp(-mpCost);
+        emit skillPerformed();
     }
 }

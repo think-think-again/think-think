@@ -13,22 +13,30 @@
 
 class MyWindow : public QWidget
 {
+    static constexpr char bossNames[][4] = {"ljy", "zqj", "gw"};
+
     Q_OBJECT
 public:
     explicit MyWindow(QApplication *_app, QWidget *parent = nullptr);
     QStackedLayout *layout;
     QApplication *app;
 private:
+    QGraphicsView *initMainMenu();
+    QGraphicsView *initDialogue(int bossId);
+    QGraphicsView *initBattle(int bossId);
     MainMenu *menu;
     Dialogue *dialogue;
     BattleScene *battle;
+    int currentBossId;
 
 signals:
 
 public slots:
-    void startDialog();
+    void startDialogue();
     void startBattle();
     void returnMenu();
+    void handleBattleFailed();
+    void handleBattleSucceeded();
 };
 
 #endif // MYWINDOW_H

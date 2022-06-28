@@ -41,5 +41,6 @@ void Skill4::handleSelection(int gx, int gy)
         board->setSkillSelected(false);
         player->GetMP(-800);
         MPBar->setValue(player->ReturnMp());
+        emit skillPerformed();
     }
 }

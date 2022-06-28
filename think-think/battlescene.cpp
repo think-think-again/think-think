@@ -10,7 +10,7 @@
 #include <QGraphicsView>
 #include <QGuiApplication>
 
-BattleScene::BattleScene(QObject *parent)
+BattleScene::BattleScene(const QString &name, QObject *parent)
     : QGraphicsScene{parent}
 {
     // change to screen resolution
@@ -37,6 +37,8 @@ BattleScene::BattleScene(QObject *parent)
     Boss *_boss = boss;
 
     board = new GameBoard(_boss, _player);
+    connect(board, &GameBoard::turnFinished,
+            this, &BattleScene::handleTurnFinished);
     QGraphicsScene *boardScene = new QGraphicsScene;
     boardScene->addItem(board);
     QGraphicsView *boardView = new QGraphicsView(boardScene);
@@ -98,6 +100,8 @@ BattleScene::BattleScene(QObject *parent)
                 this, &BattleScene::increasePlayerHp);
         connect(skill[i], &Skill::increaseBossHp,
                 this, &BattleScene::increaseBossHp);
+        connect(skill[i], &Skill::skillPerformed,
+                this, &BattleScene::handleTurnFinished);
         skill[i]->setPos(900+i*100, 1440-200);
     }
     RoundNum = new QLabel;
@@ -127,4 +131,14 @@ void BattleScene::increaseBossHp(int x)
 {
     boss->hurt(-x);
     BossHp->setValue(boss->GetHp());
+}
+
+void BattleScene::handleTurnFinished()
+{
+    if (board->T > 40 || player->ReturnHp() == 0) {
+        emit battleFailed();
+    }
+    if (boss->GetHp() == 0) {
+        emit battleSucceeded();
+    }
 }

@@ -12,5 +12,6 @@ void Skill2::handleMousePress()
     if(scene->player->ReturnMp()>=mpCost){
         emit increaseBossHp(-attack);
         emit increaseMp(-mpCost);
+        emit skillPerformed();
     }
 }

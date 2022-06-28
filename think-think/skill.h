@@ -31,6 +31,7 @@ signals:
     void increaseMp(int);
     void increasePlayerHp(int);
     void increaseBossHp(int);
+    void skillPerformed();
 public slots:
     void showIntroduction();
     void hideIntroduction();

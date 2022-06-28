@@ -10,13 +10,10 @@ class MainMenu : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    explicit MainMenu(MyWindow *parent);
-private:
-    QApplication *app;
-    QGraphicsPixmapItem *background;
+    explicit MainMenu(QObject *parent);
     StartButton *startGame, *exitGame;
-    MyWindow *window;
-
+private:
+    QGraphicsPixmapItem *background;
 private slots:
 };
 

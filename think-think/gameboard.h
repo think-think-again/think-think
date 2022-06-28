@@ -49,11 +49,11 @@ private:
 
 signals:
     void select(int, int);
-    void changeDialog();
+    void turnFinished();
 
 public slots:
     void lazyErase(bool fallFirst = false);
-    void turnFinished();
+    void _turnFinished();
 
 };
 

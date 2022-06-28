@@ -16,7 +16,7 @@ class BattleScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    explicit BattleScene(QObject *parent = nullptr);
+    explicit BattleScene(const QString &name, QObject *parent = nullptr);
     StartButton *returnMenu;
     Player *player;
     GameBoard *board;
@@ -28,10 +28,14 @@ private:
     QProgressBar *PlayerMp;
     Skill *skill[4];
     QLabel *RoundNum;
+signals:
+    void battleFailed();
+    void battleSucceeded();
 public slots:
     void increaseMp(int x);
     void increasePlayerHp(int x);
     void increaseBossHp(int x);
+    void handleTurnFinished();
 };
 
 #endif // BATTLESCENE_H

@@ -35,16 +35,14 @@ void GameBoard::lazyErase(bool fallFirst){
     }
     else{
         connect(group, &QParallelAnimationGroup::finished,
-                this, &GameBoard::turnFinished);
+                this, &GameBoard::_turnFinished);
     }
     group->start(QPropertyAnimation::DeleteWhenStopped);
 }
 
-void GameBoard::turnFinished()
+void GameBoard::_turnFinished()
 {
-    if (T > 40 || player->ReturnHp() == 0 || boss->GetHp() == 0) {
-        emit changeDialog();
-    }
+    emit turnFinished();
 }
 
 GemTypes GameBoard::getType(int x, int y)
