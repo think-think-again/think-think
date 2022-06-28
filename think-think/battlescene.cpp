@@ -100,6 +100,12 @@ BattleScene::BattleScene(QObject *parent)
                 this, &BattleScene::increaseBossHp);
         skill[i]->setPos(900+i*100, 1440-200);
     }
+    RoundNum = new QLabel;
+    addWidget(RoundNum);
+    RoundNum->setNum(board->T);
+    RoundNum->move(100, 90);
+    board->RoundNum = RoundNum;
+
 }
 
 void BattleScene::increaseMp(int x)

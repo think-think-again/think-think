@@ -86,6 +86,7 @@ void Gem::handleMouseRelease()
     if(board->existMatching())
     {
         board->T++;
+        board->RoundNum->setNum(board->T);
         board->lazyErase();
         //qDebug() << board->T;
     }

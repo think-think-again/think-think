@@ -4,11 +4,13 @@
 #include "gem.h"
 #include "boss.h"
 #include "player.h"
+
 #include <QGraphicsPixmapItem>
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 #include <random>
 #include <QProgressBar>
+#include <QLabel>
 
 class GameBoard : public QObject, public QGraphicsPixmapItem
 {
@@ -32,6 +34,7 @@ public:
     QProgressBar *BossHp;
     QProgressBar *PlayerHp;
     QProgressBar *PlayerMp;
+    QLabel *RoundNum;
 
 private:
     Gem *cell[boardSizeX][boardSizeY];
@@ -42,6 +45,7 @@ private:
     void eraseMatchings();
     QPropertyAnimation *moveGem(int gx, int gy, int x, int y, int ax=-1, int ay=-1);
     bool m_skillSelected;
+    const int UpperRound = 40;
 
 signals:
     void select(int, int);

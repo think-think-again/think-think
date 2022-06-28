@@ -10,6 +10,7 @@
 #include <QGraphicsScene>
 #include <QPushButton>
 #include <QProgressBar>
+#include <QLabel>
 
 class BattleScene : public QGraphicsScene
 {
@@ -26,6 +27,7 @@ private:
     QProgressBar *PlayerHp;
     QProgressBar *PlayerMp;
     Skill *skill[4];
+    QLabel *RoundNum;
 public slots:
     void increaseMp(int x);
     void increasePlayerHp(int x);

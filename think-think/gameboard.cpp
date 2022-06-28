@@ -25,7 +25,9 @@ GameBoard::GameBoard(Boss *_boss,Player* _player, QGraphicsItem *parent)
 }
 
 void GameBoard::lazyErase(bool fallFirst){
-    if(!fallFirst) eraseMatchings();
+    if(!fallFirst){
+        eraseMatchings();
+    }
     QParallelAnimationGroup *group = gemsFalling();
     if(existMatching()){
         connect(group, &QParallelAnimationGroup::finished,
@@ -40,7 +42,9 @@ void GameBoard::lazyErase(bool fallFirst){
 
 void GameBoard::turnFinished()
 {
+    if (T > 40 || player->ReturnHp() == 0 || boss->GetHp() == 0) {
 
+    }
 }
 
 GemTypes GameBoard::getType(int x, int y)
