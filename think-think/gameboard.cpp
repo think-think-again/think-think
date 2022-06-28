@@ -43,7 +43,7 @@ void GameBoard::lazyErase(bool fallFirst){
 void GameBoard::turnFinished()
 {
     if (T > 40 || player->ReturnHp() == 0 || boss->GetHp() == 0) {
-
+        emit changeDialog();
     }
 }
 

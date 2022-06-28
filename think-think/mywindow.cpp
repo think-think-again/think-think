@@ -42,6 +42,7 @@ MyWindow::MyWindow(QApplication *_app, QWidget *parent)
     layout->addWidget(dialogueView);
     layout->addWidget(battleView);
     layout->setCurrentIndex(0);
+    connect(battle->board, &GameBoard::changeDialog, this, &MyWindow::returnMenu);
 }
 
 void MyWindow::startDialog()

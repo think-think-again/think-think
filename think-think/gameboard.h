@@ -49,6 +49,7 @@ private:
 
 signals:
     void select(int, int);
+    void changeDialog();
 
 public slots:
     void lazyErase(bool fallFirst = false);

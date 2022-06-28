@@ -19,9 +19,9 @@ public:
     explicit BattleScene(QObject *parent = nullptr);
     StartButton *returnMenu;
     Player *player;
+    GameBoard *board;
 private:
     QGraphicsPixmapItem *backgroundMask, *dialogueBackground;
-    GameBoard *board;
     Boss *boss;
     QProgressBar *BossHp;
     QProgressBar *PlayerHp;

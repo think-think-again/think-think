@@ -103,8 +103,11 @@ BattleScene::BattleScene(QObject *parent)
     RoundNum = new QLabel;
     addWidget(RoundNum);
     RoundNum->setNum(board->T);
-    RoundNum->move(100, 90);
+    //RoundNum->setText("Hello World!");
+    RoundNum->move(300, 200);
     board->RoundNum = RoundNum;
+    RoundNum->setMargin(5);
+    RoundNum->setScaledContents(true);
 
 }
 
