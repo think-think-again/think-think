@@ -3,27 +3,79 @@
   "dialogue": [
     {
       "speaker": "Voice-over",
-      "content": "（星期三的早晨，刚上完一节淑芬的小Z现在正坐在程设的教室里，听着张老师在台上滔滔不绝）"
+      "content": "星期三的早晨，刚上完一节淑芬的小Z现在正坐在程设的教室里，听着张老师在台上滔滔不绝。"
     },
     {
       "speaker": "小Z",
-      "content": "顺序容器、关联容器、容器适配器……往它们里面插入元素的时间复杂度……\n哇，还有这么多函数……这根本记不住呀！List还只能用双向迭代器，有点复杂啊！"
+      "content": "哇，几节课听下来真感觉程设比上学期的计概要难好多啊！"
+    },
+    {
+      "speaker": "小Z",
+      "content": "要记忆的东西有点多，这我完全记不住啊！"
     },
     {
       "speaker": "Boss",
-      "content": "我们来看一道思考题啊！“对于有 n 个元素的以下容器，大多数情况下，哪种操作速度最快？”\n我直接说了吧，这个A呢是O（1）级别的，B呢是O（log(n)），\nC呢肯定是比不止O（1）的，D和B一样是log（n）级别的，所以这题选A。大家有什么问题吗？"
+      "content": "我们下面来看一道思考题啊！"
     },
     {
-      "speaker": "小Z",
-      "content": "啊？为啥呀？他刚刚说了啥？没人有问题吗？\n那我现在问不是很尴尬，要不还是等会儿下了课去问吧。"
+      "speaker": "Boss",
+      "content": "“对于……下面那种说法是正确的。”"
+    },
+    {
+      "speaker": "Boss",
+      "content": "我直接说了吧，这个A呢是这样的，看着没什么问题啊！"
+    },
+    {
+      "speaker": "Boss",
+      "content": "B的错误就很明显了。"
+    },
+    {
+      "speaker": "Boss",
+      "content": "C呢稍微比B不好看出来一点，它的错误在这儿。"
+    },
+    {
+      "speaker": "Boss",
+      "content": "D和B一样错误也是比较明显的。"
+    },
+    {
+      "speaker": "Boss",
+      "content": "所以这题选A，大家有什么问题吗？"
     },
     {
       "speaker": "Voice-over",
-      "content": "不一会儿，清脆的下课铃声便如约而至"
+      "content": "由于刚受到淑芬的摧残，小Z没怎么听懂这道题。"
+    },
+    {
+      "speaker": "小Z",
+      "content": "啊？"
+    },
+    {
+      "speaker": "小Z",
+      "content": "为啥呀？"
+    },
+    {
+      "speaker": "小Z",
+      "content": "他刚刚说了啥？"
+    },
+    {
+      "speaker": "小Z",
+      "content": "没人有问题吗？"
+    },
+    {
+      "speaker": "小Z",
+      "content": "那我现在问不是很尴尬，要不还是等会儿下了课去问吧。"
+    },
+    {
+      "speaker": "Voice-over",
+      "content": "不一会儿，清脆的下课铃声便如约而至。"
     },
     {
       "speaker": "Boss",
       "content": "好，那我们先休息一下，剩下的下节课再说。"
+    },
+    {
+      "speaker": "Voice-over",
+      "content": "小Z连忙抢在所有人前面跑上了台。"
     },
     {
       "speaker": "小Z",
