@@ -99,6 +99,17 @@ void Gem::handleMouseRelease()
         board->RoundNum->setText("回合数：" + QString::number(board->T) + " / 40");
         board->RoundNum->adjustSize();
         board->lazyErase();
+        if (board->player->duration > 0) board->player->duration--;
+        else if (board->player->duration == 0) board->player->debuff = 1;
+        board->SkillToGo--;
+        board->BossSkillInform->setText(QString::number(boss->BossSkillId)+" "+QString::number(board->SkillToGo));
+        if (board->SkillToGo == 0){
+            emit board->turnBossSkill();
+            board->BossSkillId = board->RandomNum();
+            board->SkillToGo = board->BossSkillTime[board->BossSkillId];
+            boss->BossSkillId = board->BossSkillId;
+            board->BossSkillInform->setText(QString::number(boss->BossSkillId)+" "+QString::number(board->SkillToGo));
+        }
         //qDebug() << board->T;
     }
     else board->swapGem(gx, gy, gx-dx, gy-dy)->start(QAbstractAnimation::DeleteWhenStopped);

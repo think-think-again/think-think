@@ -46,18 +46,6 @@ void GameBoard::lazyErase(bool fallFirst){
     else{
         connect(group, &QParallelAnimationGroup::finished,
                 this, &GameBoard::_turnFinished);
-        if (player->duration > 0) player->duration--;
-        else if (player->duration == 0) player->debuff = 1;
-        SkillToGo--;
-        BossSkillInform->setText(QString::number(boss->BossSkillId)+" "+QString::number(SkillToGo));
-        if (SkillToGo == 0){
-            qDebug() << 1;
-            emit turnBossSkill();
-            BossSkillId = gemGenerator(rng);
-            SkillToGo = BossSkillTime[BossSkillId];
-            boss->BossSkillId = BossSkillId;
-            BossSkillInform->setText(QString::number(boss->BossSkillId)+" "+QString::number(SkillToGo));
-        }
     }
     group->start(QPropertyAnimation::DeleteWhenStopped);
 }
@@ -342,4 +330,7 @@ void GameBoard::removeGem(int gx, int gy)
 {
     cell[gx][gy]->deleteLater();
     cell[gx][gy] = nullptr;
+}
+int GameBoard::RandomNum() {
+    return gemGenerator(rng);
 }

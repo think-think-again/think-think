@@ -30,6 +30,7 @@ public:
     void emitSelection(int gx, int gy);
     void removeGem(int gx, int gy);
     QParallelAnimationGroup *gemsFalling();
+    int RandomNum();
     int T;
     int SkillToGo;
     int BossSkillId;
@@ -40,10 +41,10 @@ public:
     QProgressBar *PlayerMp;
     QLabel *RoundNum;
     QLabel *BossSkillInform;
-
+    Player *player;
 private:
     Gem *cell[boardSizeX][boardSizeY];
-    Player *player;
+
     std::mt19937 rng;
     std::uniform_int_distribution<int> gemGenerator;
     void eraseMatchings();
