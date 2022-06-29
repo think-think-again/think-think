@@ -37,7 +37,7 @@ Boss::Boss(const QString &name, int _difficulty, QGraphicsItem* parent)
 }
 
 void Boss::hurt(int harm){
-    HarmLabel *harmLabel = new HarmLabel(harm);
+    HarmLabel *harmLabel = new HarmLabel(-harm);
     emit harmDisplay(harmLabel);
     QParallelAnimationGroup *harmAnimation = new QParallelAnimationGroup;
     QPropertyAnimation *ascend = new QPropertyAnimation(harmLabel, "pos");
@@ -54,7 +54,7 @@ void Boss::hurt(int harm){
     harmAnimation->addAnimation(fadeOut);
 
     connect(harmAnimation, &QParallelAnimationGroup::finished,
-            harmLabel, &QLabel::deleteLater);
+            harmLabel, &HarmLabel::deleteLater);
     harmAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
     HP -= harm;

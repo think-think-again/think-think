@@ -1,9 +1,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "harmlabel.h"
 #include<QGraphicsPixmapItem>
 class Player: public QObject, public QGraphicsPixmapItem
 {
+    Q_OBJECT
 public:
    explicit Player(QGraphicsItem* parent = 0);
     const int Attack = 30;
@@ -22,6 +24,8 @@ public:
 private:
     int HP;
     int MP;
+signals:
+    void harmDisplay(HarmLabel*);
 };
 
 #endif // PLAYER_H

@@ -12,11 +12,12 @@ class HarmLabel : public QLabel
                WRITE setAlpha
                NOTIFY alphaChanged)
 public:
-    HarmLabel(int harm);
+    HarmLabel(int harm, const QString &_color = "");
     float alpha();
     void setAlpha(float _alpha);
 private:
     float m_alpha;
+    QString color;
 signals:
     void alphaChanged();
 };

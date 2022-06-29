@@ -32,9 +32,11 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     addItem(backgroundMask);
 
     player = new Player;
+    connect(player, &Player::harmDisplay,
+            this, &BattleScene::handleHarmDisplay);
     Player* _player = player;
 
-    int dif;
+    int dif = 0;
     if(name == "ljy") dif = 1;
     if(name == "zqj") dif = 2;
     if(name == "gw") dif = 3;
