@@ -33,7 +33,6 @@ void Skill3::handleSelection(int gx, int gy)
 {
     board->removeGem(gx, gy);
     board->lazyErase(true);
-
     disconnect(board, &GameBoard::select,
             this, &Skill3::handleSelection);
     selected = false;
@@ -43,4 +42,8 @@ void Skill3::handleSelection(int gx, int gy)
     player->GetMP(-500);
     MPBar->setValue(player->ReturnMp());
     emit skillPerformed();
+    icon->hide();
+    layer->hide();
+    introductionLabel->hide();
+    introductionLabelProxy->hide();
 }

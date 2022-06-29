@@ -13,5 +13,9 @@ void Skill2::handleMousePress()
         emit increaseBossHp(-attack);
         emit increaseMp(-mpCost);
         emit skillPerformed();
+        icon->hide();
+        layer->hide();
+        introductionLabel->hide();
+        introductionLabelProxy->hide();
     }
 }

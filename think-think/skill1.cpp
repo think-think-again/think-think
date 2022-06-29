@@ -13,5 +13,8 @@ void Skill1::handleMousePress()
         emit increasePlayerHp(hpIncrement);
         emit increaseMp(-mpCost);
         emit skillPerformed();
+        icon->hide();
+        layer->hide();
+        introductionLabel->hide();
     }
 }

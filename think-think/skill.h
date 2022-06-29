@@ -23,8 +23,8 @@ public:
     QLabel *introductionLabel;
     QGraphicsProxyWidget *introductionLabelProxy;
     QGraphicsPixmapItem *icon;
-private:
     SkillHoverLayer *layer;
+private:
     QFont font;
 signals:
     void clicked();

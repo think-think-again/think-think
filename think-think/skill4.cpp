@@ -42,5 +42,9 @@ void Skill4::handleSelection(int gx, int gy)
         player->GetMP(-800);
         MPBar->setValue(player->ReturnMp());
         emit skillPerformed();
+        icon->hide();
+        layer->hide();
+        introductionLabel->hide();
+        introductionLabelProxy->hide();
     }
 }
