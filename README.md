@@ -31,3 +31,4 @@ Please set environment variable `QT_ENABLE_HIGHDPI_SCALING` to `0` before build.
     + 剧情的设计与实现：俞俊喆、屠学畅
     + boss设计：朱蔚骐
     + 返回主菜单按钮设计：俞俊喆
+    + S宝石右键消除：俞俊喆
