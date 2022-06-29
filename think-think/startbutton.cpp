@@ -1,20 +1,21 @@
 #include "startbutton.h"
+#include "myglobalvariants.h"
 
 StartButton::StartButton(const QString &name)
 {
     QPixmap start(":/resources/" + name + ".png");
     setPixmap(start);
-    setMyScale(1./3);
+    setMyScale(SCREEN_SCALE/3);
     setAcceptHoverEvents(true);
 
     zoomInAnimation = new QPropertyAnimation(this, "myScale");
-    zoomInAnimation->setStartValue(1./3);
-    zoomInAnimation->setEndValue(0.4);
+    zoomInAnimation->setStartValue(SCREEN_SCALE/3);
+    zoomInAnimation->setEndValue(SCREEN_SCALE*0.4);
     zoomInAnimation->setDuration(200);
 
     zoomOutAnimation = new QPropertyAnimation(this, "myScale");
-    zoomOutAnimation->setStartValue(0.4);
-    zoomOutAnimation->setEndValue(1./3);
+    zoomOutAnimation->setStartValue(SCREEN_SCALE*0.4);
+    zoomOutAnimation->setEndValue(SCREEN_SCALE/3);
     zoomOutAnimation->setDuration(200);
 }
 

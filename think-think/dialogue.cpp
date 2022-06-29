@@ -28,34 +28,37 @@ Dialogue::Dialogue(QObject *parent, const QString &name)
     fontFile.open(QIODevice::ReadOnly);
     int fontId = QFontDatabase::addApplicationFontFromData(fontFile.readAll());
     font.setFamilies(QFontDatabase::applicationFontFamilies(fontId));
-    font.setPixelSize(50);
+    font.setPixelSize(50*SCREEN_SCALE);
 
     QPixmap _background(":/resources/classroom1.jpg");
-    _background = _background.scaled(2560, 1440, Qt::KeepAspectRatioByExpanding);
+    _background = _background.scaled(SCREEN_WIDTH, SCREEN_HEIGHT, Qt::KeepAspectRatioByExpanding);
     QGraphicsPixmapItem *background = new QGraphicsPixmapItem(_background);
-    background->setPos(-(_background.width()-2560)/2, -(_background.height()-1440)/2);
+    background->setPos(-(_background.width()-SCREEN_WIDTH)/2, -(_background.height()-SCREEN_HEIGHT)/2);
     addItem(background);
 
-    QPixmap _backgroundMask(2560, 1440);
+    QPixmap _backgroundMask(SCREEN_WIDTH, SCREEN_HEIGHT);
     _backgroundMask.fill(QColor(255, 255, 255, 160));
     backgroundMask = new QGraphicsPixmapItem(_backgroundMask);
     addItem(backgroundMask);
 
     QPixmap _dialogueBackground(":/resources/character-dialogue/dialogue.png");
-    _dialogueBackground = _dialogueBackground.scaled(2560, 1440);
+    _dialogueBackground = _dialogueBackground.scaled(_dialogueBackground.size()*(SCREEN_SCALE/3));
     dialogueBackground = new QGraphicsPixmapItem(_dialogueBackground);
+    dialogueBackground->setPos(-(_dialogueBackground.width()-SCREEN_WIDTH)/2, -(_dialogueBackground.height()-SCREEN_HEIGHT));
     addItem(dialogueBackground);
     dialogueBackground->hide();
 
     QPixmap _dialogueBackgroundBoss(":/resources/character-dialogue/" + name + ".png");
-    _dialogueBackgroundBoss = _dialogueBackgroundBoss.scaled(2560, 1440);
+    _dialogueBackgroundBoss = _dialogueBackgroundBoss.scaled(_dialogueBackgroundBoss.size()*(SCREEN_SCALE/3));
     dialogueBackgroundBoss = new QGraphicsPixmapItem(_dialogueBackgroundBoss);
+    dialogueBackgroundBoss->setPos(-(_dialogueBackgroundBoss.width()-SCREEN_WIDTH)/2, -(_dialogueBackgroundBoss.height()-SCREEN_HEIGHT));
     addItem(dialogueBackgroundBoss);
     dialogueBackgroundBoss->hide();
 
     QPixmap _dialogueBackgroundZ(":/resources/character-dialogue/z.png");
-    _dialogueBackgroundZ = _dialogueBackgroundZ.scaled(2560, 1440);
+    _dialogueBackgroundZ = _dialogueBackgroundZ.scaled(_dialogueBackgroundZ.size()*(SCREEN_SCALE/3));
     dialogueBackgroundZ = new QGraphicsPixmapItem(_dialogueBackgroundZ);
+    dialogueBackgroundZ->setPos(-(_dialogueBackgroundZ.width()-SCREEN_WIDTH)/2, -(_dialogueBackgroundZ.height()-SCREEN_HEIGHT));
     addItem(dialogueBackgroundZ);
     dialogueBackgroundZ->hide();
 

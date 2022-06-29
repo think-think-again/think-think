@@ -2,6 +2,7 @@
 #include "dialogue.h"
 #include "gameboard.h"
 #include "mainmenu.h"
+#include "myglobalvariants.h"
 #include "mywindow.h"
 
 #include <QAudioOutput>
@@ -56,7 +57,7 @@ QGraphicsView *MyWindow::initDialogue(int bossId)
     dialogueView->setRenderHint(QPainter::Antialiasing);
     dialogueView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     dialogueView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    dialogueView->setSceneRect(0, 0, 2560, 1440);
+    dialogueView->setSceneRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     return dialogueView;
 }
 

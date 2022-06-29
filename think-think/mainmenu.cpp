@@ -1,4 +1,5 @@
 #include "mainmenu.h"
+#include "myglobalvariants.h"
 #include "mywindow.h"
 #include <QFont>
 #include <QGraphicsPixmapItem>
@@ -9,23 +10,23 @@ MainMenu::MainMenu(QObject *parent)
     : QGraphicsScene{parent}
 {
     // change to screen resolution
-    QSize screenSize = QGuiApplication::primaryScreen()->size();
-    screenSize = QSize(2560, 1440);
-    setSceneRect(0, 0, screenSize.width(), screenSize.height());
+    setSceneRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     // set background
-    QPixmap bg(":/resources/main_menu.jpg");
-    bg = bg.scaled(screenSize.width(), screenSize.height());
-    background = new QGraphicsPixmapItem(bg);
+    // 8k resolution (3x)
+    QPixmap _background(":/resources/main_menu.jpg");
+    _background = _background.scaled(SCREEN_WIDTH, SCREEN_HEIGHT, Qt::KeepAspectRatioByExpanding);
+    background = new QGraphicsPixmapItem(_background);
+    background->setPos(-(_background.width()-SCREEN_WIDTH)/2, -(_background.height()-SCREEN_HEIGHT)/2);
     addItem(background);
 
     // add start button
     startGame = new StartButton("start");
-    startGame->setPos(2560-232, 1440-340);
+    startGame->setPos(SCREEN_WIDTH-232*SCREEN_SCALE, SCREEN_HEIGHT-340*SCREEN_SCALE);
     addItem(startGame);
 
     // add exit button
     exitGame = new StartButton("exit");
-    exitGame->setPos(2560-240, 1440-200);
+    exitGame->setPos(SCREEN_WIDTH-240*SCREEN_SCALE, SCREEN_HEIGHT-200*SCREEN_SCALE);
     addItem(exitGame);
 }
