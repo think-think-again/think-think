@@ -18,11 +18,11 @@
         <file>resources/FZYanSJW_Zhun.TTF</file>
         <file>resources/30232-0.7(RGB)(noise_scale)(Level0)(x4.000000).png</file>
         <file>resources/dialogue.png</file>
-        <file>resources/dialogue-1.png</file>
-        <file>resources/dialogue-2.png</file>
-        <file>resources/dialogue-3.png</file>
         <file>resources/dialogue-4.png</file>
         <file>resources/exit.png</file>
         <file>resources/menu.png</file>
+        <file>resources/gw.png</file>
+        <file>resources/ljy.png</file>
+        <file>resources/zqj.png</file>
     </qresource>
 </RCC>

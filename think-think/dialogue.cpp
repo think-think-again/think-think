@@ -43,7 +43,7 @@ Dialogue::Dialogue(QObject *parent, const QString &name)
     addItem(dialogueBackground);
     dialogueBackground->hide();
 
-    QPixmap _dialogueBackgroundBoss(":/resources/dialogue-1.png");
+    QPixmap _dialogueBackgroundBoss(":/resources/" + name + ".png");
     _dialogueBackgroundBoss = _dialogueBackgroundBoss.scaled(2560, 1440);
     dialogueBackgroundBoss = new QGraphicsPixmapItem(_dialogueBackgroundBoss);
     addItem(dialogueBackgroundBoss);
