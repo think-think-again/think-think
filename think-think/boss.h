@@ -1,8 +1,13 @@
 #ifndef BOSS_H
 #define BOSS_H
 
+#include "harmlabel.h"
+
 #include <QGraphicsPixmapItem>
+#include <QLabel>
 #include <QSequentialAnimationGroup>
+#include <time.h>
+#include <random>
 
 class Boss:public QObject, public QGraphicsPixmapItem
 {
@@ -21,9 +26,11 @@ private:
     QSequentialAnimationGroup *floating;
     int HP;
     int difficulty;
+    std::mt19937 joy;
 
 signals:
     void posChanged(QPointF);
+    void harmDisplay(HarmLabel*);
 
 };
 

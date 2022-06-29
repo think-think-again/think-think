@@ -316,6 +316,6 @@ void GameBoard::emitSelection(int gx, int gy)
 
 void GameBoard::removeGem(int gx, int gy)
 {
-    delete cell[gx][gy];
+    cell[gx][gy]->deleteLater();
     cell[gx][gy] = nullptr;
 }

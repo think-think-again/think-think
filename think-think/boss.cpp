@@ -1,10 +1,14 @@
 #include "boss.h"
+#include "harmlabel.h"
 
+#include <QLabel>
+#include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 
 Boss::Boss(const QString &name, int _difficulty, QGraphicsItem* parent)
     :QGraphicsPixmapItem(parent),
-    difficulty(_difficulty)
+    difficulty(_difficulty),
+    joy(20030206)
 {
     QPixmap bossPixmap(":/resources/character/" + name + ".png");
     setPixmap(bossPixmap);
@@ -33,6 +37,26 @@ Boss::Boss(const QString &name, int _difficulty, QGraphicsItem* parent)
 }
 
 void Boss::hurt(int harm){
+    HarmLabel *harmLabel = new HarmLabel(harm);
+    emit harmDisplay(harmLabel);
+    QParallelAnimationGroup *harmAnimation = new QParallelAnimationGroup;
+    QPropertyAnimation *ascend = new QPropertyAnimation(harmLabel, "pos");
+    int x = joy()%400+1800, y = joy()%800+400;
+    ascend->setStartValue(QPoint(x, y));
+    ascend->setEndValue(QPoint(x, y-200));
+    ascend->setDuration(1000);
+    ascend->setEasingCurve(QEasingCurve::OutQuad);
+    harmAnimation->addAnimation(ascend);
+    QPropertyAnimation *fadeOut = new QPropertyAnimation(harmLabel, "alpha");
+    fadeOut->setStartValue(1);
+    fadeOut->setEndValue(0);
+    fadeOut->setDuration(2000);
+    harmAnimation->addAnimation(fadeOut);
+
+    connect(harmAnimation, &QParallelAnimationGroup::finished,
+            harmLabel, &QLabel::deleteLater);
+    harmAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+
     HP -= harm;
     if (HP < 0) HP = 0;
     return;

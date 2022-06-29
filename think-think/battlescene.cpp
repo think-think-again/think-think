@@ -35,10 +35,12 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     Player* _player = player;
 
     int dif;
-    if(name == "ljy")dif = 1;
-    if(name == "zqj")dif = 2;
-    if(name == "gw")dif = 3;
+    if(name == "ljy") dif = 1;
+    if(name == "zqj") dif = 2;
+    if(name == "gw") dif = 3;
     boss = new Boss(name, dif);
+    connect(boss, &Boss::harmDisplay,
+            this, &BattleScene::handleHarmDisplay);
     addItem(boss);
     Boss *_boss = boss;
 
@@ -251,4 +253,9 @@ void BattleScene::handleTurnFinished()
     if (boss->GetHp() == 0) {
         emit battleSucceeded();
     }
+}
+
+void BattleScene::handleHarmDisplay(HarmLabel *harmLabel)
+{
+    addWidget(harmLabel);
 }

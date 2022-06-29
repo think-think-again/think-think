@@ -71,7 +71,7 @@ void MyWindow::startDialogue()
 {
     QWidget *w = layout->currentWidget();
     layout->removeWidget(w);
-//    delete w;
+    w->deleteLater();
     layout->addWidget(initDialogue(currentBossId));
 }
 
@@ -79,7 +79,7 @@ void MyWindow::startBattle()
 {
     QWidget *w = layout->currentWidget();
     layout->removeWidget(w);
-//    delete w;
+    w->deleteLater();
     layout->addWidget(initBattle(currentBossId));
 }
 
@@ -87,7 +87,7 @@ void MyWindow::returnMenu()
 {
     QWidget *w = layout->currentWidget();
     layout->removeWidget(w);
-//    delete w;
+    w->deleteLater();
     layout->addWidget(initMainMenu());
 }
 

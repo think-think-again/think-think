@@ -14,6 +14,7 @@ SOURCES += \
     dialogue.cpp \
     gameboard.cpp \
     gem.cpp \
+    harmlabel.cpp \
     main.cpp \
     mainmenu.cpp \
     mywindow.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     dialogue.h \
     gameboard.h \
     gem.h \
+    harmlabel.h \
     mainmenu.h \
     mywindow.h \
     player.h \

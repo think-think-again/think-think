@@ -36,6 +36,7 @@ public slots:
     void increasePlayerHp(int x);
     void increaseBossHp(int x);
     void handleTurnFinished();
+    void handleHarmDisplay(HarmLabel *harmLabel);
 };
 
 #endif // BATTLESCENE_H
