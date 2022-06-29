@@ -16,15 +16,15 @@ Gem::Gem(GemTypes tp, GameBoard *parent, int x, int y)
       curSwapAnimation(nullptr)
 {
     auto gemTypeName = [](GemTypes tp){
-        if(tp == Blue) return ":/resources/b.png";
-        if(tp == Green) return ":/resources/g.png";
-        if(tp == Red) return ":/resources/r.png";
-        if(tp == Orange) return ":/resources/o.png";
-        if(tp == (Blue | Upgraded)) return ":/resources/bb.png";
-        if(tp == (Green | Upgraded)) return ":/resources/gg.png";
-        if(tp == (Red | Upgraded)) return ":/resources/rr.png";
-        if(tp == (Orange | Upgraded)) return ":/resources/oo.png";
-        if(tp == Super) return ":/resources/s.png";
+        if(tp == Blue) return ":/resources/gems/b.png";
+        if(tp == Green) return ":/resources/gems/g.png";
+        if(tp == Red) return ":/resources/gems/r.png";
+        if(tp == Orange) return ":/resources/gems/o.png";
+        if(tp == (Blue | Upgraded)) return ":/resources/gems/bb.png";
+        if(tp == (Green | Upgraded)) return ":/resources/gems/gg.png";
+        if(tp == (Red | Upgraded)) return ":/resources/gems/rr.png";
+        if(tp == (Orange | Upgraded)) return ":/resources/gems/oo.png";
+        if(tp == Super) return ":/resources/gems/s.png";
         qCritical() << "invalid gem type";
         return "invalid";
     };

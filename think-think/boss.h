@@ -13,7 +13,7 @@ class Boss:public QObject, public QGraphicsPixmapItem
                NOTIFY posChanged)
 
 public:
-    explicit Boss(int _difficulty, QGraphicsItem* parent = 0);
+    explicit Boss(const QString &name, int _difficulty, QGraphicsItem* parent = 0);
     void hurt(int harm);
     int GetHp();
 

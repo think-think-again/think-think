@@ -9,7 +9,7 @@ Skill::Skill(BattleScene *_scene, const QString &_introduction, bool _isDirectio
       introduction(_introduction),
       isDirectional(_isDirectional)
 {
-    QPixmap _icon(":/resources/g.png");
+    QPixmap _icon(":/resources/gems/g.png");
     icon = new QGraphicsPixmapItem(_icon);
     icon->setZValue(0);
     scene->addItem(icon);
@@ -30,7 +30,7 @@ Skill::Skill(BattleScene *_scene, const QString &_introduction, bool _isDirectio
     connect(layer, &SkillHoverLayer::mousePress,
             this, &Skill::handleMousePress);
 
-    QFile fontFile(":/resources/FZYanSJW_Zhun.TTF");
+    QFile fontFile(":/resources/fonts/FZYanSJW_Zhun.TTF");
     fontFile.open(QIODevice::ReadOnly);
     int fontId = QFontDatabase::addApplicationFontFromData(fontFile.readAll());
     font.setFamilies(QFontDatabase::applicationFontFamilies(fontId));

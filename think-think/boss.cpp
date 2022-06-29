@@ -2,11 +2,11 @@
 
 #include <QPropertyAnimation>
 
-Boss::Boss(int _difficulty, QGraphicsItem* parent)
+Boss::Boss(const QString &name, int _difficulty, QGraphicsItem* parent)
     :QGraphicsPixmapItem(parent),
     difficulty(_difficulty)
 {
-    QPixmap bossPixmap(":/resources/30232-0.7(RGB)(noise_scale)(Level0)(x4.000000).png");
+    QPixmap bossPixmap(":/resources/character/" + name + ".png");
     setPixmap(bossPixmap);
     setScale(0.7);
     setPos(1200, 300);

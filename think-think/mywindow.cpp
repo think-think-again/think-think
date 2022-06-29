@@ -17,8 +17,8 @@ MyWindow::MyWindow(QApplication *_app, QWidget *parent)
     currentBossId = 0;
 
     layout = new QStackedLayout(this);
-//    layout->addWidget(initMainMenu());
-    layout->addWidget(initBattle(currentBossId));
+    layout->addWidget(initMainMenu());
+//    layout->addWidget(initBattle(currentBossId));
 }
 
 QGraphicsView *MyWindow::initMainMenu()

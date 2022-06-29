@@ -32,7 +32,7 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     player = new Player;
     Player* _player = player;
 
-    boss = new Boss(1);
+    boss = new Boss(name, 1);
     addItem(boss);
     Boss *_boss = boss;
 

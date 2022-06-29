@@ -1,14 +1,7 @@
 {
   "bossName": "郭老师",
+  "prologue": "由于疫情，所有的科目都改成了线上教学。<br>但是，这并没有影响到小Z的学习热情。",
   "dialogue": [
-    {
-      "speaker": "Voice-over",
-      "content": "由于疫情，所有的科目都改成了线上教学。"
-    },
-    {
-      "speaker": "Voice-over",
-      "content": "但是，这并没有影响到小Z的学习热情。"
-    },
     {
       "speaker": "小Z",
       "content": "来，开始看慕课啦。不知道程设的算法部分会讲点什么呢？"
@@ -82,7 +75,7 @@
       "content": "小Z正纳闷呢，突然，一阵神秘的声音传入她的脑海。"
     },
     {
-      "speaker": "？？？",
+      "speaker": "Voice-over",
       "content": "年轻人啊，好好看视频吧，这个视频里总有你没有学到过的知识。"
     },
     {

@@ -19,8 +19,11 @@ Dialogue::Dialogue(QObject *parent, const QString &name)
       clicked(false)
 {
     timer = new QTimer(this);
+    if(name=="ljy") bossName = "刘老师";
+    if(name=="zqj") bossName = "张老师";
+    if(name=="gw") bossName = "郭老师";
 
-    QFile fontFile(":/resources/FZYanSJW_Zhun.TTF");
+    QFile fontFile(":/resources/fonts/FZYanSJW_Zhun.TTF");
     fontFile.open(QIODevice::ReadOnly);
     int fontId = QFontDatabase::addApplicationFontFromData(fontFile.readAll());
     font.setFamilies(QFontDatabase::applicationFontFamilies(fontId));
@@ -37,19 +40,19 @@ Dialogue::Dialogue(QObject *parent, const QString &name)
     backgroundMask = new QGraphicsPixmapItem(_backgroundMask);
     addItem(backgroundMask);
 
-    QPixmap _dialogueBackground(":/resources/dialogue.png");
+    QPixmap _dialogueBackground(":/resources/character-dialogue/dialogue.png");
     _dialogueBackground = _dialogueBackground.scaled(2560, 1440);
     dialogueBackground = new QGraphicsPixmapItem(_dialogueBackground);
     addItem(dialogueBackground);
     dialogueBackground->hide();
 
-    QPixmap _dialogueBackgroundBoss(":/resources/" + name + ".png");
+    QPixmap _dialogueBackgroundBoss(":/resources/character-dialogue/" + name + ".png");
     _dialogueBackgroundBoss = _dialogueBackgroundBoss.scaled(2560, 1440);
     dialogueBackgroundBoss = new QGraphicsPixmapItem(_dialogueBackgroundBoss);
     addItem(dialogueBackgroundBoss);
     dialogueBackgroundBoss->hide();
 
-    QPixmap _dialogueBackgroundZ(":/resources/dialogue-4.png");
+    QPixmap _dialogueBackgroundZ(":/resources/character-dialogue/z.png");
     _dialogueBackgroundZ = _dialogueBackgroundZ.scaled(2560, 1440);
     dialogueBackgroundZ = new QGraphicsPixmapItem(_dialogueBackgroundZ);
     addItem(dialogueBackgroundZ);
@@ -111,7 +114,7 @@ void Dialogue::mousePressEvent(__attribute__ ((unused))QGraphicsSceneMouseEvent 
         }
         if(speakerName == "Boss"){
             dialogueBackgroundBoss->show();
-            speaker->setText("刘老师");
+            speaker->setText(bossName);
         }
         if(speakerName == "小Z"){
             dialogueBackgroundZ->show();
