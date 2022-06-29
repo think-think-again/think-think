@@ -34,7 +34,11 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     player = new Player;
     Player* _player = player;
 
-    boss = new Boss(name, 1);
+    int dif;
+    if(name == "ljy")dif = 1;
+    if(name == "zqj")dif = 2;
+    if(name == "gw")dif = 3;
+    boss = new Boss(name, dif);
     addItem(boss);
     Boss *_boss = boss;
 

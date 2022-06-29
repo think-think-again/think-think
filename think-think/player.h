@@ -6,7 +6,7 @@ class Player: public QObject, public QGraphicsPixmapItem
 {
 public:
    explicit Player(QGraphicsItem* parent = 0);
-    const int Attack = 50;
+    const int Attack = 30;
     const int UpperBoundHp = 1000;
     const int UpperBoundMp = 1000;
     const int getHP = 50;
