@@ -58,29 +58,101 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     boardView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     boardView->setFixedSize(boardScene->sceneRect().size().toSize());
     boardView->setStyleSheet("background: transparent; border:0px");
-    //boardView->setAttribute(Qt::WA_TranslucentBackground,true);
     QGraphicsProxyWidget *boardProxy = addWidget(boardView);
     boardProxy->setPos(300, 300);
 
+    QProgressBar *BossHpBg = new QProgressBar;
+    addWidget(BossHpBg);
+    BossHpBg->setOrientation(Qt::Horizontal);
+    BossHpBg->setMinimum(0);
+    BossHpBg->setMaximum(1);
+    BossHpBg->setValue(1);
+    BossHpBg->setGeometry(600, 100, 1000, 50);
+    BossHpBg->setFormat("");
+    BossHpBg->setStyleSheet("QProgressBar{"
+                            "    background: transparent;"
+                            "    border-radius: 20px;"
+                            "}"
+                            "QProgressBar::chunk{"
+                            "    background: #818181;"
+                            "    border-radius: 20px;"
+                            "}");
+
     BossHp = new QProgressBar;
     addWidget(BossHp);
-    BossHp->move(300, 250);
     BossHp->setOrientation(Qt::Horizontal);
     BossHp->setMinimum(0);
     BossHp->setMaximum(boss->GetHp());
     BossHp->setValue(boss->GetHp());
+    BossHp->setGeometry(600, 100, 1000, 50);
     BossHp->setFormat(QString::fromLocal8Bit("%v"));
     BossHp->setAlignment(Qt::AlignCenter);
+    BossHp->setStyleSheet("QProgressBar{"
+                          "    background: transparent;"
+                          "    border: 2px solid red;"
+                          "    border-radius: 20px;"
+                          "    color: white;"
+                          "    font-size: 30px;"
+                          "}"
+                          "QProgressBar::chunk{"
+                          "    background: rgb(244, 88, 56);"
+                          "    border-radius: 20px;"
+                          "}");
+
+    QProgressBar *PlayerHpBg = new QProgressBar;
+    addWidget(PlayerHpBg);
+    PlayerHpBg->setOrientation(Qt::Horizontal);
+    PlayerHpBg->setMinimum(0);
+    PlayerHpBg->setMaximum(1);
+    PlayerHpBg->setValue(1);
+    PlayerHpBg->setGeometry(320, 1440-170, 300, 40);
+    PlayerHpBg->setFormat("");
+    PlayerHpBg->setStyleSheet("QProgressBar{"
+                              "    background: transparent;"
+                              "    border-radius: 10px;"
+                              "}"
+                              "QProgressBar::chunk{"
+                              "    background: #818181;"
+                              "    border-radius: 10px;"
+                              "}");
 
     PlayerHp = new QProgressBar;
     addWidget(PlayerHp);
-    PlayerHp->move(300, 1440-200);
     PlayerHp->setOrientation(Qt::Horizontal);
     PlayerHp->setMinimum(0);
     PlayerHp->setMaximum(player->UpperBoundHp);
     PlayerHp->setValue(player->ReturnHp());
+    PlayerHp->setGeometry(320, 1440-170, 300, 40);
     PlayerHp->setFormat(QString::fromLocal8Bit("%v"));
     PlayerHp->setAlignment(Qt::AlignCenter);
+    PlayerHp->setStyleSheet("QProgressBar{"
+                            "    background: transparent;"
+                            "    border: 2px solid green;"
+                            "    border-radius: 10px;"
+                            "    color: yellow;"
+                            "    font-size: 20px;"
+                            "}"
+                            "QProgressBar::chunk{"
+                            "    background: green;"
+                            "    border-radius: 10px;"
+                            "}");
+
+    QProgressBar *PlayerMpBg = new QProgressBar;
+    addWidget(PlayerMpBg);
+    PlayerMpBg->setOrientation(Qt::Horizontal);
+    PlayerMpBg->setMinimum(0);
+    PlayerMpBg->setMaximum(1);
+    PlayerMpBg->setValue(1);
+    PlayerMpBg->setGeometry(320, 1440-100, 300, 40);
+    PlayerMpBg->setFormat("");
+    PlayerMpBg->setStyleSheet("QProgressBar{"
+                              "    background: transparent;"
+                              "    border-radius: 10px;"
+                              "}"
+                              "QProgressBar::chunk{"
+                              "    background: #ffffff;"
+                              "    border-radius: 10px;"
+                              "}");
 
     PlayerMp = new QProgressBar;
     addWidget(PlayerMp);
@@ -89,8 +161,20 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     PlayerMp->setMinimum(0);
     PlayerMp->setMaximum(player->UpperBoundMp);
     PlayerMp->setValue(0);
+    PlayerMp->setGeometry(320, 1440-100, 300, 40);
     PlayerMp->setFormat(QString::fromLocal8Bit("%v"));
     PlayerMp->setAlignment(Qt::AlignCenter);
+    PlayerMp->setStyleSheet("QProgressBar{"
+                            "    background: transparent;"
+                            "    border: 2px solid yellow;"
+                            "    border-radius: 10px;"
+                            "    color: blue;"
+                            "    font-size: 20px;"
+                            "}"
+                            "QProgressBar::chunk{"
+                            "    background: yellow;"
+                            "    border-radius: 10px;"
+                            "}");
 
     board->BossHp = BossHp;
     board->PlayerHp = PlayerHp;
