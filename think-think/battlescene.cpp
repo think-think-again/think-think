@@ -6,6 +6,8 @@
 #include "skill4.h"
 #include "mywindow.h"
 
+#include <QFile>
+#include <QFontDatabase>
 #include <QGraphicsProxyWidget>
 #include <QGraphicsView>
 #include <QGuiApplication>
@@ -113,16 +115,25 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
                 this, &BattleScene::increaseBossHp);
         connect(skill[i], &Skill::skillPerformed,
                 this, &BattleScene::handleTurnFinished);
-        skill[i]->setPos(900+i*100, 1440-200);
+        skill[i]->setPos(700+i*150, 1440-200);
     }
+
+    QFile fontFile(":/resources/fonts/FZYanSJW_Zhun.TTF");
+    fontFile.open(QIODevice::ReadOnly);
+    int fontId = QFontDatabase::addApplicationFontFromData(fontFile.readAll());
+    QFont font;
+    font.setFamilies(QFontDatabase::applicationFontFamilies(fontId));
+    font.setPixelSize(30);
+
     RoundNum = new QLabel;
+    RoundNum->setFont(font);
+    RoundNum->setStyleSheet("QLabel{ background: rgba(170, 0, 0, 0.7); color: white; border-style: outset; border-width: medium; border-color: rgba(170, 0, 0, 0.7);}");
     addWidget(RoundNum);
-    RoundNum->setNum(board->T);
-    //RoundNum->setText("Hello World!");
-    RoundNum->move(300, 200);
+    RoundNum->setText("回合数：1 / 40");
+    RoundNum->move(300, 170);
     board->RoundNum = RoundNum;
-    RoundNum->setMargin(5);
-    RoundNum->setScaledContents(true);
+//    RoundNum->setMargin(5);
+//    RoundNum->setScaledContents(true);
 
 }
 

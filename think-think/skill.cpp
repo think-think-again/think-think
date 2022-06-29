@@ -4,12 +4,12 @@
 #include <QFile>
 #include <QFontDatabase>
 
-Skill::Skill(BattleScene *_scene, const QString &_introduction, bool _isDirectional)
+Skill::Skill(BattleScene *_scene, const QString &_introduction, int id, bool _isDirectional)
     : scene(_scene),
       introduction(_introduction),
       isDirectional(_isDirectional)
 {
-    QPixmap _icon(":/resources/gems/g.png");
+    QPixmap _icon(":/resources/skills/skill" + QString::number(id) + ".png");
     icon = new QGraphicsPixmapItem(_icon);
     icon->setZValue(0);
     scene->addItem(icon);
@@ -20,8 +20,8 @@ Skill::Skill(BattleScene *_scene, const QString &_introduction, bool _isDirectio
     layer->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     scene->addItem(layer);
 //    qDebug() << "layer Z: " << layer->zValue();
-    icon->setScale(1./3);
-    layer->setScale(1./3);
+    icon->setScale(1./8);
+    layer->setScale(1./8);
 
     connect(layer->hoverDelay, &QTimer::timeout,
             this, &Skill::showIntroduction);
@@ -42,7 +42,6 @@ Skill::Skill(BattleScene *_scene, const QString &_introduction, bool _isDirectio
     introductionLabel->hide();
     introductionLabelProxy = scene->addWidget(introductionLabel);
     introductionLabelProxy->setZValue(2);
-    //    qDebug() << "label Z: " << introductionLabelProxy->zValue();
 }
 
 void Skill::setPos(qreal x, qreal y)

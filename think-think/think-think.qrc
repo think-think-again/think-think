@@ -28,5 +28,11 @@
         <file>resources/gems/rr.png</file>
         <file>resources/gems/s.png</file>
         <file>resources/fonts/FZYanSJW_Zhun.TTF</file>
+        <file>resources/skills/skill1.png</file>
+        <file>resources/skills/skill2.png</file>
+        <file>resources/skills/skill3.png</file>
+        <file>resources/skills/skill4.png</file>
+        <file>resources/skills/skill3-s.png</file>
+        <file>resources/skills/skill4-s.png</file>
     </qresource>
 </RCC>

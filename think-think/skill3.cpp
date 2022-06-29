@@ -1,7 +1,7 @@
 #include "skill3.h"
 
 Skill3::Skill3(BattleScene *_scene, GameBoard *_board, Player *_player)
-    : Skill(_scene, introduction)
+    : Skill(_scene, introduction, 3)
 {
     selected = false;
     board = _board;
@@ -15,7 +15,7 @@ void Skill3::handleMousePress()
         disconnect(board, &GameBoard::select,
                 this, &Skill3::handleSelection);
         selected = false;
-        QPixmap _icon(":/resources/g.png");
+        QPixmap _icon(":/resources/skills/skill3.png");
         icon->setPixmap(_icon);
         board->setSkillSelected(false);
     }
@@ -23,7 +23,7 @@ void Skill3::handleMousePress()
         connect(board, &GameBoard::select,
                 this, &Skill3::handleSelection);
         selected = true;
-        QPixmap _icon(":/resources/gg.png");
+        QPixmap _icon(":/resources/skills/skill3-s.png");
         icon->setPixmap(_icon);
         board->setSkillSelected(true);
     }
@@ -37,7 +37,7 @@ void Skill3::handleSelection(int gx, int gy)
     disconnect(board, &GameBoard::select,
             this, &Skill3::handleSelection);
     selected = false;
-    QPixmap _icon(":/resources/g.png");
+    QPixmap _icon(":/resources/skills/skill3.png");
     icon->setPixmap(_icon);
     board->setSkillSelected(false);
     player->GetMP(-500);

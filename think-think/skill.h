@@ -15,7 +15,7 @@ class Skill : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    Skill(BattleScene *_scene, const QString &_introduction, bool _isDirectional = false);
+    Skill(BattleScene *_scene, const QString &_introduction, int id, bool _isDirectional = false);
     void setPos(qreal x, qreal y);
     BattleScene *scene;
     QString introduction;

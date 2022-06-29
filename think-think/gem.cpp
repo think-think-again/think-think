@@ -94,7 +94,7 @@ void Gem::handleMouseRelease()
     if(board->existMatching())
     {
         board->T++;
-        board->RoundNum->setNum(board->T);
+        board->RoundNum->setText("回合数：" + QString::number(board->T) + " / 40");
         board->lazyErase();
         //qDebug() << board->T;
     }

@@ -2,7 +2,7 @@
 #include "battlescene.h"
 
 Skill2::Skill2(BattleScene *_scene)
-    : Skill(_scene, introduction)
+    : Skill(_scene, introduction, 2)
 {
 
 }
