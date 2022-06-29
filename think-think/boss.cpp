@@ -34,6 +34,9 @@ Boss::Boss(const QString &name, int _difficulty, QGraphicsItem* parent)
 
     setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     HP = 1500 + difficulty * 1000;
+    UpperBoundHp = HP;
+    PhysicalDefense = 5 + _difficulty * 5;
+    MagicalDefense = 8 + _difficulty * 4;
 }
 
 void Boss::hurt(int harm){
@@ -65,4 +68,43 @@ void Boss::hurt(int harm){
 int Boss::GetHp()
 {
     return HP;
+}
+int Boss::getPD()
+{
+    return PhysicalDefense;
+}
+int Boss::getMD()
+{
+    return MagicalDefense;
+}
+
+void Boss::Skill()
+{
+    if (BossSkillId == 0)
+    {
+        int dHp = difficulty * 50 + 150;
+        player->GetHP(-1 * dHp);
+        player->PlayerHp->setValue(player->ReturnHp());
+    }
+    else if (BossSkillId == 1)
+    {
+        int dMp = difficulty * 30 + 50;
+        player->GetMP(-1 * dMp);
+        player->PlayerMp->setValue(player->ReturnMp());
+    }
+    else if (BossSkillId == 2)
+    {
+        int dHp = 50 + difficulty * 50;
+        player->GetHP(-1 * dHp);
+        HP += 50 + difficulty * 50;
+        if (HP > UpperBoundHp) HP = UpperBoundHp;
+        BossHp->setValue(HP);
+        player->PlayerHp->setValue(player->ReturnHp());
+    }
+    else if (BossSkillId == 3)
+    {
+        player->debuff = 1 - difficulty * 0.1;
+        player->duration = 5;
+    }
+
 }

@@ -31,11 +31,15 @@ public:
     void removeGem(int gx, int gy);
     QParallelAnimationGroup *gemsFalling();
     int T;
+    int SkillToGo;
+    int BossSkillId;
+    int BossSkillTime[4];
     Boss *boss;
     QProgressBar *BossHp;
     QProgressBar *PlayerHp;
     QProgressBar *PlayerMp;
     QLabel *RoundNum;
+    QLabel *BossSkillInform;
 
 private:
     Gem *cell[boardSizeX][boardSizeY];
@@ -50,6 +54,7 @@ private:
 signals:
     void select(int, int);
     void turnFinished();
+    void turnBossSkill();
 
 public slots:
     void lazyErase(bool fallFirst = false);

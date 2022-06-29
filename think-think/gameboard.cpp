@@ -15,6 +15,10 @@ GameBoard::GameBoard(Boss *_boss,Player* _player, QGraphicsItem *parent)
     T = 1;
     boss = _boss;
     player = _player;
+    BossSkillTime[0] = 3;
+    BossSkillTime[1] = 4;
+    BossSkillTime[2] = 5;
+    BossSkillTime[3] = 5;
     for(int i=0; i<boardSizeX; ++i) for(int j=0; j<boardSizeY; ++j) cell[i][j] = nullptr;
     // TODO: more efficient initialization is needed.
     do{
@@ -23,6 +27,10 @@ GameBoard::GameBoard(Boss *_boss,Player* _player, QGraphicsItem *parent)
             cell[i][j] = new Gem(GemTypes(1<<gemGenerator(rng)), this, i, j);
         }
     } while(existMatching());
+    BossSkillId = gemGenerator(rng);
+    SkillToGo = BossSkillTime[BossSkillId];
+    boss->BossSkillId = BossSkillId;
+    connect(this, &GameBoard::turnBossSkill, boss, &Boss::Skill);
 }
 
 void GameBoard::lazyErase(bool fallFirst){
@@ -38,6 +46,18 @@ void GameBoard::lazyErase(bool fallFirst){
     else{
         connect(group, &QParallelAnimationGroup::finished,
                 this, &GameBoard::_turnFinished);
+        if (player->duration > 0) player->duration--;
+        else if (player->duration == 0) player->debuff = 1;
+        SkillToGo--;
+        BossSkillInform->setText(QString::number(boss->BossSkillId)+" "+QString::number(SkillToGo));
+        if (SkillToGo == 0){
+            qDebug() << 1;
+            emit turnBossSkill();
+            BossSkillId = gemGenerator(rng);
+            SkillToGo = BossSkillTime[BossSkillId];
+            boss->BossSkillId = BossSkillId;
+            BossSkillInform->setText(QString::number(boss->BossSkillId)+" "+QString::number(SkillToGo));
+        }
     }
     group->start(QPropertyAnimation::DeleteWhenStopped);
 }
@@ -113,7 +133,7 @@ void GameBoard::eraseMatchings()
                 GemTypes temp = getBasicType(j, i);
                 tempcolor = temp;
                 int cnt = 0, mem = -1;
-                bool _4 = false;
+                bool _5 = false;
                 for (int k = i; k < boardSizeY && getBasicType(j, k) == temp; ++k){
                     int BranchBasicNum = 0, BranchUpgradeNum = 0;
                     if (cell[j][k]->getType() & Upgraded) UpgradeNum++;
@@ -135,7 +155,7 @@ void GameBoard::eraseMatchings()
                         mem = k;
                         BasicNum += BranchBasicNum;
                         UpgradeNum += BranchUpgradeNum;
-                        if (sumcol == 3) _4 = true;
+                        if (sumcol == 4) _5 = true;
                         for (int l = j - 1; l >= 0 && getBasicType(l, k) == temp; --l){
                             removeGem(l, k);
                         }
@@ -145,13 +165,14 @@ void GameBoard::eraseMatchings()
                     }
                 }
                 if (cnt == 3) {
-                    if (_4) {
+                    if (_5)
+                    {
+                        cell[j][mem] = new Gem(Super, this, j, mem);
+                        BasicHit = 4;
+                    }
+                    else if (mem != -1) {
                         cell[j][mem] = new Gem(Upgraded | temp, this, j, mem);
                         BasicHit = 3;
-                    }
-                    else if (mem != -1){
-                        cell[j][mem] = new Gem(Upgraded | temp, this, j ,mem);
-                        BasicHit = 2;
                     }
                     else {
                         BasicHit = 1;
@@ -237,19 +258,19 @@ void GameBoard::eraseMatchings()
             {
                 UpgradeHit = UpgradeNum * BasicHit;
                 if (tempcolor == Blue) {
-                    boss->hurt(player->Attack * BasicHit + (int)player->Attack * player->UpgradeRateBlue * UpgradeHit);
+                    boss->hurt((player->Attack * player->debuff - boss->getPD()) * BasicHit + (int)(player->Attack * player->debuff - boss->getPD()) * player->UpgradeRateBlue * UpgradeHit);
                     BossHp->setValue(boss->GetHp());
                 }
                 else if (tempcolor == Red) {
-                    boss->hurt(player->Attack * BasicHit + (int)player->Attack * player->UpgradeRateRed * UpgradeHit);
+                    boss->hurt((player->Attack * player->debuff - boss->getMD()) * BasicHit + (int)(player->Attack * player->debuff - boss->getMD())* player->UpgradeRateRed * UpgradeHit);
                     BossHp->setValue(boss->GetHp());
                 }
                 else if (tempcolor == Green) {
-                    player->GetHP(player->getHP * BasicHit + (int)player->getHP * player->UpgardeRateGreen * UpgradeHit);
+                    player->GetHP(player->getHP * player->debuff * BasicHit + (int)player->getHP * player->debuff * player->UpgardeRateGreen * UpgradeHit);
                     PlayerHp->setValue(player->ReturnHp());
                 }
                 else if (tempcolor == Orange) {
-                    player->GetMP(player->getMP * BasicHit + (int)player->getMP * player->UpgradeRateOrange * UpgradeHit);
+                    player->GetMP(player->getMP * player->debuff * BasicHit + (int)player->getMP * player->debuff * player->UpgradeRateOrange * UpgradeHit);
                     PlayerMp->setValue(player->ReturnMp());
                 }
             }

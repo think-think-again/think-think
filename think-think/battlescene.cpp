@@ -41,6 +41,7 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     if(name == "zqj") dif = 2;
     if(name == "gw") dif = 3;
     boss = new Boss(name, dif);
+    boss->player = _player;
     connect(boss, &Boss::harmDisplay,
             this, &BattleScene::handleHarmDisplay);
     addItem(boss);
@@ -226,7 +227,14 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     board->RoundNum = RoundNum;
 //    RoundNum->setMargin(5);
 //    RoundNum->setScaledContents(true);
-
+    boss->BossHp = BossHp;
+    player->PlayerHp = PlayerHp;
+    player->PlayerMp = PlayerMp;
+    BossSkillId = new QLabel;
+    addWidget(BossSkillId);
+    BossSkillId->move(1000, 250);
+    BossSkillId->setText(QString::number(boss->BossSkillId)+" "+QString::number(board->SkillToGo));
+    board->BossSkillInform = BossSkillId;
 }
 
 void BattleScene::increaseMp(int x)

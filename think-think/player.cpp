@@ -9,6 +9,9 @@ Player::Player(QGraphicsItem* parent)
 {
     HP = 1000;
     MP = 0;
+    debuff = 1;
+    getHP = Attack * 4 / 5;
+    getMP = Attack * 4 / 5;
 }
 
 void Player::GetHP(int dHP) {
