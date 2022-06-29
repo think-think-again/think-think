@@ -40,12 +40,20 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     connect(board, &GameBoard::turnFinished,
             this, &BattleScene::handleTurnFinished);
     QGraphicsScene *boardScene = new QGraphicsScene;
+    QPixmap _gameboard_Background(":/resources/gameboard_background.png");
+    _gameboard_Background = _gameboard_Background.scaled(2560, 1440, Qt::KeepAspectRatioByExpanding);
+    QGraphicsPixmapItem *gameboard_background = new QGraphicsPixmapItem(_gameboard_Background);
+    gameboard_background->setPos(-(_gameboard_Background.width()-2560)/2, -(_gameboard_Background.height()-1440)/2);
     boardScene->addItem(board);
+    addItem(gameboard_background);
+
     QGraphicsView *boardView = new QGraphicsView(boardScene);
     boardView->setRenderHint(QPainter::Antialiasing);
     boardView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     boardView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     boardView->setFixedSize(boardScene->sceneRect().size().toSize());
+    boardView->setStyleSheet("background: transparent;border:0px");
+    //boardView->setAttribute(Qt::WA_TranslucentBackground,true);
     QGraphicsProxyWidget *boardProxy = addWidget(boardView);
     boardProxy->setPos(300, 300);
 

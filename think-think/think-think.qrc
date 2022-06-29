@@ -24,5 +24,6 @@
         <file>resources/gw.png</file>
         <file>resources/ljy.png</file>
         <file>resources/zqj.png</file>
+        <file>resources/gameboard_background.png</file>
     </qresource>
 </RCC>
