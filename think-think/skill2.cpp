@@ -1,5 +1,6 @@
 #include "skill2.h"
 #include "battlescene.h"
+#include "myglobalvariants.h"
 
 Skill2::Skill2(BattleScene *_scene)
     : Skill(_scene, introduction, 2)
@@ -9,6 +10,7 @@ Skill2::Skill2(BattleScene *_scene)
 
 void Skill2::handleMousePress()
 {
+    if(BAN_MOUSE_EVENTS) return;
     if(scene->player->ReturnMp()>=mpCost){
         emit increaseBossHp(-attack);
         emit increaseMp(-mpCost);
@@ -17,5 +19,6 @@ void Skill2::handleMousePress()
         layer->hide();
         introductionLabel->hide();
         introductionLabelProxy->hide();
+        layer->hoverDelay->stop();
     }
 }

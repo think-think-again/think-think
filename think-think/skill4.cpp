@@ -1,4 +1,5 @@
 #include "skill4.h"
+#include "myglobalvariants.h"
 
 Skill4::Skill4(BattleScene *_scene, GameBoard *_board, Player *_player)
     : Skill(_scene, introduction, 4)
@@ -11,6 +12,7 @@ Skill4::Skill4(BattleScene *_scene, GameBoard *_board, Player *_player)
 
 void Skill4::handleMousePress()
 {
+    if(BAN_MOUSE_EVENTS) return;
     if(selected){
         disconnect(board, &GameBoard::select,
                 this, &Skill4::handleSelection);
@@ -45,6 +47,6 @@ void Skill4::handleSelection(int gx, int gy)
         icon->hide();
         layer->hide();
         introductionLabel->hide();
-        introductionLabelProxy->hide();
+        layer->hoverDelay->stop();
     }
 }

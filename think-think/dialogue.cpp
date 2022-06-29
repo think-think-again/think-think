@@ -1,4 +1,5 @@
 #include "dialogue.h"
+#include "myglobalvariants.h"
 #include "mywindow.h"
 
 #include <QFile>
@@ -98,6 +99,7 @@ void Dialogue::initialize()
 
 void Dialogue::mousePressEvent(__attribute__ ((unused))QGraphicsSceneMouseEvent *mouseEvent)
 {
+    if(BAN_MOUSE_EVENTS) return;
     if(!clicked){
         clicked = true;
         prologue->setText("");
@@ -130,6 +132,7 @@ void Dialogue::mousePressEvent(__attribute__ ((unused))QGraphicsSceneMouseEvent 
 
 void Dialogue::setTextAnimation(QLabel *label, const QString &str)
 {
+    BAN_MOUSE_EVENTS = true;
     animationStr = str;
     animationLabel = label;
     animationProgress = 0;
@@ -141,6 +144,7 @@ void Dialogue::updateLabel()
 {
     if(animationProgress == animationStr.length()){
         timer->stop();
+        BAN_MOUSE_EVENTS = false;
     }
     else{
         QString str = "<p style='line-height: 70px'>" + animationStr.left(++animationProgress) + "</p>";

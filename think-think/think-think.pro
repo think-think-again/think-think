@@ -18,6 +18,7 @@ SOURCES += \
     harmlabel.cpp \
     main.cpp \
     mainmenu.cpp \
+    myglobalvariants.cpp \
     mywindow.cpp \
     player.cpp \
     skill.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     gem.h \
     harmlabel.h \
     mainmenu.h \
+    myglobalvariants.h \
     mywindow.h \
     player.h \
     skill.h \

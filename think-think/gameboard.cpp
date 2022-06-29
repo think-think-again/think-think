@@ -1,4 +1,5 @@
 #include "gameboard.h"
+#include "myglobalvariants.h"
 #include <time.h>
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
@@ -25,6 +26,7 @@ GameBoard::GameBoard(Boss *_boss,Player* _player, QGraphicsItem *parent)
 }
 
 void GameBoard::lazyErase(bool fallFirst){
+    BAN_MOUSE_EVENTS = true;
     if(!fallFirst){
         eraseMatchings();
     }
@@ -42,6 +44,7 @@ void GameBoard::lazyErase(bool fallFirst){
 
 void GameBoard::_turnFinished()
 {
+    BAN_MOUSE_EVENTS = false;
     emit turnFinished();
 }
 

@@ -4,13 +4,23 @@
 #include "mainmenu.h"
 #include "mywindow.h"
 
+#include <QAudioOutput>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QMediaPlayer>
 #include <QStackedLayout>
 
 MyWindow::MyWindow(QApplication *_app, QWidget *parent)
     : QWidget{parent}, app(_app)
 {
+    QMediaPlayer *musicPlayer = new QMediaPlayer(this);
+    QAudioOutput *audioOutput = new QAudioOutput;
+    audioOutput->setVolume(100);
+    musicPlayer->setAudioOutput(audioOutput);
+    musicPlayer->setSource(QUrl("qrc:/resources/Lovely Piano Song.mp3"));
+    musicPlayer->setLoops(QMediaPlayer::Infinite);
+    musicPlayer->play();
+
     menu = nullptr;
     dialogue = nullptr;
     battle = nullptr;

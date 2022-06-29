@@ -1,6 +1,7 @@
 #include "gem.h"
 #include "gameboard.h"
 #include "battlescene.h"
+#include "myglobalvariants.h"
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QSequentialAnimationGroup>
@@ -70,6 +71,7 @@ Gem::Gem(GemTypes tp, GameBoard *parent, int x, int y)
 
 void Gem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(BAN_MOUSE_EVENTS) return;
     if(event->button() == Qt::LeftButton){
         lastPosition = this->pos();
         scaleAnimation->start();
@@ -105,6 +107,7 @@ void Gem::handleMouseRelease()
 
 void Gem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(BAN_MOUSE_EVENTS) return;
     if(event->button() == Qt::LeftButton){
         scaleAnimation->stop();
         setScale(defaultScale);
@@ -127,6 +130,7 @@ void Gem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void Gem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(BAN_MOUSE_EVENTS) return;
     if(board->skillSelected()) return;
     if(curSwapAnimation!=nullptr && curSwapAnimation->state() == QAbstractAnimation::Running) return;
     if(event->buttons() & Qt::LeftButton){
@@ -155,6 +159,7 @@ void Gem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void Gem::hoverEnterEvent(__attribute__((unused))QGraphicsSceneHoverEvent *event)
 {
+    if(BAN_MOUSE_EVENTS) return;
     if(!hover){
         hover = true;
         rotateAnimation->start();
