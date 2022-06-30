@@ -64,6 +64,7 @@ void Boss::hurt(int harm){
 
     HP -= harm;
     if (HP < 0) HP = 0;
+    if (HP > UpperBoundHp) HP = UpperBoundHp;
     return;
 }
 

@@ -36,6 +36,7 @@ void Player::GetHP(int dHP) {
     harmAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
     HP += dHP;
+    if (HP < 0) HP = 0;
     if (HP > UpperBoundHp) HP = UpperBoundHp;
     return;
 }
@@ -62,6 +63,7 @@ void Player::GetMP(int dMP) {
     harmAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
     MP += dMP;
+    if (MP < 0) MP = 0;
     if (MP > UpperBoundMp) MP = UpperBoundMp;
     return;
 }
