@@ -8,7 +8,7 @@
 class BattleScene;
 class Skill3 : public Skill
 {
-    static constexpr char introduction[] = "泸溪河：消耗500精力，选择一颗宝石移除";
+    static constexpr char introduction[] = "泸溪河：消耗500精神力，选择一颗宝石移除";
 
     Q_OBJECT
 public:

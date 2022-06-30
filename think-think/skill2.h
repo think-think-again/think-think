@@ -7,7 +7,7 @@
 class BattleScene;
 class Skill2 : public Skill
 {
-    static constexpr char introduction[] = "复习：消耗300精力，对老师造成300伤害";
+    static constexpr char introduction[] = "复习：消耗300精神力，对老师造成300伤害";
     static const int mpCost = 300, attack = 300;
 
     Q_OBJECT
