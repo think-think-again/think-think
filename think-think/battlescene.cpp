@@ -239,32 +239,28 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
 
     RoundToGo = new QLabel;
     RoundToGo->setFont(font);
-    addWidget(RoundToGo);
-    RoundToGo->setStyleSheet("QLabel { background : lightblue; color:white; border-width: medium; border-color: lightblue} ");
+    RoundToGo->setStyleSheet("QLabel { background : lightblue; color: rgb(244, 88, 56); border-style: outset; border-width: medium; border-color: lightblue} ");
     RoundToGo->setText(QString::number(board->SkillToGo)+"回合后");
-    RoundToGo->move(680, 300);
+    RoundToGo->move(1650*SCREEN_SCALE+MARGIN_HORIZONTAL, 100*SCREEN_SCALE+MARGIN_VERTICAL);
     connect(board, &GameBoard::updateRoundToGo, this, &BattleScene::updateRoundToGo);
 
     SkillIntroduction = new QLabel;
     board->BossSkillIntroduction = SkillIntroduction;
     addWidget(SkillIntroduction);
-    SkillIntroduction->move(790, 300);
+    addWidget(RoundToGo);
+    SkillIntroduction->move(1780*SCREEN_SCALE+MARGIN_HORIZONTAL, 100*SCREEN_SCALE+MARGIN_VERTICAL);
     SkillIntroduction->setFont(font);
-    SkillIntroduction->setStyleSheet("QLabel{ background : lightblue ; color:white; border-width: medium; border-color:lightblue}");
-    if (boss->BossSkillId == 0)
-    {
+    SkillIntroduction->setStyleSheet("QLabel{ background : lightblue; color: rgb(244, 88, 56); border-style: outset; border-width: medium; border-color:lightblue}");
+    if (boss->BossSkillId == 0) {
         SkillIntroduction->setText("对玩家造成"+QString::number(dif * 50 + 150) + "点伤害");
     }
-    else if (boss->BossSkillId == 1)
-    {
+    else if (boss->BossSkillId == 1) {
         SkillIntroduction->setText("偷取玩家"+QString::number(50 + 30 * dif) + "点精神力");
     }
-    else if (boss->BossSkillId == 2)
-    {
+    else if (boss->BossSkillId == 2) {
         SkillIntroduction->setText("吸取玩家"+QString::number(50 + 50 * dif) + "点生命值");
     }
-    else if (boss->BossSkillId == 3)
-    {
+    else if (boss->BossSkillId == 3) {
         SkillIntroduction->setText("降低玩家"+QString::number(10 * dif) + "%攻击力，持续5回合");
     }
     SkillIntroduction->adjustSize();

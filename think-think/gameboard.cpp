@@ -20,10 +20,9 @@ GameBoard::GameBoard(Boss *_boss,Player* _player, QGraphicsItem *parent)
     BossSkillTime[2] = 5;
     BossSkillTime[3] = 5;
     for(int i=0; i<boardSizeX; ++i) for(int j=0; j<boardSizeY; ++j) cell[i][j] = nullptr;
-    // TODO: more efficient initialization is needed.
     do{
         for(int i=0; i<boardSizeX; ++i) for(int j=0; j<boardSizeY; ++j){
-            if(cell[i][j] != nullptr) removeGem(i, j);
+            if(cell[i][j] != nullptr) delete cell[i][j];
             cell[i][j] = new Gem(GemTypes(1<<gemGenerator(rng)), this, i, j);
         }
     } while(existMatching());
@@ -100,7 +99,6 @@ QParallelAnimationGroup *GameBoard::swapGem(int sx, int sy, int dx, int dy)
     return g;
 }
 
-// TODO: the upgrade positon of "xxxx" should be the operate position
 void GameBoard::eraseMatchings()
 {
     for (int i = 0; i < boardSizeY; ++i){

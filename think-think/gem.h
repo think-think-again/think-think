@@ -22,7 +22,6 @@ Q_DECLARE_FLAGS(GemTypes, GemType)
 Q_DECLARE_OPERATORS_FOR_FLAGS(GemTypes)
 
 class GameBoard;
-// TODO: QObject affects performance. Should find an alternative.
 class Gem : public QObject, public QGraphicsPixmapItem
 {
 public:

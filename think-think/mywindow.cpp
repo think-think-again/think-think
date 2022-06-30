@@ -30,8 +30,8 @@ MyWindow::MyWindow(QApplication *_app, QWidget *parent)
     battleOpacity = new QGraphicsOpacityEffect;
 
     layout = new QStackedLayout(this);
-    layout->addWidget(initMainMenu());
-//    layout->addWidget(initBattle(currentBossId));
+//    layout->addWidget(initMainMenu());
+    layout->addWidget(initBattle(currentBossId));
 }
 
 QGraphicsView *MyWindow::initMainMenu()
@@ -123,6 +123,7 @@ void MyWindow::handleBattleSucceeded()
     fade->setEndValue(0);
     fade->setDuration(2000);
     if(++currentBossId == 3){
+        currentBossId = 0;
         connect(fade, &QPropertyAnimation::finished,
                 this, &MyWindow::returnMenu);
     }
