@@ -5,8 +5,7 @@
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 
-Player::Player(QGraphicsItem* parent)
-    :QGraphicsPixmapItem(parent)
+Player::Player()
 {
     HP = 1000;
     MP = 0;

@@ -4,11 +4,11 @@
 #include "harmlabel.h"
 #include<QGraphicsPixmapItem>
 #include<QProgressBar>
-class Player: public QObject, public QGraphicsPixmapItem
+class Player: public QObject
 {
     Q_OBJECT
 public:
-   explicit Player(QGraphicsItem* parent = 0);
+    explicit Player();
     const int Attack = 50;
     const int UpperBoundHp = 1000;
     const int UpperBoundMp = 1000;

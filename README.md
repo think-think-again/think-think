@@ -24,7 +24,15 @@ Please set environment variable `QT_ENABLE_HIGHDPI_SCALING` to `0` before build.
 
 #### 游戏主体
 
-一共有三关，每一关包含小Z与一个老师的剧情，剧情结束后进入挑战，玩家可以通过消除宝石来对老师造成伤害、回复自己的生命值以及获得精神力来释放技能。三个关卡挑战难度逐渐上升。玩家在战胜一个老师后会自动解锁下一段剧情。在对战中玩家还可以随时返回主菜单重新开始本关。
+一共有三关，每一关包含小Z与一个老师（Boss）的剧情，剧情结束后进入挑战，玩家可以通过消除宝石来对 Boss 造成伤害、回复自己的生命值以及获得精神力来释放技能。三个关卡挑战难度逐渐上升。玩家在战胜一个 Boss 后会自动解锁下一段剧情。在对战中玩家还可以随时返回主菜单重新开始本关。
+
+#### 特色
+
+*   适配了所有屏幕分辨率。
+*   部分素材支持高达 8K（7680 x 4320）的分辨率
+*   立绘由 [This Anime Does Not Exist](https://thisanimedoesnotexist.ai/) 生成。
+*   背景音乐为 CC0 许可。
+
 
 ### 项目各模块与类的设计细节
 
@@ -83,16 +91,16 @@ Please set environment variable `QT_ENABLE_HIGHDPI_SCALING` to `0` before build.
 
 设计细节：
 
-*   包含游戏面板（GameBoard 类）、玩家（Player 类）、老师（Boss 类）和一个返回主菜单按钮（StartButton 类）。
+*   包含游戏面板（GameBoard 类）、玩家（Player 类）、Boss（Boss 类）和一个返回主菜单按钮（StartButton 类）。
 *   包含四个玩家技能（Skill 类的派生类）。
-*   包含三个用于展示老师生命值、玩家生命值、玩家精神力的 QProgressBar 和一个用于展示当前回合数的 QLabel。自定义了样式。
+*   包含三个用于展示 Boss 生命值、玩家生命值、玩家精神力的 QProgressBar 和一个用于展示当前回合数的 QLabel。自定义了样式。
 *   使用了半透明白色遮罩覆盖背景图片，突出画面主体。
 
 ##### 游戏面板类（GameBoard）
 
 继承自 QObject 和 QGraphicsPixmapItem。
 
-设计细节。
+设计细节：
 
 *   包含 $8\times 7$ 的网格，初始随机生成四种不同样式的普通宝石（Gem 类）。
 *   不同宝石对应着不同的消除效果，包括：物理攻击、魔法攻击、回复生命值、回复精神力。
@@ -101,23 +109,66 @@ Please set environment variable `QT_ENABLE_HIGHDPI_SCALING` to `0` before build.
 *   宝石可以上下左右移动，但只有满足消除的规则时移动才是允许的。
 *   S宝石还可以右键消除并释放强大力量。
 
-        * 技能按钮：一共有四个技能，均继承于skill类。每个技能都有介绍，在鼠标移到技能图标上时会显示。
-        * boss：所有boss都共用一个boss类，其中包含了它们名称、血量以及对应的立绘。每个boss的难度不同，而且和玩家一样，boss们还有属于自己的技能。boss的血量我们采用的是QProgressBar来显示。
-        * 玩家血量及精神力：和boss的血量一样，我们都采用了QProgressBar来显示。
-        * 回合数：我们采用label来显示，每经过一次成功的交换，当前回合数便会加一。
-        * 返回菜单按钮：和start按钮和exit按钮一样，点击它便可以返回到主菜单。
-    
-##### 角色类（Boss和Player）
+##### 宝石类（Gem）
 
-继承自QObject 和 QGraphic
-1. 小组成员的分工情况：
-    + 开始菜单的设计：屠学畅、朱蔚骐、俞俊喆
-    + 剧情的设计与实现：俞俊喆、屠学畅
-    + boss设计：朱蔚骐
-    + 游戏机制设计与实现：朱蔚骐、俞俊喆
-    + 伤害结算系统设计与实现：朱蔚骐
-    + 技能设计与实现：屠学畅、朱蔚骐、俞俊喆
-    + 游戏动画设计与实现：屠学畅
-    + 游戏整体界面处理：屠学畅
-    + 图像文件处理：屠学畅、朱蔚骐、俞俊喆
-    + 背景音乐：屠学畅、朱蔚骐
+继承自 QObject 和 QGraphicsPixmapItem。
+
+设计细节：
+
+*   读取对应宝石图片并显示。
+*   重新实现了 mousePressEvent、mouseReleaseEvent和mouseMoveEvent 函数，鼠标长按时显示宝石不断放大缩小的动画，并且和游戏面板共同完成拖动和消除宝石的动画效果。
+*   重新实现了 hoverEnterEvent 和 hoverLeaveEvent 函数，鼠标悬浮时显示宝石晃动的动画。
+
+##### 玩家类（Player）
+
+继承自 QObject。
+
+设计细节：
+
+*   记录了玩家的生命值和精神力。
+
+##### Boss类（Boss）
+
+继承自 QObject 和 QGraphicsPixmapItem。
+
+设计细节：
+
+*   所有 Boss 共用一个 Boss 类。
+*   记录 Boss 的生命值、物理防御和魔法防御。
+*   展示 Boss 的立绘，并且添加了上下浮动的动画效果，使 Boss 栩栩如生。
+*   在战斗结束（包括失败或胜利）时，Boss 立绘会停止浮动，并且逐渐变为透明。
+
+##### 技能类（Skill、Skill[1-4]、SkillHoverLayer）
+
+Skill、SkillHoverLayer 继承自 QObject 和 QGraphicsPixmapItem，Skill[1-4] 继承自 Skill。
+
+设计细节：
+
+*   Skill 类展示技能图片。
+*   SkillHoverLayer 类检测鼠标事件，重新实现了 hoverEnterEvent 和 hoverLeaveEvent 函数，鼠标悬浮达到一定时长显示对应技能介绍（QLabel 类）。技能介绍自定义了样式，且跟随鼠标移动直到离开技能图片。
+*   重新实现 mousePressEvent 函数，在点击技能时做出相应反馈。
+*   特殊的技能需要指定一个宝石，通过与宝石类交互实现了这个功能。
+
+
+
+### 小组成员的分工情况
+
+主菜单设计：屠学畅、朱蔚骐、俞俊喆
+
+剧情的设计与实现：俞俊喆、屠学畅
+
+Boss 设计：朱蔚骐
+
+游戏机制设计与实现：朱蔚骐、俞俊喆
+
+伤害结算系统设计与实现：朱蔚骐
+
+技能设计与实现：屠学畅、朱蔚骐、俞俊喆
+
+游戏动画设计与实现：屠学畅
+
+游戏整体界面处理：屠学畅
+
+图像文件处理：屠学畅、朱蔚骐、俞俊喆
+
+背景音乐：屠学畅、朱蔚骐
