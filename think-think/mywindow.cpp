@@ -133,7 +133,7 @@ void MyWindow::handleBattleSucceeded()
     fade->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
-void MyWindow::playMusicAgain(QMediaPlayer::PlaybackState newState)
+void MyWindow::playMusicAgain()
 {
     musicPlayer->deleteLater();
     musicPlayer = new QMediaPlayer(this);

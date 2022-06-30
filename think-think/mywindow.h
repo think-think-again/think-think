@@ -42,7 +42,7 @@ public slots:
     void returnMenu();
     void handleBattleFailed();
     void handleBattleSucceeded();
-    void playMusicAgain(QMediaPlayer::PlaybackState newState);
+    void playMusicAgain();
 };
 
 #endif // MYWINDOW_H
