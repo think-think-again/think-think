@@ -81,8 +81,8 @@ QPropertyAnimation *GameBoard::moveGem(int gx, int gy, int x, int y, int ax, int
 {
     if(ax == -1 && ay == -1) ax = gx, ay = gy;
     QPropertyAnimation *move = new QPropertyAnimation(cell[gx][gy], "pos");
-    move->setStartValue(QPointF(ax*Gem::gemSize, ay*Gem::gemSize));
-    move->setEndValue(QPointF(x*Gem::gemSize, y*Gem::gemSize));
+    move->setStartValue(QPointF(ax*GEM_SIZE, ay*GEM_SIZE));
+    move->setEndValue(QPointF(x*GEM_SIZE, y*GEM_SIZE));
     move->setEasingCurve(QEasingCurve::InQuad);
     int duration = sqrt(abs(ax-x)+abs(ay-y))*swapAnimationDuration;
     move->setDuration(duration);

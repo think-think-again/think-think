@@ -1,4 +1,5 @@
 #include "harmlabel.h"
+#include "myglobalvariants.h"
 #include "player.h"
 
 #include <QParallelAnimationGroup>
@@ -19,9 +20,9 @@ void Player::GetHP(int dHP) {
     emit harmDisplay(harmLabel);
     QParallelAnimationGroup *harmAnimation = new QParallelAnimationGroup;
     QPropertyAnimation *ascend = new QPropertyAnimation(harmLabel, "pos");
-    int x = 50, y = 1440-100;
+    int x = 50*SCREEN_SCALE+MARGIN_HORIZONTAL, y = SCREEN_HEIGHT-100*SCREEN_SCALE;
     ascend->setStartValue(QPoint(x, y));
-    ascend->setEndValue(QPoint(x, y-200));
+    ascend->setEndValue(QPoint(x, y-200*SCREEN_SCALE));
     ascend->setDuration(1000);
     ascend->setEasingCurve(QEasingCurve::OutQuad);
     harmAnimation->addAnimation(ascend);
@@ -45,9 +46,9 @@ void Player::GetMP(int dMP) {
     emit harmDisplay(harmLabel);
     QParallelAnimationGroup *harmAnimation = new QParallelAnimationGroup;
     QPropertyAnimation *ascend = new QPropertyAnimation(harmLabel, "pos");
-    int x = 50, y = 1440-100;
+    int x = 50*SCREEN_SCALE+MARGIN_HORIZONTAL, y = SCREEN_HEIGHT-100*SCREEN_SCALE;
     ascend->setStartValue(QPoint(x, y));
-    ascend->setEndValue(QPoint(x, y-200));
+    ascend->setEndValue(QPoint(x, y-200*SCREEN_SCALE));
     ascend->setDuration(1000);
     ascend->setEasingCurve(QEasingCurve::OutQuad);
     harmAnimation->addAnimation(ascend);

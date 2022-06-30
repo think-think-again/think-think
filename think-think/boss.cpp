@@ -1,5 +1,6 @@
 #include "boss.h"
 #include "harmlabel.h"
+#include "myglobalvariants.h"
 
 #include <QLabel>
 #include <QParallelAnimationGroup>
@@ -11,21 +12,22 @@ Boss::Boss(const QString &name, int _difficulty, QGraphicsItem* parent)
     joy(20030206)
 {
     QPixmap bossPixmap(":/resources/character/" + name + ".png");
+    bossPixmap = bossPixmap.scaled(bossPixmap.size()*SCREEN_SCALE);
     setPixmap(bossPixmap);
     setScale(0.7);
-    setPos(1200, 300);
+    setPos(1200*SCREEN_SCALE+MARGIN_HORIZONTAL, 150*SCREEN_SCALE+MARGIN_VERTICAL*2);
 
     floating = new QSequentialAnimationGroup(this);
     QPropertyAnimation *f;
     f = new QPropertyAnimation(this, "pos");
-    f->setStartValue(QPointF(1200, 150));
-    f->setEndValue(QPointF(1200, 100));
+    f->setStartValue(QPointF(1200*SCREEN_SCALE+MARGIN_HORIZONTAL, 150*SCREEN_SCALE+MARGIN_VERTICAL*2));
+    f->setEndValue(QPointF(1200*SCREEN_SCALE+MARGIN_HORIZONTAL, 100*SCREEN_SCALE+MARGIN_VERTICAL*2));
     f->setEasingCurve(QEasingCurve::InOutQuad);
     f->setDuration(2000);
     floating->addAnimation(f);
     f = new QPropertyAnimation(this, "pos");
-    f->setStartValue(QPointF(1200, 100));
-    f->setEndValue(QPointF(1200, 150));
+    f->setStartValue(QPointF(1200*SCREEN_SCALE+MARGIN_HORIZONTAL, 100*SCREEN_SCALE+MARGIN_VERTICAL*2));
+    f->setEndValue(QPointF(1200*SCREEN_SCALE+MARGIN_HORIZONTAL, 150*SCREEN_SCALE+MARGIN_VERTICAL*2));
     f->setEasingCurve(QEasingCurve::InOutQuad);
     f->setDuration(2000);
     floating->addAnimation(f);
@@ -45,8 +47,8 @@ void Boss::hurt(int harm){
     QParallelAnimationGroup *harmAnimation = new QParallelAnimationGroup;
     QPropertyAnimation *ascend = new QPropertyAnimation(harmLabel, "pos");
     int x = joy()%400+1800, y = joy()%800+400;
-    ascend->setStartValue(QPoint(x, y));
-    ascend->setEndValue(QPoint(x, y-200));
+    ascend->setStartValue(QPoint(x*SCREEN_SCALE+MARGIN_HORIZONTAL, y*SCREEN_SCALE+MARGIN_VERTICAL*2));
+    ascend->setEndValue(QPoint(x*SCREEN_SCALE+MARGIN_HORIZONTAL, (y-200)*SCREEN_SCALE+MARGIN_VERTICAL*2));
     ascend->setDuration(1000);
     ascend->setEasingCurve(QEasingCurve::OutQuad);
     harmAnimation->addAnimation(ascend);

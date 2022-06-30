@@ -26,7 +26,6 @@ class GameBoard;
 class Gem : public QObject, public QGraphicsPixmapItem
 {
 public:
-    static constexpr int gemSize = 128;
     static constexpr double defaultScale = 0.4, scaleFactor = 1.3;
 
     Q_OBJECT

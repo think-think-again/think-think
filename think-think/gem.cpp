@@ -32,13 +32,13 @@ Gem::Gem(GemTypes tp, GameBoard *parent, int x, int y)
     boss = parent->boss;
     HPBar = parent->BossHp;
     QPixmap pixmap(gemTypeName(tp));
-    pixmap = pixmap.scaled(Gem::gemSize*2, Gem::gemSize*2);
+    pixmap = pixmap.scaled(GEM_SIZE*2, GEM_SIZE*2);
     setPixmap(pixmap);
-    setOffset(-Gem::gemSize, -Gem::gemSize);
+    setOffset(-GEM_SIZE, -GEM_SIZE);
     setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     setAcceptHoverEvents(true);
     setScale(defaultScale);
-    setPos(x*gemSize, y*gemSize);
+    setPos(x*GEM_SIZE, y*GEM_SIZE);
 
     scaleAnimation = new QPropertyAnimation(this, "scale");
     scaleAnimation->setStartValue(defaultScale);
@@ -147,7 +147,7 @@ void Gem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     if(event->buttons() & Qt::LeftButton){
         QPointF delta = event->scenePos() - lastPosition;
         // move forward
-        if(dx==0 && dy==0 && (qAbs(delta.x())>gemSize/2 || qAbs(delta.y())>gemSize/2)){
+        if(dx==0 && dy==0 && (qAbs(delta.x())>GEM_SIZE/2 || qAbs(delta.y())>GEM_SIZE/2)){
             // moving direction
             int x = 0, y = 0;
             if(qAbs(delta.x())>qAbs(delta.y()))
@@ -160,7 +160,7 @@ void Gem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
                 curSwapAnimation->start();
             }
         }
-        if((dx || dy) && qAbs(delta.x())<=gemSize/2 && qAbs(delta.y())<=gemSize/2){
+        if((dx || dy) && qAbs(delta.x())<=GEM_SIZE/2 && qAbs(delta.y())<=GEM_SIZE/2){
             // gx and gy here are modified by last swap !!!
             board->swapGem(gx, gy, gx-dx, gy-dy)->start(QAbstractAnimation::DeleteWhenStopped);
             dx = dy = 0;

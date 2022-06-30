@@ -44,21 +44,21 @@ Dialogue::Dialogue(QObject *parent, const QString &name)
     QPixmap _dialogueBackground(":/resources/character-dialogue/dialogue.png");
     _dialogueBackground = _dialogueBackground.scaled(_dialogueBackground.size()*(SCREEN_SCALE/3));
     dialogueBackground = new QGraphicsPixmapItem(_dialogueBackground);
-    dialogueBackground->setPos(-(_dialogueBackground.width()-SCREEN_WIDTH)/2, -(_dialogueBackground.height()-SCREEN_HEIGHT));
+    dialogueBackground->setPos(MARGIN_HORIZONTAL, MARGIN_VERTICAL*2);
     addItem(dialogueBackground);
     dialogueBackground->hide();
 
     QPixmap _dialogueBackgroundBoss(":/resources/character-dialogue/" + name + ".png");
     _dialogueBackgroundBoss = _dialogueBackgroundBoss.scaled(_dialogueBackgroundBoss.size()*(SCREEN_SCALE/3));
     dialogueBackgroundBoss = new QGraphicsPixmapItem(_dialogueBackgroundBoss);
-    dialogueBackgroundBoss->setPos(-(_dialogueBackgroundBoss.width()-SCREEN_WIDTH)/2, -(_dialogueBackgroundBoss.height()-SCREEN_HEIGHT));
+    dialogueBackgroundBoss->setPos(MARGIN_HORIZONTAL, MARGIN_VERTICAL*2);
     addItem(dialogueBackgroundBoss);
     dialogueBackgroundBoss->hide();
 
     QPixmap _dialogueBackgroundZ(":/resources/character-dialogue/z.png");
     _dialogueBackgroundZ = _dialogueBackgroundZ.scaled(_dialogueBackgroundZ.size()*(SCREEN_SCALE/3));
     dialogueBackgroundZ = new QGraphicsPixmapItem(_dialogueBackgroundZ);
-    dialogueBackgroundZ->setPos(-(_dialogueBackgroundZ.width()-SCREEN_WIDTH)/2, -(_dialogueBackgroundZ.height()-SCREEN_HEIGHT));
+    dialogueBackgroundZ->setPos(MARGIN_HORIZONTAL, MARGIN_VERTICAL*2);
     addItem(dialogueBackgroundZ);
     dialogueBackgroundZ->hide();
 
@@ -70,7 +70,7 @@ Dialogue::Dialogue(QObject *parent, const QString &name)
     /*QGraphicsProxyWidget *prologueProxy = */addWidget(prologue);
     prologue->setWordWrap(true);
     prologue->setAlignment(Qt::AlignTop);
-    prologue->setGeometry(400, 400, 2560-400*2, 500);
+    prologue->setGeometry(400*SCREEN_SCALE+MARGIN_HORIZONTAL, 400*SCREEN_SCALE, (2560-400*2)*SCREEN_SCALE, 500*SCREEN_SCALE);
     prologue->setFont(font);
     prologue->setStyleSheet("QLabel{ background: transparent}");
 
@@ -79,14 +79,14 @@ Dialogue::Dialogue(QObject *parent, const QString &name)
     dlgProxy->setZValue(1);
     dlg->setWordWrap(true);
     dlg->setAlignment(Qt::AlignTop);
-    dlg->setGeometry(700,1440-372,2560-1000,372);
+    dlg->setGeometry(700*SCREEN_SCALE+MARGIN_HORIZONTAL, SCREEN_HEIGHT-372*SCREEN_SCALE, SCREEN_WIDTH-1000*SCREEN_SCALE-MARGIN_HORIZONTAL*2, 372*SCREEN_SCALE);
     dlg->setFont(font);
     dlg->setStyleSheet("QLabel{ background: transparent; color: white}");
 
     speaker = new QLabel();
     addWidget(speaker);
     speaker->setAlignment(Qt::AlignTop);
-    speaker->setGeometry(500,1440-180,2560-1000,180);
+    speaker->setGeometry(500*SCREEN_SCALE+MARGIN_HORIZONTAL, SCREEN_HEIGHT-180*SCREEN_SCALE, SCREEN_WIDTH, 180*SCREEN_SCALE);
     speaker->setFont(font);
     speaker->setStyleSheet("QLabel{ background: transparent; color: #FFD700}");
 
@@ -150,7 +150,7 @@ void Dialogue::updateLabel()
         BAN_MOUSE_EVENTS = false;
     }
     else{
-        QString str = "<p style='line-height: 70px'>" + animationStr.left(++animationProgress) + "</p>";
+        QString str = "<p style='line-height: " + QString::number(70*SCREEN_SCALE) + "px'>" + animationStr.left(++animationProgress) + "</p>";
         animationLabel->setText(str);
     }
 }

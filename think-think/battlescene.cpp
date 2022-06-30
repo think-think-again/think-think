@@ -1,4 +1,5 @@
 #include "battlescene.h"
+#include "myglobalvariants.h"
 #include "qscreen.h"
 #include "skill1.h"
 #include "skill2.h"
@@ -16,17 +17,15 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     : QGraphicsScene{parent}
 {
     // change to screen resolution
-    QSize screenSize = QGuiApplication::primaryScreen()->size();
-    screenSize = QSize(2560, 1440);
-    setSceneRect(0, 0, screenSize.width(), screenSize.height());
+    setSceneRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     QPixmap _background(":/resources/classroom1.jpg");
-    _background = _background.scaled(2560, 1440, Qt::KeepAspectRatioByExpanding);
+    _background = _background.scaled(SCREEN_WIDTH, SCREEN_HEIGHT, Qt::KeepAspectRatioByExpanding);
     QGraphicsPixmapItem *background = new QGraphicsPixmapItem(_background);
-    background->setPos(-(_background.width()-2560)/2, -(_background.height()-1440)/2);
+    background->setPos(-(_background.width()-SCREEN_WIDTH)/2, -(_background.height()-SCREEN_HEIGHT)/2);
     addItem(background);
 
-    QPixmap _backgroundMask(2560, 1440);
+    QPixmap _backgroundMask(SCREEN_WIDTH, SCREEN_HEIGHT);
     _backgroundMask.fill(QColor(255, 255, 255, 90));
     backgroundMask = new QGraphicsPixmapItem(_backgroundMask);
     addItem(backgroundMask);
@@ -47,11 +46,11 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     addItem(boss);
     Boss *_boss = boss;
 
-    QPixmap _gameboard_Background(":/resources/gameboard_background.png");
-    _gameboard_Background = _gameboard_Background.scaled(2560, 1440, Qt::KeepAspectRatioByExpanding);
-    QGraphicsPixmapItem *gameboard_background = new QGraphicsPixmapItem(_gameboard_Background);
-    gameboard_background->setPos(-(_gameboard_Background.width()-2560)/2, -(_gameboard_Background.height()-1440)/2);
-    addItem(gameboard_background);
+    QPixmap _gameboardBackground(":/resources/gameboard_background.png");
+    _gameboardBackground = _gameboardBackground.scaled(_gameboardBackground.size()*SCREEN_SCALE);
+    QGraphicsPixmapItem *gameboardBackground = new QGraphicsPixmapItem(_gameboardBackground);
+    gameboardBackground->setPos(MARGIN_HORIZONTAL, MARGIN_VERTICAL);
+    addItem(gameboardBackground);
 
     board = new GameBoard(_boss, _player);
     connect(board, &GameBoard::turnFinished,
@@ -68,7 +67,7 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     boardView->setFixedSize(boardScene->sceneRect().size().toSize());
     boardView->setStyleSheet("background: transparent; border:0px");
     QGraphicsProxyWidget *boardProxy = addWidget(boardView);
-    boardProxy->setPos(300, 300);
+    boardProxy->setPos(300*SCREEN_SCALE+MARGIN_HORIZONTAL, 300*SCREEN_SCALE+MARGIN_VERTICAL);
 
     QProgressBar *BossHpBg = new QProgressBar;
     addWidget(BossHpBg);
@@ -76,15 +75,15 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     BossHpBg->setMinimum(0);
     BossHpBg->setMaximum(1);
     BossHpBg->setValue(1);
-    BossHpBg->setGeometry(600, 100, 1000, 50);
+    BossHpBg->setGeometry(600*SCREEN_SCALE+MARGIN_HORIZONTAL, 100*SCREEN_SCALE+MARGIN_VERTICAL, 1000*SCREEN_SCALE, 50*SCREEN_SCALE);
     BossHpBg->setFormat("");
     BossHpBg->setStyleSheet("QProgressBar{"
                             "    background: transparent;"
-                            "    border-radius: 20px;"
+                            "    border-radius: " + QString::number(20*SCREEN_SCALE) + "px;"
                             "}"
                             "QProgressBar::chunk{"
                             "    background: #818181;"
-                            "    border-radius: 20px;"
+                            "    border-radius: " + QString::number(20*SCREEN_SCALE) + "px;"
                             "}");
 
     BossHp = new QProgressBar;
@@ -93,19 +92,19 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     BossHp->setMinimum(0);
     BossHp->setMaximum(boss->GetHp());
     BossHp->setValue(boss->GetHp());
-    BossHp->setGeometry(600, 100, 1000, 50);
+    BossHp->setGeometry(600*SCREEN_SCALE+MARGIN_HORIZONTAL, 100*SCREEN_SCALE+MARGIN_VERTICAL, 1000*SCREEN_SCALE, 50*SCREEN_SCALE);
     BossHp->setFormat(QString::fromLocal8Bit("%v"));
     BossHp->setAlignment(Qt::AlignCenter);
     BossHp->setStyleSheet("QProgressBar{"
                           "    background: transparent;"
                           "    border: 2px solid red;"
-                          "    border-radius: 20px;"
+                          "    border-radius: " + QString::number(20*SCREEN_SCALE) + "px;"
                           "    color: white;"
-                          "    font-size: 30px;"
+                          "    font-size: " + QString::number(30*SCREEN_SCALE) + "px;"
                           "}"
                           "QProgressBar::chunk{"
                           "    background: rgb(244, 88, 56);"
-                          "    border-radius: 20px;"
+                          "    border-radius: " + QString::number(20*SCREEN_SCALE) + "px;"
                           "}");
 
     QProgressBar *PlayerHpBg = new QProgressBar;
@@ -114,15 +113,15 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     PlayerHpBg->setMinimum(0);
     PlayerHpBg->setMaximum(1);
     PlayerHpBg->setValue(1);
-    PlayerHpBg->setGeometry(320, 1440-170, 300, 40);
+    PlayerHpBg->setGeometry(320*SCREEN_SCALE+MARGIN_HORIZONTAL, SCREEN_HEIGHT-170*SCREEN_SCALE, 300*SCREEN_SCALE, 40*SCREEN_SCALE);
     PlayerHpBg->setFormat("");
     PlayerHpBg->setStyleSheet("QProgressBar{"
                               "    background: transparent;"
-                              "    border-radius: 10px;"
+                              "    border-radius: " + QString::number(10*SCREEN_SCALE) + "px;"
                               "}"
                               "QProgressBar::chunk{"
                               "    background: #818181;"
-                              "    border-radius: 10px;"
+                              "    border-radius: " + QString::number(10*SCREEN_SCALE) + "px;"
                               "}");
 
     PlayerHp = new QProgressBar;
@@ -131,19 +130,19 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     PlayerHp->setMinimum(0);
     PlayerHp->setMaximum(player->UpperBoundHp);
     PlayerHp->setValue(player->ReturnHp());
-    PlayerHp->setGeometry(320, 1440-170, 300, 40);
+    PlayerHp->setGeometry(320*SCREEN_SCALE+MARGIN_HORIZONTAL, SCREEN_HEIGHT-170*SCREEN_SCALE, 300*SCREEN_SCALE, 40*SCREEN_SCALE);
     PlayerHp->setFormat(QString::fromLocal8Bit("%v"));
     PlayerHp->setAlignment(Qt::AlignCenter);
     PlayerHp->setStyleSheet("QProgressBar{"
                             "    background: transparent;"
                             "    border: 2px solid green;"
-                            "    border-radius: 10px;"
+                            "    border-radius: " + QString::number(10*SCREEN_SCALE) + "px;"
                             "    color: yellow;"
-                            "    font-size: 20px;"
+                            "    font-size: " + QString::number(20*SCREEN_SCALE) + "px;"
                             "}"
                             "QProgressBar::chunk{"
                             "    background: green;"
-                            "    border-radius: 10px;"
+                            "    border-radius: " + QString::number(10*SCREEN_SCALE) + "px;"
                             "}");
 
     QProgressBar *PlayerMpBg = new QProgressBar;
@@ -152,15 +151,15 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     PlayerMpBg->setMinimum(0);
     PlayerMpBg->setMaximum(1);
     PlayerMpBg->setValue(1);
-    PlayerMpBg->setGeometry(320, 1440-100, 300, 40);
+    PlayerMpBg->setGeometry(320*SCREEN_SCALE+MARGIN_HORIZONTAL, SCREEN_HEIGHT-100*SCREEN_SCALE, 300*SCREEN_SCALE, 40*SCREEN_SCALE);
     PlayerMpBg->setFormat("");
     PlayerMpBg->setStyleSheet("QProgressBar{"
                               "    background: transparent;"
-                              "    border-radius: 10px;"
+                              "    border-radius: " + QString::number(10*SCREEN_SCALE) + "px;"
                               "}"
                               "QProgressBar::chunk{"
                               "    background: #ffffff;"
-                              "    border-radius: 10px;"
+                              "    border-radius: " + QString::number(10*SCREEN_SCALE) + "px;"
                               "}");
 
     PlayerMp = new QProgressBar;
@@ -170,19 +169,19 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     PlayerMp->setMinimum(0);
     PlayerMp->setMaximum(player->UpperBoundMp);
     PlayerMp->setValue(0);
-    PlayerMp->setGeometry(320, 1440-100, 300, 40);
+    PlayerMp->setGeometry(320*SCREEN_SCALE+MARGIN_HORIZONTAL, SCREEN_HEIGHT-100*SCREEN_SCALE, 300*SCREEN_SCALE, 40*SCREEN_SCALE);
     PlayerMp->setFormat(QString::fromLocal8Bit("%v"));
     PlayerMp->setAlignment(Qt::AlignCenter);
     PlayerMp->setStyleSheet("QProgressBar{"
                             "    background: transparent;"
                             "    border: 2px solid yellow;"
-                            "    border-radius: 10px;"
+                            "    border-radius: " + QString::number(10*SCREEN_SCALE) + "px;"
                             "    color: blue;"
-                            "    font-size: 20px;"
+                            "    font-size: " + QString::number(20*SCREEN_SCALE) + "px;"
                             "}"
                             "QProgressBar::chunk{"
                             "    background: yellow;"
-                            "    border-radius: 10px;"
+                            "    border-radius: " + QString::number(10*SCREEN_SCALE) + "px;"
                             "}");
 
     board->BossHp = BossHp;
@@ -191,7 +190,7 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
 
     // add returnMenu button
     returnMenu = new StartButton("menu");
-    returnMenu->setPos(2560-240, 1440-1360);
+    returnMenu->setPos(SCREEN_WIDTH-240*SCREEN_SCALE, 40*SCREEN_SCALE);
     addItem(returnMenu);
 
     skill[0] = new Skill1(this);
@@ -208,7 +207,7 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
                 this, &BattleScene::increaseBossHp);
         connect(skill[i], &Skill::skillPerformed,
                 this, &BattleScene::handleTurnFinished);
-        skill[i]->setPos(700+i*150, 1440-200);
+        skill[i]->setPos((700+i*150)*SCREEN_SCALE+MARGIN_HORIZONTAL, SCREEN_HEIGHT-200*SCREEN_SCALE);
     }
 
     QFile fontFile(":/resources/fonts/FZYanSJW_Zhun.TTF");
@@ -216,23 +215,24 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     int fontId = QFontDatabase::addApplicationFontFromData(fontFile.readAll());
     QFont font;
     font.setFamilies(QFontDatabase::applicationFontFamilies(fontId));
-    font.setPixelSize(30);
+    font.setPixelSize(30*SCREEN_SCALE);
 
     RoundNum = new QLabel;
     RoundNum->setFont(font);
     RoundNum->setStyleSheet("QLabel{ background: rgba(170, 0, 0, 0.7); color: white; border-style: outset; border-width: medium; border-color: rgba(170, 0, 0, 0.7);}");
     addWidget(RoundNum);
     RoundNum->setText("回合数：1 / 40");
-    RoundNum->move(300, 170);
+    RoundNum->move(170*SCREEN_SCALE, 170*SCREEN_SCALE);
     board->RoundNum = RoundNum;
 //    RoundNum->setMargin(5);
 //    RoundNum->setScaledContents(true);
     boss->BossHp = BossHp;
     player->PlayerHp = PlayerHp;
     player->PlayerMp = PlayerMp;
+
     BossSkillId = new QLabel;
     addWidget(BossSkillId);
-    BossSkillId->move(1000, 250);
+    BossSkillId->move(1000*SCREEN_SCALE, 250*SCREEN_SCALE);
     BossSkillId->setText(QString::number(boss->BossSkillId)+" "+QString::number(board->SkillToGo));
     board->BossSkillInform = BossSkillId;
 }

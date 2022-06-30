@@ -1,5 +1,6 @@
 #include "skill.h"
 #include "battlescene.h"
+#include "myglobalvariants.h"
 
 #include <QFile>
 #include <QFontDatabase>
@@ -10,6 +11,7 @@ Skill::Skill(BattleScene *_scene, const QString &_introduction, int id, bool _is
       isDirectional(_isDirectional)
 {
     QPixmap _icon(":/resources/skills/skill" + QString::number(id) + ".png");
+    _icon = _icon.scaled(_icon.size()*SCREEN_SCALE);
     icon = new QGraphicsPixmapItem(_icon);
     icon->setZValue(0);
     scene->addItem(icon);
