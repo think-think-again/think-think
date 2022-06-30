@@ -8,6 +8,8 @@
 #include <QStackedLayout>
 #include <QWidget>
 #include <QApplication>
+#include <QGraphicsOpacityEffect>
+#include <QMediaPlayer>
 
 
 
@@ -28,6 +30,9 @@ private:
     Dialogue *dialogue;
     BattleScene *battle;
     int currentBossId;
+    QGraphicsOpacityEffect *battleOpacity;
+    QMediaPlayer *musicPlayer;
+    QAudioOutput *audioOutput;
 
 signals:
 
@@ -37,6 +42,7 @@ public slots:
     void returnMenu();
     void handleBattleFailed();
     void handleBattleSucceeded();
+    void playMusicAgain(QMediaPlayer::PlaybackState newState);
 };
 
 #endif // MYWINDOW_H

@@ -14,22 +14,24 @@
 MyWindow::MyWindow(QApplication *_app, QWidget *parent)
     : QWidget{parent}, app(_app)
 {
-    QMediaPlayer *musicPlayer = new QMediaPlayer(this);
-    QAudioOutput *audioOutput = new QAudioOutput;
+    musicPlayer = new QMediaPlayer(this);
+    audioOutput = new QAudioOutput;
     audioOutput->setVolume(100);
     musicPlayer->setAudioOutput(audioOutput);
     musicPlayer->setSource(QUrl("qrc:/resources/Lovely Piano Song.mp3"));
-    musicPlayer->setLoops(QMediaPlayer::Infinite);
     musicPlayer->play();
+    connect(musicPlayer, &QMediaPlayer::playbackStateChanged,
+            this, &MyWindow::playMusicAgain);
 
     menu = nullptr;
     dialogue = nullptr;
     battle = nullptr;
     currentBossId = 0;
+    battleOpacity = new QGraphicsOpacityEffect;
 
     layout = new QStackedLayout(this);
-    layout->addWidget(initMainMenu());
-//    layout->addWidget(initBattle(currentBossId));
+//    layout->addWidget(initMainMenu());
+    layout->addWidget(initBattle(currentBossId));
 }
 
 QGraphicsView *MyWindow::initMainMenu()
@@ -75,11 +77,15 @@ QGraphicsView *MyWindow::initBattle(int bossId)
     battleView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     battleView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     battleView->setFixedSize(battle->sceneRect().size().toSize());
+    battle->boss->setGraphicsEffect(battleOpacity);
+    battleOpacity->setOpacity(1);
     return battleView;
 }
 
 void MyWindow::startDialogue()
 {
+
+    BAN_MOUSE_EVENTS = false;
     QWidget *w = layout->currentWidget();
     layout->removeWidget(w);
     w->deleteLater();
@@ -96,6 +102,7 @@ void MyWindow::startBattle()
 
 void MyWindow::returnMenu()
 {
+    BAN_MOUSE_EVENTS = false;
     QWidget *w = layout->currentWidget();
     layout->removeWidget(w);
     w->deleteLater();
@@ -109,10 +116,30 @@ void MyWindow::handleBattleFailed()
 
 void MyWindow::handleBattleSucceeded()
 {
+    BAN_MOUSE_EVENTS = true;
+    battle->boss->floating->stop();
+    QPropertyAnimation *fade = new QPropertyAnimation(battleOpacity, "opacity");
+    fade->setStartValue(1);
+    fade->setEndValue(0);
+    fade->setDuration(2000);
     if(++currentBossId == 3){
-        returnMenu();
+        connect(fade, &QPropertyAnimation::finished,
+                this, &MyWindow::returnMenu);
     }
     else{
-        startDialogue();
+        connect(fade, &QPropertyAnimation::finished,
+                this, &MyWindow::startDialogue);
     }
+    fade->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+void MyWindow::playMusicAgain(QMediaPlayer::PlaybackState newState)
+{
+    musicPlayer->deleteLater();
+    musicPlayer = new QMediaPlayer(this);
+    musicPlayer->setAudioOutput(audioOutput);
+    musicPlayer->setSource(QUrl("qrc:/resources/Lovely Piano Song.mp3"));
+    musicPlayer->play();
+    connect(musicPlayer, &QMediaPlayer::playbackStateChanged,
+            this, &MyWindow::playMusicAgain);
 }

@@ -29,9 +29,9 @@ public:
     int BossSkillId;
     int difficulty;
     QProgressBar* BossHp;
+    QSequentialAnimationGroup *floating;
 
 private:
-    QSequentialAnimationGroup *floating;
     int HP;
     int UpperBoundHp;
     std::mt19937 joy;
