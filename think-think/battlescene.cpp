@@ -303,27 +303,19 @@ void BattleScene::ShowSkills1()
 {
     skill[0]->icon->show();
     skill[0]->layer->show();
-    skill[0]->introductionLabel->show();
-    skill[0]->layer->hoverDelay->start();
 }
 void BattleScene::ShowSkills2()
 {
     skill[1]->icon->show();
     skill[1]->layer->show();
-    skill[1]->introductionLabel->show();
-    skill[1]->layer->hoverDelay->start();
 }
 void BattleScene::ShowSkills3()
 {
     skill[2]->icon->show();
     skill[2]->layer->show();
-    skill[2]->introductionLabel->show();
-    skill[2]->layer->hoverDelay->start();
 }
 void BattleScene::ShowSkills4()
 {
     skill[3]->icon->show();
     skill[3]->layer->show();
-    skill[3]->introductionLabel->show();
-    skill[3]->layer->hoverDelay->start();
 }
