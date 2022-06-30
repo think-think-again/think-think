@@ -33,6 +33,7 @@ public:
     int RandomNum();
     int T;
     int SkillToGo;
+    int SkillsToGo[4];
     int BossSkillId;
     int BossSkillTime[4];
     Boss *boss;
@@ -56,7 +57,10 @@ signals:
     void select(int, int);
     void turnFinished();
     void turnBossSkill();
-
+    void skillshowed1();
+    void skillshowed2();
+    void skillshowed3();
+    void skillshowed4();
 public slots:
     void lazyErase(bool fallFirst = false);
     void _turnFinished();

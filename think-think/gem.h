@@ -56,7 +56,6 @@ signals:
     void rotationChanged(qreal);
     void scaleChanged(qreal);
 
-
 private:
     Boss *boss;
     QProgressBar *HPBar;

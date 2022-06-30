@@ -126,6 +126,18 @@ void Gem::handleMouseRelease()
             }
             board->BossSkillIntroduction->adjustSize();
         }
+        for(int i = 0;i < 4;i++){
+            if(board->SkillsToGo[i] != 1){
+                board->SkillsToGo[i]--;
+            }
+            else if(board->SkillsToGo[i] == 1){
+                if(i == 0) emit board->skillshowed1();
+                if(i == 1) emit board->skillshowed2();
+                if(i == 2) emit board->skillshowed3();
+                if(i == 3) emit board->skillshowed4();
+                board->SkillsToGo[i]--;
+            }
+        }
         //qDebug() << board->T;
     }
     else board->swapGem(gx, gy, gx-dx, gy-dy)->start(QAbstractAnimation::DeleteWhenStopped);

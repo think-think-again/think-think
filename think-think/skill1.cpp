@@ -15,6 +15,7 @@ void Skill1::handleMousePress()
         emit increasePlayerHp(hpIncrement);
         emit increaseMp(-mpCost);
         emit skillPerformed();
+        scene->board->SkillsToGo[0] = 3;
         icon->hide();
         layer->hide();
         introductionLabel->hide();

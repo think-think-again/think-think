@@ -38,6 +38,10 @@ public slots:
     void increaseBossHp(int x);
     void handleTurnFinished();
     void handleHarmDisplay(HarmLabel *harmLabel);
+    void ShowSkills1();
+    void ShowSkills2();
+    void ShowSkills3();
+    void ShowSkills4();
 };
 
 #endif // BATTLESCENE_H

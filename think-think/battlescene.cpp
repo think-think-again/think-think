@@ -209,7 +209,14 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
                 this, &BattleScene::handleTurnFinished);
         skill[i]->setPos((700+i*150)*SCREEN_SCALE+MARGIN_HORIZONTAL, SCREEN_HEIGHT-200*SCREEN_SCALE);
     }
-
+    connect(board, &GameBoard::skillshowed1,
+            this, &BattleScene::ShowSkills1);
+    connect(board, &GameBoard::skillshowed2,
+            this, &BattleScene::ShowSkills2);
+    connect(board, &GameBoard::skillshowed3,
+            this, &BattleScene::ShowSkills3);
+    connect(board, &GameBoard::skillshowed4,
+            this, &BattleScene::ShowSkills4);
     QFile fontFile(":/resources/fonts/FZYanSJW_Zhun.TTF");
     fontFile.open(QIODevice::ReadOnly);
     int fontId = QFontDatabase::addApplicationFontFromData(fontFile.readAll());
@@ -290,4 +297,33 @@ void BattleScene::handleTurnFinished()
 void BattleScene::handleHarmDisplay(HarmLabel *harmLabel)
 {
     addWidget(harmLabel);
+}
+
+void BattleScene::ShowSkills1()
+{
+    skill[0]->icon->show();
+    skill[0]->layer->show();
+    skill[0]->introductionLabel->show();
+    skill[0]->layer->hoverDelay->start();
+}
+void BattleScene::ShowSkills2()
+{
+    skill[1]->icon->show();
+    skill[1]->layer->show();
+    skill[1]->introductionLabel->show();
+    skill[1]->layer->hoverDelay->start();
+}
+void BattleScene::ShowSkills3()
+{
+    skill[2]->icon->show();
+    skill[2]->layer->show();
+    skill[2]->introductionLabel->show();
+    skill[2]->layer->hoverDelay->start();
+}
+void BattleScene::ShowSkills4()
+{
+    skill[3]->icon->show();
+    skill[3]->layer->show();
+    skill[3]->introductionLabel->show();
+    skill[3]->layer->hoverDelay->start();
 }

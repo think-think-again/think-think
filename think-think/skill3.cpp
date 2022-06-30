@@ -48,4 +48,5 @@ void Skill3::handleSelection(int gx, int gy)
     layer->hide();
     introductionLabel->hide();
     layer->hoverDelay->stop();
+    board->SkillsToGo[2] = 6;
 }
