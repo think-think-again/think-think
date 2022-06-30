@@ -6,8 +6,6 @@
 
 Qt 版本：6.3.1 MinGW 64-bit（core gui + multimedia）
 
-环境变量：将 `QT_ENABLE_HIGHDPI_SCALING` 设为 `0`。
-
 ## 作业报告
 
 ### 程序功能介绍：
@@ -120,6 +118,7 @@ Qt 版本：6.3.1 MinGW 64-bit（core gui + multimedia）
 *   读取对应宝石图片并显示。
 *   重新实现了 mousePressEvent、mouseReleaseEvent和mouseMoveEvent 函数，鼠标长按时显示宝石不断放大缩小的动画，并且和游戏面板共同完成拖动和消除宝石的动画效果。
 *   重新实现了 hoverEnterEvent 和 hoverLeaveEvent 函数，鼠标悬浮时显示宝石晃动的动画。
+*   在宝石消除动画未结束前屏蔽了鼠标操作，避免非预期输入。
 
 ##### 玩家类（Player）
 
