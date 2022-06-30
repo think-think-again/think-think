@@ -126,6 +126,7 @@ void Gem::handleMouseRelease()
             }
             board->BossSkillIntroduction->adjustSize();
         }
+        emit board->updateRoundToGo();
         for(int i = 0;i < 4;i++){
             if(board->SkillsToGo[i] == 1){
                 if(i == 0) emit board->skillshowed1();

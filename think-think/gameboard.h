@@ -61,6 +61,7 @@ signals:
     void skillshowed2();
     void skillshowed3();
     void skillshowed4();
+    void updateRoundToGo();
 public slots:
     void lazyErase(bool fallFirst = false);
     void _turnFinished();

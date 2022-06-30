@@ -29,6 +29,7 @@ private:
     Skill *skill[4];
     QLabel *RoundNum;
     QLabel *SkillIntroduction;
+    QLabel *RoundToGo;
 signals:
     void battleFailed();
     void battleSucceeded();
@@ -42,6 +43,7 @@ public slots:
     void ShowSkills2();
     void ShowSkills3();
     void ShowSkills4();
+    void updateRoundToGo();
 };
 
 #endif // BATTLESCENE_H

@@ -237,16 +237,20 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     player->PlayerHp = PlayerHp;
     player->PlayerMp = PlayerMp;
 
+    RoundToGo = new QLabel;
+    RoundToGo->setFont(font);
+    addWidget(RoundToGo);
+    RoundToGo->setStyleSheet("QLabel { background : lightblue; color:white; border-width: medium; border-color: lightblue} ");
+    RoundToGo->setText(QString::number(board->SkillToGo)+"回合后");
+    RoundToGo->move(680, 300);
+    connect(board, &GameBoard::updateRoundToGo, this, &BattleScene::updateRoundToGo);
+
     SkillIntroduction = new QLabel;
-    addWidget(SkillIntroduction);
-    SkillIntroduction->move(1000*SCREEN_SCALE, 250*SCREEN_SCALE);
-    SkillIntroduction->setText(QString::number(boss->BossSkillId)+" "+QString::number(board->SkillToGo));
-    board->BossSkillIntroduction = SkillIntroduction;
-    SkillIntroduction = new QLabel;
     board->BossSkillIntroduction = SkillIntroduction;
     addWidget(SkillIntroduction);
-    SkillIntroduction->move(900, 250);
-    SkillIntroduction->setStyleSheet("QLable{background:transparent;color:white}");
+    SkillIntroduction->move(790, 300);
+    SkillIntroduction->setFont(font);
+    SkillIntroduction->setStyleSheet("QLabel{ background : lightblue ; color:white; border-width: medium; border-color:lightblue}");
     if (boss->BossSkillId == 0)
     {
         SkillIntroduction->setText("对玩家造成"+QString::number(dif * 50 + 150) + "点伤害");
@@ -318,4 +322,8 @@ void BattleScene::ShowSkills4()
 {
     skill[3]->icon->show();
     skill[3]->layer->show();
+}
+void BattleScene::updateRoundToGo()
+{
+    RoundToGo->setText(QString::number(board->SkillToGo) + "回合后");
 }
