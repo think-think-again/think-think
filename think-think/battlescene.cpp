@@ -230,11 +230,33 @@ BattleScene::BattleScene(const QString &name, QObject *parent)
     player->PlayerHp = PlayerHp;
     player->PlayerMp = PlayerMp;
 
-    BossSkillId = new QLabel;
-    addWidget(BossSkillId);
-    BossSkillId->move(1000*SCREEN_SCALE, 250*SCREEN_SCALE);
-    BossSkillId->setText(QString::number(boss->BossSkillId)+" "+QString::number(board->SkillToGo));
-    board->BossSkillInform = BossSkillId;
+    SkillIntroduction = new QLabel;
+    addWidget(SkillIntroduction);
+    SkillIntroduction->move(1000*SCREEN_SCALE, 250*SCREEN_SCALE);
+    SkillIntroduction->setText(QString::number(boss->BossSkillId)+" "+QString::number(board->SkillToGo));
+    board->BossSkillIntroduction = SkillIntroduction;
+    SkillIntroduction = new QLabel;
+    board->BossSkillIntroduction = SkillIntroduction;
+    addWidget(SkillIntroduction);
+    SkillIntroduction->move(900, 250);
+    SkillIntroduction->setStyleSheet("QLable{background:transparent;color:white}");
+    if (boss->BossSkillId == 0)
+    {
+        SkillIntroduction->setText("对玩家造成"+QString::number(dif * 50 + 150) + "点伤害");
+    }
+    else if (boss->BossSkillId == 1)
+    {
+        SkillIntroduction->setText("偷取玩家"+QString::number(50 + 30 * dif) + "点精神力");
+    }
+    else if (boss->BossSkillId == 2)
+    {
+        SkillIntroduction->setText("吸取玩家"+QString::number(50 + 50 * dif) + "点生命值");
+    }
+    else if (boss->BossSkillId == 3)
+    {
+        SkillIntroduction->setText("降低玩家"+QString::number(10 * dif) + "%攻击力，持续5回合");
+    }
+    SkillIntroduction->adjustSize();
 }
 
 void BattleScene::increaseMp(int x)

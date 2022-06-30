@@ -40,7 +40,7 @@ public:
     QProgressBar *PlayerHp;
     QProgressBar *PlayerMp;
     QLabel *RoundNum;
-    QLabel *BossSkillInform;
+    QLabel *BossSkillIntroduction;
     Player *player;
 private:
     Gem *cell[boardSizeX][boardSizeY];

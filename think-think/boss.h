@@ -27,13 +27,13 @@ public:
     int getMD();
     Player* player;
     int BossSkillId;
+    int difficulty;
     QProgressBar* BossHp;
 
 private:
     QSequentialAnimationGroup *floating;
     int HP;
     int UpperBoundHp;
-    int difficulty;
     std::mt19937 joy;
     int PhysicalDefense;
     int MagicalDefense;

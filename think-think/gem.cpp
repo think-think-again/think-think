@@ -102,13 +102,29 @@ void Gem::handleMouseRelease()
         if (board->player->duration > 0) board->player->duration--;
         else if (board->player->duration == 0) board->player->debuff = 1;
         board->SkillToGo--;
-        board->BossSkillInform->setText(QString::number(boss->BossSkillId)+" "+QString::number(board->SkillToGo));
         if (board->SkillToGo == 0){
             emit board->turnBossSkill();
             board->BossSkillId = board->RandomNum();
             board->SkillToGo = board->BossSkillTime[board->BossSkillId];
             boss->BossSkillId = board->BossSkillId;
-            board->BossSkillInform->setText(QString::number(boss->BossSkillId)+" "+QString::number(board->SkillToGo));
+            board->BossSkillIntroduction->setText(QString::number(boss->BossSkillId)+" "+QString::number(board->SkillToGo));
+            if (boss->BossSkillId == 0)
+            {
+                board->BossSkillIntroduction->setText("对玩家造成"+QString::number(boss->difficulty * 50 + 150) + "点伤害");
+            }
+            else if (boss->BossSkillId == 1)
+            {
+                board->BossSkillIntroduction->setText("偷取玩家"+QString::number(50 + 30 * boss->difficulty) + "点精神力");
+            }
+            else if (boss->BossSkillId == 2)
+            {
+                board->BossSkillIntroduction->setText("吸取玩家"+QString::number(50 + 50 * boss->difficulty) + "点生命值");
+            }
+            else if (boss->BossSkillId == 3)
+            {
+                board->BossSkillIntroduction->setText("降低玩家"+QString::number(10 * boss->difficulty) + "%攻击力，持续5回合");
+            }
+            board->BossSkillIntroduction->adjustSize();
         }
         //qDebug() << board->T;
     }

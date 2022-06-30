@@ -28,7 +28,7 @@ private:
     QProgressBar *PlayerMp;
     Skill *skill[4];
     QLabel *RoundNum;
-    QLabel *BossSkillId;
+    QLabel *SkillIntroduction;
 signals:
     void battleFailed();
     void battleSucceeded();
