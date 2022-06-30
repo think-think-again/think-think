@@ -52,3 +52,6 @@ compile_commands.json
 *creator.user*
 
 .vscode/
+github-markdown.css
+README.html
+README.pdf
